@@ -1,0 +1,31 @@
+.seats-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .seat {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .available {
+    background-color: #b4f8c8;
+  }
+  
+  .booked {
+    background-color: #f8b4b4;
+    cursor: not-allowed;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  

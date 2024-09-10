@@ -1,0 +1,266 @@
+.scheduleSection {
+  padding: 20px 40px;
+  height: 100vh;
+  padding-top: 170px;
+  /* Ensure the content is positioned correctly */
+  background-color: #f9f9f9;
+  /* Light background for better readability */
+}
+
+.movieHeader {
+  text-align: left;
+  margin-bottom: 20px;
+
+}
+
+.movieHeader h2 {
+  margin-bottom: 1px;
+  font-size: 32px;
+
+  color: #fb4545;
+  /* Accent color for the title */
+}
+
+.genre {
+  padding: 2px 7px;
+  display: auto;
+
+  gap: 11px;
+  font-size: 12px;
+  color: rgb(79, 75, 75);
+  border-radius: 50px;
+  border: 3px solid #f9f9f9;
+  background-color: #feffb4;
+}
+
+.movieHeader p {
+  margin: 15px 5px 0px 5px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #343333b8;
+  /* Text color for details */
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0px;
+  border-bottom: 1px solid rgb(88, 84, 84);
+  border-top: 1px solid rgb(89, 85, 85);
+}
+
+.filters .filterInput,
+.filters .filterSelect {
+  padding: 30px;
+
+  background-color: transparent;
+  border: 0px solid #ffffff;
+  min-width: 200px;
+  flex: 1;
+  outline: none;
+  border-left: 1px solid rgb(55, 49, 49);
+
+
+}
+
+.filters .filterInput {
+  margin-right: 15px;
+
+}
+
+.filterSelect {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 8px 10px;
+}
+
+.theaterSchedulesDiv {
+  width: 100%;
+  padding: 30px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.theaterSchedule {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for better separation */
+}
+
+.theaterSchedule h4 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.theaterSchedule p {
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.showDate {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+
+}
+
+.showTimes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.showTimes button {
+  margin: 5px;
+  padding: 8px 20px;
+  background-color: #fff;
+  color: #f12f3f;
+  /* Accent color for buttons */
+  border: 1px solid #f12f3f;
+  /* Accent color for border */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, color 0.3s;
+  /* Smooth transition effects */
+}
+
+.showTimes button:hover {
+  background-color: #d11d1d;
+  /* Darker shade on hover */
+  color: #fff;
+}
+
+.showDate h5 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.weekdaySliderDiv {
+  width: 24.0%;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+}
+
+.weekdaySlider {
+
+
+  overflow: hidden;
+  width: 80.5%;
+  display: flex;
+  justify-content: flex-start;
+  overflow-x: auto;
+  gap: 10px;
+
+  padding: 10px 0;
+  /* Add some padding for a better visual effect */
+  scroll-behavior: smooth;
+  /* Smooth scrolling effect */
+  position: relative;
+  /* Position relative for absolute positioning of arrows */
+}
+
+/* Hide the scrollbar for WebKit browsers */
+.weekdaySlider::-webkit-scrollbar {
+  display: none;
+  /* Hide scrollbar */
+}
+
+.weekdayButton {
+  flex: 1;
+  padding: 5px;
+  border: 0px solid #ddd;
+  background-color: #fff;
+  text-align: center;
+  cursor: pointer;
+  scroll-snap-align: start;
+  height: 60px;
+  width: 100px;
+  border-radius: 10px;
+  font-size: 10px;
+  transition: background-color 0.3s, transform 0.3s;
+  /* Smooth transitions for hover effects */
+}
+
+.weekdayButton:hover {
+  background-color: #f7bfbf;
+  transform: scale(1.01);
+  /* Slight scale effect on hover */
+}
+
+.weekdayButton.active {
+  background-color: #f12f3f;
+  /* Accent color for active state */
+  color: #fff;
+}
+
+.arrow {
+  position: relative;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(122, 72, 72);
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+  width: 25px;
+  height: 30px;
+  padding: 10px;
+  border-radius: 30%;
+}
+
+.arrow.left {
+  left: 10px;
+}
+
+.arrow.right {
+  right: 10px;
+}
+
+@media (max-width: 768px) {
+  .movieHeader h2 {
+    font-size: 24px;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters .filterInput {
+    margin-right: 0;
+    margin-bottom: 10px;
+    /* Space between input and select */
+  }
+
+  .weekdayButton {
+    min-width: 60px;
+    /* Adjust min-width for smaller screens */
+    font-size: 12px;
+  }
+
+  .showTimes button {
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+}
