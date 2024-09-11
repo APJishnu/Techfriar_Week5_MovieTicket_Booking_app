@@ -1,10 +1,15 @@
 .scheduleSection {
   padding: 20px 40px;
-  height: 100vh;
-  padding-top: 170px;
+  height: 100%;
+  padding-top: 150px;
   /* Ensure the content is positioned correctly */
   background-color: #f9f9f9;
   /* Light background for better readability */
+}
+
+.seatsSection {
+  height: 100vh;
+  background-color: #f9f9f9;
 }
 
 .movieHeader {
@@ -16,7 +21,7 @@
 .movieHeader h2 {
   margin-bottom: 1px;
   font-size: 32px;
-
+  letter-spacing: 1px;
   color: #fb4545;
   /* Accent color for the title */
 }
@@ -24,7 +29,6 @@
 .genre {
   padding: 2px 7px;
   display: auto;
-
   gap: 11px;
   font-size: 12px;
   color: rgb(79, 75, 75);
@@ -34,8 +38,9 @@
 }
 
 .movieHeader p {
-  margin: 15px 5px 0px 5px;
-  font-size: 15px;
+  margin: 5px 5px 0px 5px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
   font-weight: 600;
   color: #343333b8;
   /* Text color for details */
@@ -78,29 +83,35 @@
   background-size: 8px 10px;
 }
 
+
 .theaterSchedulesDiv {
   width: 100%;
   padding: 30px 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+
 }
 
 
-.theaterSchedule {
+.noSchedules{
+  text-align: center;
+  padding-bottom: 300px;
+  padding-top: 50px;
+}
+.theatreContainer {
   width: 100%;
-  margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border-radius: 0px;
+  border-bottom: 0.5px solid rgba(60, 60, 60, 0.167);
   /* Subtle shadow for better separation */
 }
 
-.theaterSchedule h4 {
-  font-size: 24px;
-  margin-bottom: 5px;
+.theatreContainer h3 {
+  letter-spacing: 1px;
+  font-size: 16px;
+  margin-bottom: 0px;
   color: #333;
 }
 
@@ -109,27 +120,34 @@
   color: #666;
 }
 
-.showDate {
+.showDateContainer {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
+  flex-direction: row;
+  gap: 300px;
+  margin-top: 0px;
+  color: #666;
 
+}
+
+
+.showDateContainer h5 {
+  font-weight: 400;
 }
 
 .showTimes {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+
 }
 
 .showTimes button {
   margin: 5px;
   padding: 8px 20px;
   background-color: #fff;
-  color: #f12f3f;
+  color: #4aa01f;
   /* Accent color for buttons */
-  border: 1px solid #f12f3f;
+  border: 1px solid #4aa01f;
   /* Accent color for border */
   border-radius: 5px;
   cursor: pointer;
@@ -139,7 +157,7 @@
 }
 
 .showTimes button:hover {
-  background-color: #d11d1d;
+  background-color: #4aa01f;
   /* Darker shade on hover */
   color: #fff;
 }
@@ -236,6 +254,42 @@
 
 .arrow.right {
   right: 10px;
+}
+
+.scheduleList {
+
+  width: 100%;
+  padding: 20px 40px;
+}
+
+.theatreContainer {
+  width: 100%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+
+.backButton {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 5px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #f93969;
+  color: #f93969;
+  position: relative;
+  margin: 0;
+}
+
+.backButton:hover {
+  background-color: #f93969;
+  border-radius: 5px;
+  padding: 5px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #f93969;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {

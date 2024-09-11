@@ -1,9 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import styles from "./book-tickets.module.css";
 import Seats from "@/components/Seats/Seats";
+import Popup from "../book-tickets/components/popup/Popup"; // Import the Popup component
+import { isAuthenticated } from "../../../hooks/auth"; // Import the authentication utility
 
 type Movie = {
   title: string;
@@ -58,6 +60,8 @@ const MovieSchedule: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
+  const router = useRouter();
+
   const [movie, setMovie] = useState<Movie | null>(null);
   const [theaterSchedules, setTheaterSchedules] = useState<TheaterSchedule[]>([]);
   const [filteredSchedules, setFilteredSchedules] = useState<TheaterSchedule[]>([]);
@@ -67,6 +71,7 @@ const MovieSchedule: React.FC = () => {
   const [selectedTime, setSelectedTime] = useState<string>("All");
   const [weekdays, setWeekdays] = useState<WeekdayButtons>({});
   const [selectedShowtime, setSelectedShowtime] = useState<SelectedShowtime | null>(null);
+  const [showPopup, setShowPopup] = useState<boolean>(false); // Manage popup state
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -183,7 +188,19 @@ const MovieSchedule: React.FC = () => {
   };
 
   const handleShowtimeClick = (theatreId: string, showDate: string, showTime: string) => {
-    setSelectedShowtime({ theatreId, date: showDate, time: showTime });
+    if (isAuthenticated()) {
+      setSelectedShowtime({ theatreId, date: showDate, time: showTime });
+    } else {
+      setShowPopup(true); // Show the popup if not authenticated
+    }
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+  };
+
+  const handleLoginRedirect = () => {
+    router.push('/login'); // Redirect to login page
   };
 
   const handleBackToSchedule = () => {
@@ -192,10 +209,18 @@ const MovieSchedule: React.FC = () => {
 
   return (
     <section className={styles.scheduleSection}>
+      {showPopup && (
+        <Popup
+          message="Please log in or register to book tickets."
+          onClose={handlePopupClose}
+         
+         // Redirect to register page
+        />
+      )}
       {selectedShowtime ? (
-        <div>
+        <div className={styles.seatsSection}>
           <button onClick={handleBackToSchedule} className={styles.backButton}>
-            Back to Schedule
+            back
           </button>
           <Seats
             movieId={id!}
@@ -261,35 +286,45 @@ const MovieSchedule: React.FC = () => {
           </div>
 
           <div className={styles.scheduleList}>
-            {filteredSchedules.map((schedule) => (
-              <div key={schedule.theatreName} className={styles.theatreContainer}>
-                <h3>{schedule.theatreName} - {schedule.location}</h3>
-                {schedule.movies.map((movie) => (
-                  <div key={movie.movieTitle} className={styles.movieContainer}>
-                    <h4>{movie.movieTitle}</h4>
-                    {movie.showDates.map((showDate) => (
-                      <div key={showDate.date} className={styles.showDateContainer}>
-                        <h5>{new Date(showDate.date).toDateString()}</h5>
-                        <div className={styles.showTimes}>
-                        {showDate.times.map((showTime, index) => (
-                          <button
-                            key={index}
-                            onClick={() =>
-                              handleShowtimeClick(schedule.theatreName, showDate.date, showTime.time)
-                            }
-                            className={styles.showtimeButton}
-                          >
-                            {showTime.time}
-                          </button>
-                        ))}
-                      </div>
-                      </div>
-                    ))}
-                    
-                  </div>
-                ))}
-              </div>
-            ))}
+            {!filteredSchedules ? (
+              <p>Loading schedules...</p> // Display loading message when data is undefined or not yet available
+            ) : filteredSchedules.length === 0 ? (
+              <p className={styles.noSchedules}>No schedules found. Please try again later.</p> // Display error message if no schedules are available
+            ) : (
+              filteredSchedules.map((schedule) => (
+                <div key={schedule.theatreName} className={styles.theatreContainer}>
+                  <h3>
+                    {schedule.theatreName} - {schedule.location}
+                  </h3>
+                  {schedule.movies.map((movie) => (
+                    <div key={movie.movieTitle} className={styles.movieContainer}>
+                      {movie.showDates.map((showDate) => (
+                        <div key={showDate.date} className={styles.showDateContainer}>
+                          <h5>{new Date(showDate.date).toDateString()}</h5>
+                          <div className={styles.showTimes}>
+                            {showDate.times.map((showTime, index) => (
+                              <button
+                                key={index}
+                                onClick={() =>
+                                  handleShowtimeClick(
+                                    schedule.theatreName,
+                                    showDate.date,
+                                    showTime.time
+                                  )
+                                }
+                                className={styles.showtimeButton}
+                              >
+                                {showTime.time}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              ))
+            )}
           </div>
         </>
       )}

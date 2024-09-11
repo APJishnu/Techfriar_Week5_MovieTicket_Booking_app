@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styles from "../../../styles/user/movieDetails.module.css";
-import { useSearchParams ,useRouter} from "next/navigation";
+import styles from "./movieDetails.module.css";
+import { useSearchParams, useRouter } from "next/navigation";
 
 // Define TypeScript interfaces
 interface Movie {
@@ -66,9 +66,9 @@ const MovieDetails: React.FC = () => {
   const backgroundPoster = schedule.movie.backgroundPoster || schedule.movie.image; // Default background image
 
   return (
-    <div 
-      className={styles.detailsSection} 
-      
+    <div
+      className={styles.detailsSection}
+
     >
       <div className={styles.movieInfoContainer} style={{ backgroundImage: `url(${backgroundPoster})` }}>
         <img src={schedule.movie.image || '/path/to/dummy-poster.jpg'} alt={schedule.movie.title} className={styles.movieImage} />
@@ -77,6 +77,7 @@ const MovieDetails: React.FC = () => {
           <div className={styles.ratingBox}>
             <span>⭐ {schedule.movie.imdbRating}/10</span>
             <span> - {schedule.movie.language}</span>
+            <button className={styles.rateNow}>Rate Now</button>
           </div>
           <p>{schedule.movie.duration} - {schedule.movie.genre} - {schedule.movie.certification}</p>
           <p>Release Date: {new Date(schedule.movie.releaseDate).toLocaleDateString()}</p>

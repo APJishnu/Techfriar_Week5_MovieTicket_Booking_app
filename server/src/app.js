@@ -4,8 +4,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const adminRoutes = require('./routes/admin/admin-routes');
 const userRoutes= require('./routes/user/user-routes');
+const passport = require('passport');  
+const authRoutes = require('./routes/auth-routes'); // Add auth routes
+const jwt = require('jsonwebtoken');
+
 const session = require('express-session');
 const { db } = require('./config/database')
+require('./config/passport');  // Add the passport configuration
 
 const app = express();
 
@@ -36,12 +41,15 @@ app.use(session({
   
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 
 
 app.use('/api/admin/', adminRoutes); // Add the new movie routes
 app.use('/api/', userRoutes); // Add the new movie routes
+app.use('/api/auth/', authRoutes);  
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

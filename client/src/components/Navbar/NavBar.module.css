@@ -9,7 +9,7 @@
   top: 0;
   z-index: 447;
   background-image: linear-gradient(to right, #ffffff 10%, #ffffff 400%);
-  padding-bottom: 30px;
+  padding-bottom: 8px;
 }
 
 .nav {
@@ -150,17 +150,17 @@
   position: fixed;
   left: 0;
   right: 0;
-  top: 89px;
-  z-index: 447;
+  top: 78px;
+  z-index: 2;
   padding: 8px 0 15px;
   background-image: linear-gradient(to right, #000000 10%, #f8f8f8 400%);
- 
+
 
 }
 
 .mainNavigationsDiv {
   display: flex;
-  
+
 
 }
 
@@ -186,15 +186,22 @@
   display: block;
 }
 
+.categories {
+  text-decoration: none;
+  color: white;
+}
+
 .categoriesItems {
   position: absolute;
-  padding: 20px 40px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
   border-radius: 5px;
-  margin-top: 8px;
-  background-color: rgba(68, 68, 68, 0.8);
+  width: 150px;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   opacity: 0;
   visibility: hidden;
-  transition: 0.4s;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .mainNavigationsLi:hover .categoriesItems {
@@ -207,8 +214,135 @@
 }
 
 .categoriesItems p a {
-  color: #ffffff;
+  color: #000000;
+  text-decoration: none;
 }
+
+.signUpBtn {
+  background-color: rgb(219, 52, 52);
+  padding: 2px 15px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  margin-left: 20px;
+  font-size: 14px;
+  color: white;
+}
+
+.signUpBtn:hover {
+  background-color: rgba(255, 255, 255, 0);
+  padding: 2px 15px;
+  border: 1px solid rgb(219, 52, 52);
+  border-radius: 1px;
+  color:rgb(219, 52, 52);
+}
+
+.cartHeader {
+  display: flex;
+  align-items: center;
+}
+
+/* Profile Header (align right) */
+.profileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  cursor: pointer;
+  padding-right: 30px;
+
+}
+
+.profileIcon {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+}
+
+.profilePhoto {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profileIcon span {
+  margin-left: 8px;
+  color: #000000;
+  font-size: 0.8rem;
+}
+
+.profileDropdown {
+  position: absolute;
+  top: 55px;
+  left: -25px;
+  right: 0;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 5px;
+  width: 150px;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.profileDropdown a {
+  display: block;
+  padding: 8px;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.profileDropdown a:hover {
+  background-color: #ff242f;
+  border-radius: 4px;
+  color: #f8f8f8;
+}
+
+.profileHeader.active .profileDropdown {
+
+  opacity: 1;
+  visibility: visible;
+}
+
+.searchResults {
+  position: absolute;
+  top: 100%;
+  /* Position below the search bar */
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  /* Adjust height as needed */
+  overflow-y: auto;
+  /* Scroll if results exceed max height */
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  /* Ensure it appears above other content */
+  border-radius: 4px;
+  /* Rounded corners */
+}
+
+.searchResultItem {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.searchResultItem:hover {
+  background-color: #f0f0f0;
+  /* Highlight on hover */
+}
+
+.searchBar {
+  position: relative;
+  /* Ensure search results dropdown is positioned correctly */
+}
+
+
 
 /* Media Queries */
 @media (max-width: 510px) {
@@ -218,5 +352,10 @@
 
   .mobileHide {
     display: none;
+  }
+
+  .profileIcon span {
+    display: none;
+    /* Hide username on small screens */
   }
 }

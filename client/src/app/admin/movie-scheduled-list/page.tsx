@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../../../styles/admin/movieScheduleList.module.css";
+import { useRouter } from "next/navigation";
 
 interface ShowTime {
   time: string;
@@ -38,6 +39,7 @@ interface Schedule {
 const ScheduleList: React.FC = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchSchedules = async () => {
@@ -106,7 +108,10 @@ const ScheduleList: React.FC = () => {
   return (
     <div className={styles.mainSection}>
       <div className={styles.container}>
+        <div className={styles.headingWithButton}>
         <h2>Movie Schedules</h2>
+        <button className={styles.addButton} onClick={() =>  router.push('/admin/movie-schedule')}>Add Movie</button>
+        </div>
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
         <div className={styles.cardContainer}>
@@ -124,15 +129,13 @@ const ScheduleList: React.FC = () => {
                         <h4 className={styles.movieTitle}>
                           {schedule.movies.map(movieSchedule => movieSchedule.movie.title).join(', ')}
                         </h4>
-                        <span className={styles.movieDetail}>
-                          Theatre: {schedule.theatre.theatreName}
-                        </span>
+                        
                       </div>
 
                       <div className={styles.movieDetails}>
                         {schedule.movies.map((movieSchedule) => (
                           <div key={movieSchedule.movie._id} className={styles.movieDetailsSection}>
-                            <h5>{movieSchedule.movie.title}</h5>
+                          
                             {Array.isArray(movieSchedule.showDates) && movieSchedule.showDates.length > 0 ? (
                               movieSchedule.showDates
                                 .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())

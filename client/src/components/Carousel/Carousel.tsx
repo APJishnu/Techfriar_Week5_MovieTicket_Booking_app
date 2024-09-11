@@ -10,21 +10,21 @@ const fetchCarouselData = async () => {
   return [
     {
       id: 1,
-      src: "/demoCarousel.avif",
+      src: "/carousel-1.jpeg",
       title: "Movie 1",
       rating: 4.5,
       description: "An epic journey of a hero.",
     },
     {
       id: 2,
-      src: "/demoCarousel.avif",
+      src: "/carousel-2.jpeg",
       title: "Movie 2",
       rating: 4.7,
       description: "A romantic tale set in the 90s.",
     },
     {
       id: 3,
-      src: "/demoCarousel.avif",
+      src: "/carousel.jpg",
       title: "Movie 3",
       rating: 4.9,
       description: "A thrilling action-packed movie.",

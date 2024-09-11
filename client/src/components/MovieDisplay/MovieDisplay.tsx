@@ -86,7 +86,7 @@ const MovieDisplay: React.FC = () => {
       <h2>Movies</h2>
       <div className={styles.container}>
         <div className={styles.filterMainDiv}>
-          {filteredMovies.length > 0 ? (
+         
             <div className={styles.filterSection}>
               <h3>Filter by</h3>
               <div className={styles.filterRow}>
@@ -116,9 +116,7 @@ const MovieDisplay: React.FC = () => {
                 </div>
               </div>
             </div>
-          ) : (
-            <p className={styles.emptyMessage}>No movies available.</p>
-          )}
+         
         </div>
 
         <div className={styles.moviesCardDiv}>

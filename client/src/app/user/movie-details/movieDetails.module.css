@@ -59,6 +59,8 @@
   margin-right: 20px;
 }
 
+
+
 .movieInfo {
   display: flex;
   flex-direction: column;
@@ -72,6 +74,7 @@
 }
 
 .ratingBox {
+  width: 350px;
   background-color: #ffffffa8;
   display: flex;
   align-items: center;
@@ -79,6 +82,15 @@
   padding: 20px;
   border-radius: 20px;
   color: #ffef62;
+}
+
+.rateNow{
+  color: white;
+  background-color:  hsl(357, 100%, 61%);
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: 0px;
+  margin-left:20px ;
 }
 
 .ratingBox span {

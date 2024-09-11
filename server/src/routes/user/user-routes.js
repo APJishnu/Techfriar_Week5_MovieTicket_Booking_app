@@ -97,7 +97,6 @@ router.get('/book-tickets/:movieId', async (req, res) => {
 });
 
 
-
 router.get('/seats', async (req, res) => {
   const { theatreId, movieId, showDate, showTime } = req.query;
 
@@ -108,37 +107,73 @@ router.get('/seats', async (req, res) => {
       return res.status(404).json({ message: 'Theatre not found' });
     }
 
-    // Find the schedule using the theatre's ObjectId
+    // Find the movie schedule using the theatre's ObjectId
     const schedule = await movieSchedule.findOne({
-      'theatre': theatre._id,
+      theatre: theatre._id,
       'movies.movie': movieId,
       'movies.showDates.date': showDate,
       'movies.showDates.times.time': showTime
     }).populate({
-      path: 'movies.showDates.times',
-      match: { time: showTime }
+      path: 'movies.movie',
+      select: 'title' // Fetch only the title from the movie document
     });
 
     if (!schedule) {
-      return res.status(404).json({ message: 'Seats not found for this showtime' });
+      return res.status(404).json({ message: 'Schedule not found for the selected theatre, movie, date, and time' });
     }
 
-    const showtime = schedule.movies.flatMap(movie =>
-      movie.showDates.find(date => date.date === showDate)
-    )?.times.find(time => time.time === showTime);
+    // Find the movie in the schedule
+    const MovieSchedule = schedule.movies.find(m => m.movie._id.toString() === movieId);
+    if (!movieSchedule) {
+      return res.status(404).json({ message: 'Movie not found in the schedule' });
+    }
 
-    if (!showtime) {
+    // Find the specific show date for the movie
+    const showDateObj = MovieSchedule.showDates.find(date => date.date === showDate);
+    if (!showDateObj) {
+      return res.status(404).json({ message: 'Show date not found' });
+    }
+
+    // Find the specific show time for the selected date
+    const showtimeObj = showDateObj.times.find(time => time.time === showTime);
+    if (!showtimeObj) {
       return res.status(404).json({ message: 'Showtime not found' });
     }
 
-    console.log(showtime.seats)
-    // Return the seats for the found showtime
-    res.json({ seats: showtime.seats });
+    // Return the seats for the selected showtime
+    res.json({
+      seats: showtimeObj.seats,
+      movieTitle: MovieSchedule.movie.title // Return movie title for the frontend
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to fetch seats', error });
   }
 });
+
+
+
+router.get('/search-movies', async (req, res) => {
+  try {
+      const { title } = req.query;
+      if (!title) {
+          return res.status(400).json({ error: 'Title is required' });
+      }
+
+      // Use word boundaries to match complete words and make regex stricter
+      const regex = new RegExp(`\\b${title}`, 'i');
+
+      const movies = await Movie.find({
+          title: { $regex: regex }
+      });
+
+      res.json(movies);
+  } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch movies' });
+  }
+});
+
+
 
 
 module.exports = router;

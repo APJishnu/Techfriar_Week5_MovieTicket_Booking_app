@@ -67,7 +67,7 @@ const AdminNavbar = ({ user }: { user?: { firstname: string } }) => {
                             onMouseEnter={() => setMoviesDropdownOpen(true)}
 
                         >
-                            <a className={styles.categories}>Movies <i className="fas fa-caret-down"></i></a>
+                            <a className={styles.categories}><Link className={styles.categories} href="/admin/movies-list">Movies</Link><i className="fas fa-caret-down"></i></a>
                             {isMoviesDropdownOpen && (
                                 <div className={styles.categoriesItems}>
                                     <p><Link className={styles.categoriesItemsLink} href="/admin/movies-list">Movies List</Link></p>
@@ -82,13 +82,17 @@ const AdminNavbar = ({ user }: { user?: { firstname: string } }) => {
                             onMouseEnter={() => setTheatersDropdownOpen(true)}
 
                         >
-                            <a className={styles.categories}>Theatres <i className="fas fa-caret-down"></i></a>
+                            <a className={styles.categories}><Link className={styles.categories} href="/admin/theatres-list">Theaters</Link><i className="fas fa-caret-down"></i></a>
                             {isTheatersDropdownOpen && (
                                 <div className={styles.categoriesItems}>
                                     <p><Link className={styles.categoriesItemsLink} href="/admin/theatres-list">Theaters List</Link></p>
                                     <p><Link className={styles.categoriesItemsLink} href="/admin/add-theatre">Add Theaters</Link></p>
                                 </div>
                             )}
+                        </li>
+
+                        <li className={`${styles.mainNavigationsLi} ${styles.mobileHide}`}>
+                            <Link className={styles.listNav} href="/admin/movie-scheduled-list">movie schedule</Link>
                         </li>
                     </ul>
                 </div>

@@ -1,11 +1,12 @@
+const { trusted } = require('mongoose');
 const { Movie, Theatre, movieSchedule } = require('../models/admin-models');
 const generateSeats = (capacity) => {
   const seats = [];
-  const rows = Math.ceil(capacity / 10); // Assuming 10 seats per row
+  const rows = Math.ceil(capacity / 20); // Assuming 10 seats per row
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
   for (let row = 0; row < rows; row++) {
-    for (let seat = 1; seat <= 10; seat++) {
+    for (let seat = 1; seat <= 20; seat++) {
       const seatNumber = `${alphabet[row]}${seat}`;
       seats.push({
         seatNumber,

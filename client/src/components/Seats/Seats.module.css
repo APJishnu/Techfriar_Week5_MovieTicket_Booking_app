@@ -1,31 +1,117 @@
-.seats-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+.seatsWrapper {
+  text-align: left;
+  padding: 0px 0px;
+  width: 100%;
+  margin-top: 0px;
+  padding: 0;
+
+}
+
+.seatsHeadingDiv{
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  border-bottom:1px solid black ;
+  padding-bottom: 20px;
+}
+
+.title {
+  font-size: 20px;
+  margin-bottom: 0px;
+  font-weight: 700;
+  color: #525252;
+  letter-spacing: 2px;
+}
+
+.details {
+  padding: 0px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  color: #464646;
+  width: 270px;
+}
+
+.details span{
   
-  .seat {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .available {
-    background-color: #b4f8c8;
-  }
-  
-  .booked {
-    background-color: #f8b4b4;
-    cursor: not-allowed;
-  }
-  
-  .error {
-    color: red;
-    font-weight: bold;
-  }
-  
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.seatsContainer {
+  display: grid;
+  grid-template-columns: repeat(20, 45px); /* 10 seats per row */
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.seat {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1.8px solid #5bc15f; /* Green outline for available seats */
+  border-radius: 5px; /* Rounded seat edges */
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.available {
+  background-color: white; /* Default color for available seats */
+  color: #4caf50; /* Green text for available seats */
+}
+
+.booked {
+  background-color: #f0f0f0; /* Light grey background for booked seats */
+  border-color: #999999; /* Grey border for booked seats */
+  color: #999999; /* Muted color for booked seats */
+  cursor: not-allowed;
+}
+
+.selected {
+  background-color: #4caf50; /* Green background for selected seats */
+  color: white; /* White text for selected seats */
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.paymentSection {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.totalPrice {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.payButton {
+  background-color: #f53b57;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.payButton:hover {
+  background-color: #ff6b81;
+}
