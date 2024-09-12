@@ -58,7 +58,7 @@ const timeCategories: { [key: string]: string[] } = {
 
 const MovieSchedule: React.FC = () => {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const movieId = searchParams.get("movieId");
 
   const router = useRouter();
 
@@ -75,9 +75,9 @@ const MovieSchedule: React.FC = () => {
 
   useEffect(() => {
     const fetchSchedule = async () => {
-      if (id) {
+      if (movieId) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/book-tickets/${id}`);
+          const response = await axios.get(`http://localhost:5000/api/book-tickets/${movieId}`);
           const scheduleData = response.data;
 
           if (scheduleData.length > 0) {
@@ -103,7 +103,7 @@ const MovieSchedule: React.FC = () => {
     };
 
     fetchSchedule();
-  }, [id]);
+  }, [movieId]);
 
   const calculateWeekdays = (): WeekdayButtons => {
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -223,7 +223,7 @@ const MovieSchedule: React.FC = () => {
             back
           </button>
           <Seats
-            movieId={id!}
+            movieId={movieId!}
             theatreId={selectedShowtime.theatreId}
             showDate={selectedShowtime.date}
             showTime={selectedShowtime.time}

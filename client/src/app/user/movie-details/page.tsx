@@ -33,16 +33,16 @@ interface Schedule {
 
 const MovieDetails: React.FC = () => {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const movieId = searchParams.get("movieId");
   const router = useRouter();
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
-      if (id) {
+      if (movieId) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/movie-details/${id}`);
+          const response = await axios.get(`http://localhost:5000/api/movie-details/${movieId}`);
           setSchedule(response.data);
         } catch (error) {
           setErrorMessage("Failed to fetch movie details.");
@@ -53,11 +53,11 @@ const MovieDetails: React.FC = () => {
     };
 
     fetchMovieDetails();
-  }, [id]);
+  }, [movieId]);
 
 
   const handleBookTickets = () => {
-    router.push(`/user/book-tickets?id=${id}`);
+    router.push(`/user/book-tickets?movieId=${movieId}`);
   };
 
   if (errorMessage) return <p>{errorMessage}</p>;

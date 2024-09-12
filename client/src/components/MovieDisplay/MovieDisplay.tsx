@@ -77,8 +77,8 @@ const MovieDisplay: React.FC = () => {
     setSelectedLanguage(event.target.value);
   };
 
-  const handleCardClick = (id: string) => {
-    router.push(`/user/movie-details?id=${id}`); // Redirect to movie details page with query parameter
+  const handleCardClick = (movieId: string) => {
+    router.push(`/user/movie-details?movieId=${movieId}`); // Redirect to movie details page with query parameter
   };
 
   return (

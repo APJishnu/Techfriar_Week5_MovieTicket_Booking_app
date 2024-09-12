@@ -3,6 +3,9 @@ const { Movie, Theatre, movieSchedule } = require('../../models/admin-models')
 const express = require("express");
 const userHelper = require('../../helpers/user-helper')
 const router = express.Router();
+const Razorpay = require("razorpay");
+require('dotenv').config();
+
 
 
 // Get all movies
@@ -16,12 +19,12 @@ router.get('/all-movies', async (req, res) => {
 });
 
 
-router.get('/movie-details/:id', async (req, res) => {
-  const { id } = req.params;
+router.get('/movie-details/:movieId', async (req, res) => {
+  const { movieId } = req.params;
 
   try {
     // Fetch the movie details
-    const movie = await Movie.findById(id).exec();
+    const movie = await Movie.findById(movieId).exec();
 
     if (!movie) {
       return res.status(404).json({ message: 'Movie not found' });
@@ -170,6 +173,69 @@ router.get('/search-movies', async (req, res) => {
       res.json(movies);
   } catch (error) {
       res.status(500).json({ error: 'Failed to fetch movies' });
+  }
+});
+
+
+
+
+
+
+// Razorpay instance
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+// Generate a Razorpay order
+router.post('/razorpay-order', async (req, res) => {
+  const { amount } = req.body;
+  console.log(amount)
+
+  try {
+    const options = {
+      amount: amount, // Amount in paise
+      currency: "INR",
+      receipt: `receipt_order_${Math.random() * 1000}`,
+    };
+    
+    const order = await razorpay.orders.create(options);
+    res.json({ success: true, order_id: order.id, amount: order.amount, currency: order.currency });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// Confirm booking after payment
+router.post('/confirm-booking', async (req, res) => {
+  const { userDetails, movieTitle, theatreId, showDate, showTime, selectedSeats, totalPrice, paymentId } = req.body;
+
+  try {
+    // Save the booking details in your database (as it already exists)
+    const booking = await userHelper.confirmBooking({
+      userDetails,
+      movieTitle,
+      theatreId,
+      showDate,
+      showTime,
+      selectedSeats,
+      totalPrice,
+      paymentId,
+    });
+
+    // Update the movie schedule by marking the selected seats as booked
+    await userHelper.updateMovieSchedule({
+      theatreId,
+      movieTitle,
+      showDate,
+      showTime,
+      selectedSeats,
+      userId: userDetails.userId,
+    });
+
+    res.json({ success: true, booking });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 });
 

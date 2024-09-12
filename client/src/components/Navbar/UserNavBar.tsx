@@ -38,8 +38,11 @@ const Navbar = () => {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
-        if (token) {
+        const userDetails = urlParams.get('user')
+        if (token && userDetails) {
             localStorage.setItem('authToken', token); // Store token in localStorage
+            localStorage.setItem('userData', userDetails); // Store token in localStorage
+            console.log(userDetails)
         }
     }, []);
 
@@ -65,7 +68,7 @@ const Navbar = () => {
     };
 
     const handleMovieClick = (movieId: string) => {
-        router.push(`/user/movie-details?id=${movieId}`);
+        router.push(`/user/movie-details?movieId=${movieId}`);
         setSearchTerm("");
         setSearchResults([]);
     };
@@ -130,6 +133,7 @@ const Navbar = () => {
                                 <span>{user.firstname}</span>
                                 <div className={`${styles.profileDropdown} ${showDropdown ? styles.showDropdown : ''}`}>
                                     <Link href="/profile">Account Settings</Link>
+                                    <Link href="/user/email-verification">Two Factor Authentication</Link>
                                     <a onClick={handleLogout}>Logout</a>
                                 </div>
                             </div>

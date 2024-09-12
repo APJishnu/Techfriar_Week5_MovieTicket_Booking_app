@@ -1,8 +1,8 @@
-"use client";
+"use client"; // This allows the use of client-side hooks like useState and useEffect
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./Seats.module.css"; // Import the CSS module
 
 interface Seat {
@@ -10,64 +10,42 @@ interface Seat {
   isBooked: boolean;
 }
 
-interface SeatsProps {
-  movieId: string;
-  theatreId: string;
-  showDate: string;
-  showTime: string;
-}
+const SeatsPage: React.FC = () => {
+  const searchParams = useSearchParams();
+  const movieId = searchParams.get("movieId");
+  const theatreId = searchParams.get("theatreId");
+  const showDate = searchParams.get("showDate");
+  const showTime = searchParams.get("showTime");
 
-const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime }) => {
   const [seats, setSeats] = useState<Seat[]>([]);
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([]); // To track selected seats
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true); // Loading state
-  const [movieTitle, setMovieTitle] = useState<string>("N/A"); // To track the movie title
-  const [price, setPrice] = useState<number>(0); // To track price
-  const router = useRouter(); // Initialize router
-
-  // Handle page refresh and back button navigation
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (selectedSeats.length > 0) {
-        event.preventDefault();
-        event.returnValue = ""; // Display the confirmation dialog when refreshing
-      }
-    };
-
-    // Add the beforeunload event listener for page refresh or closing the tab
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [selectedSeats]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [movieTitle, setMovieTitle] = useState<string>("N/A");
+  const [price, setPrice] = useState<number>(0);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchSeats = async () => {
-      setLoading(true); // Set loading to true when fetching data
+      setLoading(true);
       try {
         const response = await axios.get("http://localhost:5000/api/seats", {
-          params: {
-            movieId,
-            theatreId,
-            showDate,
-            showTime,
-          },
+          params: { movieId, theatreId, showDate, showTime },
         });
         setSeats(response.data.seats);
-        setMovieTitle(response.data.movieTitle); // Get movie title from backend
-        setPrice(response.data.price || 150); // Get price dynamically from backend or use default value
-        setError(""); // Clear any previous errors
+        setMovieTitle(response.data.movieTitle);
+        setPrice(response.data.price || 150);
+        setError("");
       } catch (error) {
         setError("Failed to fetch seat details.");
       } finally {
-        setLoading(false); // Stop loading after fetching data
+        setLoading(false);
       }
     };
 
-    fetchSeats();
+    if (movieId && theatreId && showDate && showTime) {
+      fetchSeats();
+    }
   }, [movieId, theatreId, showDate, showTime]);
 
   const handleSeatClick = (seat: Seat) => {
@@ -76,34 +54,29 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
       return;
     }
 
-    // Toggle seat selection
-    setSelectedSeats(prevSelectedSeats =>
+    setSelectedSeats((prevSelectedSeats) =>
       prevSelectedSeats.includes(seat.seatNumber)
-        ? prevSelectedSeats.filter(s => s !== seat.seatNumber)
+        ? prevSelectedSeats.filter((s) => s !== seat.seatNumber)
         : [...prevSelectedSeats, seat.seatNumber]
     );
   };
 
-  // Calculate total price based on selected seats
   const totalPrice = selectedSeats.length * price;
 
-  // Handle Pay button click to redirect to the booking confirmation page
   const handlePayClick = () => {
     const userDetails = { userId: "123", phone: "9876543210" }; // Mock user details
 
-    // Create URL with query parameters
     const queryParams = new URLSearchParams({
       userId: userDetails.userId,
       userDetails: JSON.stringify(userDetails),
       movieTitle,
-      theatreId,
-      showDate,
-      showTime,
+      theatreId: theatreId || "",
+      showDate: showDate || "",
+      showTime: showTime || "",
       selectedSeats: JSON.stringify(selectedSeats),
       totalPrice: totalPrice.toString(),
     }).toString();
 
-    // Redirect to the booking confirmation page with query parameters
     router.push(`/user/booking-confirmation?${queryParams}`);
   };
 
@@ -156,4 +129,4 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
   );
 };
 
-export default Seats;
+export default SeatsPage;
