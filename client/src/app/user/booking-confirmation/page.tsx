@@ -6,11 +6,11 @@ import BookingConfirmation from "../../../components/BookingConfirmation/Booking
 import styles from "../../../components/BookingConfirmation/BookingConfirmation.module.css";
 
 interface UserDetails {
-  userId:string;
+  userId: string;
   firstname: string; // Updated to match the expected prop names in BookingConfirmation
   lastname: string;
   email: string;
-  phone:string;
+  phone: string;
 }
 
 const BookingConfirmationPage: React.FC = () => {
@@ -22,7 +22,7 @@ const BookingConfirmationPage: React.FC = () => {
     firstname: "",
     lastname: "",
     email: "",
-    phone:"",
+    phone: "",
   });
 
   // Extracting booking-related data from URL search params
@@ -36,13 +36,13 @@ const BookingConfirmationPage: React.FC = () => {
   // Fetching user details from localStorage
   useEffect(() => {
     const storedUserDetails = localStorage.getItem('userData');
-    console.log(storedUserDetails)
-   
+    console.log("haiiiiiii", storedUserDetails)
+
     if (storedUserDetails) {
       const parsedDetails = JSON.parse(storedUserDetails);
       setUserDetails({
-        userId :parsedDetails._id || "",
-        
+        userId: parsedDetails.userId || "",
+
         firstname: parsedDetails.firstname || "", // Updated to match BookingConfirmation expectations
         lastname: parsedDetails.lastname || "",
         email: parsedDetails.email || "",
@@ -54,7 +54,7 @@ const BookingConfirmationPage: React.FC = () => {
   return (
     <div className={styles.bookingConfirmationPage}>
       <BookingConfirmation
-       
+
         userDetails={userDetails} // Now using details with correct property names
         movieTitle={movieTitle}
         theatreId={theatreId}

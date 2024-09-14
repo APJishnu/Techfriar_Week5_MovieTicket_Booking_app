@@ -122,26 +122,25 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
             {error && <p className={styles.error}>{error}</p>}
           </div>
 
-          
+
           <div className={styles.seatsContainer}>
             {seats.map((seat) => (
               <div
                 key={seat.seatNumber}
-                className={`${styles.seat} ${
-                  seat.isBooked
+                className={`${styles.seat} ${seat.isBooked
                     ? styles.booked
                     : selectedSeats.includes(seat.seatNumber)
-                    ? styles.selected
-                    : styles.available
-                }`}
+                      ? styles.selected
+                      : styles.available
+                  }`}
                 onClick={() => handleSeatClick(seat)}
               >
                 {seat.seatNumber}
               </div>
             ))}
           </div>
-           {/* Screen Div */}
-           <div className={styles.screen}>
+          {/* Screen Div */}
+          <div className={styles.screen}>
             <p className={styles.screenLabel}>SCREEN</p>
           </div>
 

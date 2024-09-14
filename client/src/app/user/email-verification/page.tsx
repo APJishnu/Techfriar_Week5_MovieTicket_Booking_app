@@ -6,6 +6,8 @@ import OTPInput from "../../../components/OtpInput/OtpInput";
 import styles from "../../../components/OtpInput/OtpInput.module.css";
 import { getUser, isAuthenticated, User } from '../../../hooks/auth';
 import { useRouter } from 'next/navigation'; // Import useRouter
+import PopUpVerification from '../../../components/PopUpVerification/PopUpVerification';
+
 
 const EmailVerification: React.FC = () => {
   const router = useRouter(); // Initialize useRouter
@@ -14,10 +16,13 @@ const EmailVerification: React.FC = () => {
   const [otp, setOtp] = useState("");
   const [countdown, setCountdown] = useState(0);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [otpSent, setOtpSent] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+   // State to manage both initial and success popups
+   const [showInitialPopup, setShowInitialPopup] = useState<boolean>(true); 
+   const [showSuccessPopup, setShowSuccessPopup] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -76,8 +81,13 @@ const EmailVerification: React.FC = () => {
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
       if (response.data.verified) {
-        setSuccess("Email verified successfully.");
-        router.push('/'); // Redirect to home page
+        setSuccess(true);
+        setShowSuccessPopup(true); // Show success popup
+                // Delay redirection by 5 seconds
+                setTimeout(() => {
+                  router.push('/');
+                }, 5000);
+        
       } else {
         setError("Incorrect OTP. Please try again.");
       }
@@ -97,6 +107,31 @@ const EmailVerification: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
+       {/* Initial popup to ask for email verification */}
+       {showInitialPopup && (
+        <PopUpVerification
+          onClose={() => setShowInitialPopup(false)}  // Close the popup
+          onProceed={() => setShowInitialPopup(false)}  // Proceed button closes the popup
+          verificationType="email"  // Set verification type to "email"
+        />
+      )}
+
+      {/* Success popup after OTP verification */}
+      {showSuccessPopup && (
+        <PopUpVerification
+          onClose={() => {
+            setShowSuccessPopup(false);
+            router.push('/'); // Redirect to home page after success popup closes
+          }}
+          onProceed={() => {
+            setShowSuccessPopup(false);
+            router.push('/'); // Redirect to home page after success popup closes
+          }}
+          success
+          verificationType="email"  // Set verification type to "email"
+        />
+      )}
+
       <div className={styles.container}>
         <h1 className={styles.title}>Email Verification</h1>
         {user ? (
@@ -109,20 +144,27 @@ const EmailVerification: React.FC = () => {
                 className={styles.inputField}
                 placeholder="Email"
               />
-              <img 
+              <img
                 src={user.photo || "/default-photo.png"}
-                alt="Profile Icon" 
-                className={styles.profileIcon} 
+                alt="Profile Icon"
+                className={styles.profileIcon}
               />
             </div>
             <div className={styles.secondMaindiv}>
+            {!loading && (
               <button
                 onClick={sendOtp}
-                disabled={countdown > 0}
+                disabled={countdown > 0} // Disable button after OTP sent
                 className={`${styles.sendButton} ${otpSent ? styles.activeSendButton : ""}`}
               >
                 {countdown > 0 ? `Resend OTP (${countdown})` : "Send OTP"}
               </button>
+            )}
+            {loading && (
+              <div className={styles.spinnerDiv}>
+                <div className={styles.loadingSpinner}></div>
+              </div>
+            )}
               <OTPInput length={4} onChange={setOtp} />
               <button
                 onClick={verifyOtp}
@@ -131,6 +173,9 @@ const EmailVerification: React.FC = () => {
               >
                 Verify OTP
               </button>
+              {!otpSent ? (
+                <span className={styles.tooltip}>sent Otp to Email for enable the button</span>
+              ) : null}
               {error && <p className={styles.errorMessage}>{error}</p>}
               {success && <p className={styles.successMessage}>{success}</p>}
             </div>

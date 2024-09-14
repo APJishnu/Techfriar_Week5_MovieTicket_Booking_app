@@ -1,5 +1,29 @@
 /* src/styles/OTPInput.module.css */
 
+/* src/styles/OTPInput.module.css */
+
+/* Keyframes for slide animation */
+@keyframes slideYright {
+  from {
+    transform: translateY(-300px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
@@ -40,6 +64,7 @@
     font-family: Arial, Helvetica, sans-serif;
     letter-spacing: 1px;
     color: #1d4f91;
+    z-index: 1!important;
     
   }
   
@@ -178,14 +203,13 @@
   }
   
   /* Wrapper for Tooltip */
-  .tooltipWrapper {
-    width: 100%;
-    position: relative;
-    display: inline-block;
-  }
+  
   
   /* Tooltip */
   .tooltip {
+    width: 100%;
+    position: relative;
+    display: inline-block;
     visibility: hidden;
     background-color: #555;
     color: #fff;
@@ -205,7 +229,7 @@
   }
   
   /* Show Tooltip on hover when button is disabled */
-  .tooltipWrapper:hover .tooltip {
+  .tooltip:hover{
     visibility: visible;
     opacity: 1;
   }

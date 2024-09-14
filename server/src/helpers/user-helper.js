@@ -33,6 +33,7 @@ module.exports = {
           firstname: bookingData.userDetails.firstname,
           lastname: bookingData.userDetails.lastname,
           email: bookingData.userDetails.email,
+          phone:bookingData.userDetails.phone,
         },
         movie: bookingData.movieTitle,
         theatre: bookingData.theatreId,

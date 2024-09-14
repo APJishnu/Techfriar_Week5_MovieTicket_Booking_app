@@ -1,3 +1,4 @@
+//auth.ts
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/auth'; // Adjust to your backend URL
@@ -8,7 +9,6 @@ export interface User {
     email?: string;
     photo?: string;
 }
-
 
 export const isAuthenticated = (): boolean => {
     const token = localStorage.getItem('authToken');
@@ -35,7 +35,14 @@ export const getUser = async (): Promise<User | null> => {
 };
 
 
+setTimeout(() => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    console.log("Auth token and user data have been removed due to expiration.");
+}, 3600000); // 1 hour = 3600000 milliseconds
+
 export const logout = (): void => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData'); // Clear user data if stored
 };
+

@@ -4,6 +4,7 @@ const express = require("express");
 const userHelper = require('../../helpers/user-helper')
 const router = express.Router();
 const Razorpay = require("razorpay");
+const twilio = require('twilio');
 require('dotenv').config();
 
 
@@ -206,12 +207,18 @@ router.post('/razorpay-order', async (req, res) => {
   }
 });
 
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = new twilio(accountSid, authToken);
+
 // Confirm booking after payment
 router.post('/confirm-booking', async (req, res) => {
   const { userDetails, movieTitle, theatreId, showDate, showTime, selectedSeats, totalPrice, paymentId } = req.body;
 
   try {
-    // Save the booking details in your database (as it already exists)
+    console.log(userDetails)
+    // Save the booking details in your database (assuming userHelper.confirmBooking() already handles this)
     const booking = await userHelper.confirmBooking({
       userDetails,
       movieTitle,
@@ -233,13 +240,35 @@ router.post('/confirm-booking', async (req, res) => {
       userId: userDetails.userId,
     });
 
+    // Send a WhatsApp message with booking details using Twilio
+    const messageBody = `
+      Hello ${userDetails.firstname} ${userDetails.lastname},
+      Your booking for the movie "${movieTitle}" has been confirmed!
+      Details:
+      - Theatre: ${theatreId}
+      - Date: ${showDate}
+      - Time: ${showTime}
+      - Seats: ${selectedSeats.join(", ")}
+      - Total Price: Rs. ${totalPrice}
+      
+      Thank you for booking with us!
+    `;
+
+    // Sending the WhatsApp message to the user's phone number
+    const whatsappMessage = await client.messages.create({
+      from: 'whatsapp:+14155238886', // Use your Twilio WhatsApp number
+      to: `whatsapp:+91${userDetails.phone}`, // Send to the user's phone number
+      body: messageBody,
+    });
+
+    console.log('WhatsApp message sent:', whatsappMessage.sid);
+
     res.json({ success: true, booking });
   } catch (error) {
+    console.error('Error confirming booking or sending WhatsApp message:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
-
-
 
 
 module.exports = router;
