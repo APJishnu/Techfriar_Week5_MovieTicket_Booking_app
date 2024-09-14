@@ -1,4 +1,4 @@
-/* Carousel container styling */
+/* General carousel styling */
 .carouselContainer {
     width: 100%;
     padding: 0 14px;
@@ -8,12 +8,11 @@
     box-sizing: border-box;
 }
 
-/* Carousel styling */
 .carousel {
     position: relative;
     width: 100%;
     max-width: 100%;
-    height: 28.125vw;
+    height: 30.125vw;
     overflow: hidden;
     border-radius: 23px;
     margin-top: 8px;
@@ -23,27 +22,24 @@
     box-sizing: border-box;
 }
 
-/* Carousel images container */
 .carouselImages {
     display: flex;
     transition: transform 0.5s ease-in-out;
     width: 100%;
 }
 
-/* Each slide */
 .carouselSlide {
     position: relative;
     min-width: 100%;
-    height: 28.125vw;
+    height: 30.125vw;
 }
 
 .carouselSlide img {
     width: 100%;
     height: 100%;
-    
+    object-fit: cover;
 }
 
-/* Carousel overlay for text */
 .carouselOverlay {
     position: absolute;
     bottom: 10%;
@@ -62,7 +58,6 @@
     margin: 0.2vw 0;
 }
 
-/* Book Now button */
 .bookNowButton {
     padding: 0.7vw 1.5vw;
     font-size: 1.2vw;
@@ -78,7 +73,6 @@
     background-color: #d97825;
 }
 
-/* Carousel dots styling */
 .carouselDots {
     position: absolute;
     bottom: 2vw;
@@ -101,44 +95,82 @@
     background-color: #717171;
 }
 
-/* Mobile-specific styling */
-@media (max-width: 800px) {
+/* Styling for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+    .carouselContainer {
+        width: 100%;
+        padding: 0px 10px;
+    }
+
+    .carousel {
+        width: 100%;
+        height: 200px; /* Adjusted height for better alignment on tablets */
+        border-radius: 12px; /* Slightly smaller border-radius for smaller screens */
+       
+    }
+
+    .carouselSlide {
+        width: 100%;
+        height: 200px;
+    }
+
+    .carouselSlide img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover; /* Ensures images retain aspect ratio while covering the container */
+    }
+
+    .carouselOverlay {
+        bottom: 5%; /* Adjusted to keep the text closer to the bottom */
+        left: 5%;
+    }
+
+    .carouselOverlay h2 {
+        font-size: 3vw;
+    }
+
+    .carouselOverlay p {
+        font-size: 2.5vw;
+    }
+
+    .bookNowButton {
+        padding: 1vw 3vw;
+        font-size: 1.5vw;
+    }
+
+    .carouselDots {
+        bottom: 3vw;
+        gap: 1vw; /* Increased gap between dots for larger touch targets */
+    }
+
+    .carouselDots .dot {
+        width: 1vw;
+        height: 1vw;
+    }
+}
+
+@media(max-width:480px) {
     .carouselContainer {
         width: 100vh;
         padding: 0;
     }
 
     .carousel {
-   
-        height: 217px;
-        border-radius: 0;
-        
+        height: 150px; /* Adjusted height for better alignment on tablets */
+        border-radius: 12px; /* Slightly smaller border-radius for smaller screens */
+       
+    }
+
+    .carouselSlide {
+        height: 150px;
     }
 
     .carouselSlide img {
-        height: 267px;
+        height: 150px;
+        object-fit: cover; /* Ensures images retain aspect ratio while covering the container */
     }
-
-    .carouselOverlay h2 {
-        font-size: 5vw;
-    }
-
-    .carouselOverlay p {
-        font-size: 3vw;
-    }
-
-    .bookNowButton {
-        padding: 2vw 4vw;
-        font-size: 3vw;
-    }
-
-    .carouselDots {
-        bottom: 28px;
-        gap: 5px;
-    }
-
-    .carouselDots .dot {
-        width: 7px;
-        height: 7px;
+    .carouselOverlay {
+        bottom: 5%; /* Adjusted to keep the text closer to the bottom */
+        left: 22%;
     }
 }

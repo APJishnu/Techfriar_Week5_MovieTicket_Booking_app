@@ -120,7 +120,7 @@
   /* Slightly transparent background for readability */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.259);
   margin-bottom: 20px;
   position: relative;
   z-index: 1;
@@ -142,7 +142,7 @@
   /* Slightly transparent background for readability */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.259);
   position: relative;
   z-index: 1;
   /* Ensure this content is above the background */
@@ -181,4 +181,94 @@
   font-size: 1rem;
   text-align: center;
   color: #333;
+}
+
+
+@media (max-width: 768px) {
+  .detailsSection {
+    padding:15px;
+    padding-top: 100px;
+    background-color: #f9f9f9;
+    background-image: none; /* Remove the background image for 768px */
+  }
+
+  .movieInfoContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    padding-top: 30px;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque for better readability */
+   
+  }
+
+  .movieInfoContainer::before {
+    content: "";
+    position: absolute;
+    top: 350px;
+    left: 0px;
+    width: 100%;
+    /* Adjust width for blur effect on the left side */
+    height: 5800px;
+    background: rgb(0, 0, 0);
+    /* Semi-transparent black overlay */
+    filter: blur(30px);
+    /* Adjust blur strength as needed */
+    z-index: -1;
+    /* Place it behind the content */
+  }
+
+  .movieImage {
+    width: 230px;
+    height: 300px;
+    margin-right: 0;
+    margin-bottom: 10px; /* Add space between the image and the details */
+  }
+
+  .movieInfo {
+    align-items: center; /* Center the movie info */
+    text-align: center;
+    gap: 3px;
+
+  }
+
+  .movieInfo h2 {
+    font-size: 1.2rem;
+  }
+
+  .ratingBox {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .bookButton {
+    width: 100%;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px; /* Add space between details and button */
+    font-size: 1rem;
+  }
+
+  .aboutSection, .castCrewSection {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .aboutSection h3, .castCrewSection h3 {
+    font-size: 1rem;
+  }
+
+  .actorImage, .crewImage {
+    width: 90px;
+    height: 80px;
+  }
+
+  .castMember p, .crewMember p {
+    font-size: 0.875rem;
+  }
 }

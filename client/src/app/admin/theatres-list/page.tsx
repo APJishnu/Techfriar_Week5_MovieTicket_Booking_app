@@ -43,14 +43,12 @@ const TheatreList: React.FC = () => {
     return (
         <section className={styles.mainSection}>
             <div className={styles.container}>
+           <div className={styles.fixedContainer}>
                 <div className={styles.header}>
                     <h2 className={styles.title}>Theatre List</h2>
                     <button className={styles.addButton} onClick={() => router.push('/admin/add-theatre')}>Add Theatre</button>
-                </div>
-                {errorMessage && <div className={styles.error}>{errorMessage}</div>}
-                {theatres.length > 0 ? (
-                    <div>
-                       <div className={styles.theatreCardHeading}>
+                    </div>
+                    <div className={styles.theatreCardHeading}>
                                     <div className={styles.cardRow}>
                                         <span className={styles.index}>#</span>
                                         <span>Name</span>
@@ -66,8 +64,17 @@ const TheatreList: React.FC = () => {
                                         </div>
                                         
                                     </div>  
+                                    
             
-                                </div>
+                        </div>
+                </div>
+                {errorMessage && <div className={styles.error}>{errorMessage}</div>}
+                {theatres.length > 0 ? (
+                    
+                    <div>
+                       
+                                
+                                
                         <div className={styles.cardContainer}>
                             {theatres.map((theatre, index) => (
                                 <div className={styles.theatreCard} key={theatre._id}>

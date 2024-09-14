@@ -1,10 +1,9 @@
-'use client';
 import Link from 'next/link';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import SignUpPopup from './components/signin-popup/SignUpPopUp';
-import { getUser, isAuthenticated, logout, User } from '../../hooks/auth'; // Import utility functions
+import { getUser, isAuthenticated, logout, User } from '../../hooks/auth';
 import { useRouter } from 'next/navigation';
 
 interface Movie {
@@ -18,6 +17,9 @@ const Navbar = () => {
     const [showSignUpPopup, setShowSignUpPopup] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchResults, setSearchResults] = useState<Movie[]>([]);
+    const [isSearchVisible, setIsSearchVisible] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -33,16 +35,18 @@ const Navbar = () => {
         fetchUser();
     }, []);
 
-
+    const handleToggleClick = () => {
+        setShowMenu(!showMenu);
+    };
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
-        const userDetails = urlParams.get('user')
+        const userDetails = urlParams.get('user');
         if (token && userDetails) {
-            localStorage.setItem('authToken', token); // Store token in localStorage
-            localStorage.setItem('userData', userDetails); // Store token in localStorage
-            console.log(userDetails)
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('userData', userDetails);
+            console.log(userDetails);
         }
     }, []);
 
@@ -84,7 +88,11 @@ const Navbar = () => {
     const handleLogout = () => {
         logout();
         setUser(null);
-        router.push('/'); // Redirect to home or login page
+        router.push('/');
+    };
+
+    const handleSearchIconClick = () => {
+        setIsSearchVisible(!isSearchVisible);
     };
 
     return (
@@ -93,19 +101,24 @@ const Navbar = () => {
                 <nav className={styles.nav}>
                     <div className={styles.logo}>
                         <h1>Logo</h1>
+                        <button className={styles.toggleBtn} onClick={handleToggleClick}>
+                    ☰ 
+                </button>
                     </div>
-                    <div className={styles.searchBar}>
+                   
+                    <div className={`${styles.searchBar} ${showMenu ? styles.show : styles.hidden}`}  >
                         <input
                             type="text"
                             placeholder="Search..."
                             value={searchTerm}
                             onChange={handleSearchInput}
                             aria-label="Search"
+                            className={styles.searchInput}
                         />
                         {searchTerm ? (
                             <img src='/Navbar/close.svg' className={styles.searchIcon} onClick={handleClearSearch} />
                         ) : (
-                            <img className={styles.searchIcon} src='/Navbar/search.svg' />
+                            <img className={styles.searchIcon} src='/Navbar/search.svg' onClick={handleSearchIconClick}/>
                         )}
                         {searchResults.length > 0 && (
                             <div className={styles.searchResults}>
@@ -122,7 +135,7 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    <div className={`${styles.profileHeader} ${showDropdown ? styles.active : ''}`} onClick={toggleDropdown}>
+                    <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
                         {user ? (
                             <div className={styles.profileIcon}>
                                 {user.photo ? (
@@ -138,26 +151,19 @@ const Navbar = () => {
                                 </div>
                             </div>
                         ) : (
-                            <>
-                                <Link className={styles.listNav} href="/log-in">
-                                    Login<i className="fas fa-sign-out-alt"></i>
-                                </Link>
-                                <button onClick={toggleSignUpPopup} className={styles.signUpBtn}>
-                                    <i className="fas fa-user"></i> Sign Up
-                                </button>
-                            </>
+                            <button onClick={toggleSignUpPopup} className={styles.signUpBtn}>
+                                <i className="fas fa-user"></i> Sign Up
+                            </button>
                         )}
                     </div>
                 </nav>
-            </header>
 
-            <div className={styles.mainNavigations}>
-                <div className={styles.mainNavigationsDiv}>
-                    <ul className={styles.mainNavigationsUl}>
-                        <li className={`${styles.mainNavigationsLi} ${styles.mobileHide}`}>
-                            <Link className={styles.listNav} href="/">Home</Link>
-                        </li>
-                        <li className={styles.mainNavigationsLi}>
+               
+                <ul className={`${styles.mainNavigationsUl} ${showMenu ? styles.show : styles.hidden}`}>
+                    <li className={`${styles.mainNavigationsLi}`}>
+                        <Link className={styles.listNav} href="/">Home</Link>
+                    </li>
+                    <li className={styles.mainNavigationsLi}>
                             <a className={styles.categories}>Categories <i className="fas fa-caret-down"></i></a>
                             <div className={styles.categoriesItems}>
                                 <p><Link href="/category1">Category 1</Link></p>
@@ -167,9 +173,9 @@ const Navbar = () => {
                                 <p><Link href="/category5">Category 5</Link></p>
                             </div>
                         </li>
-                    </ul>
-                </div>
-            </div>
+                    {/* Add more items here if needed */}
+                </ul>
+            </header>
 
             {showSignUpPopup && <SignUpPopup toggleSignUpPopup={toggleSignUpPopup} />}
         </>

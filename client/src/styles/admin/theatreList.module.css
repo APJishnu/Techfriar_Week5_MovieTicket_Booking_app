@@ -1,6 +1,6 @@
 .mainSection {
     width: 100%;
-    padding: 170px 120px;
+    padding: 130px 120px;
     background-color: #f9f9f9;
     display: flex;
     justify-content: center;
@@ -9,7 +9,40 @@
 
 .container {
     width: 100%;
+
+}
+
+.fixedContainer {
+    flex-direction: column;
+    position: fixed;
+    background-color: #f9f9f9;
+    width: 100%;
+    margin-left: -120px;
+    padding: 20px;
+
+    padding-left: 120px;
+    padding-right: 120px;
+    overflow: hidden;
+    padding-bottom: 0px;
+}
+
+.theatreCardHeading {
+    font-size: 13px;
+}
+
+.cardContainer {
+    padding-top: 220px;
+    overflow: scroll;
+}
+.cardContainer::-webkit-scrollbar {
+   display: none;
+}
+
+.theatreCard {
+    font-size: 12px;
     
+
+
 }
 
 .header {
@@ -20,8 +53,9 @@
 }
 
 .title {
-    font-size: 30px;
-    font-weight: bold;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 34px;
+
 }
 
 .addButton {
@@ -62,7 +96,8 @@
     flex-direction: column;
     gap: 20px;
 }
-.theatreCardHeading{
+
+.theatreCardHeading {
     background-color: #9b9b9b;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -100,6 +135,7 @@
 .cardActions {
     display: flex;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .deleteButton,
@@ -129,4 +165,65 @@
     text-align: center;
     color: #777;
     font-size: 18px;
+}
+
+
+@media(max-width:768px) {
+    .mainSection {
+        padding: 20px;
+        padding-top: 60px;
+    }
+
+    .fixedContainer {
+        flex-direction: column;
+        position: fixed;
+        background-color: #f9f9f9;
+        width: 100%;
+        margin-left: -20px;
+        padding: 20px;
+        overflow: hidden;
+        padding-bottom: 0px;
+    }
+
+    .theatreCardHeading {
+        font-size: 13px;
+    }
+
+    .cardContainer {
+        padding-top: 220px;
+        overflow: scroll;
+    }
+
+    .theatreCard {
+        font-size: 12px;
+    
+
+    }
+
+    .cardActions {
+
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+}
+
+@media(max-width:480px) {
+
+    .cardContainer {
+        padding-top: 100px;
+        overflow: scroll;
+    }
+    
+    .theatreCardHeading  {
+        font-size: 10px;
+        display: none;
+
+    }
+    .theatreCard {
+        font-size: 10px;
+    
+
+    }
 }

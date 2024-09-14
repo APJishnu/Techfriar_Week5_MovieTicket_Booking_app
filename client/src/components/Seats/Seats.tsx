@@ -122,6 +122,7 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
             {error && <p className={styles.error}>{error}</p>}
           </div>
 
+          
           <div className={styles.seatsContainer}>
             {seats.map((seat) => (
               <div
@@ -139,6 +140,11 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
               </div>
             ))}
           </div>
+           {/* Screen Div */}
+           <div className={styles.screen}>
+            <p className={styles.screenLabel}>SCREEN</p>
+          </div>
+
 
           {selectedSeats.length > 0 && (
             <div className={styles.paymentSection}>

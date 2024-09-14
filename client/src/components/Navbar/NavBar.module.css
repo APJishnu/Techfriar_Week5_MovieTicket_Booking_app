@@ -1,199 +1,204 @@
+/* General Styles (same as before) */
 .header {
-
   display: flex;
+  flex-direction: column;
   align-items: center;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ddd;
   position: fixed;
   right: 0;
   left: 0;
   top: 0;
-  z-index: 447;
-  background-image: linear-gradient(to right, #ffffff 10%, #ffffff 400%);
-  padding-bottom: 8px;
+  z-index: 400;
+  background: #ffffff;
+  gap: 10px;
+  padding-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .nav {
-  position: relative;
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  justify-content: center;
-  padding-left: 40px;
-  padding-top: 20px;
-
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  margin: auto;
+  gap: 10px;
 }
 
 .logo {
-  width: 100%;
-  justify-content: left;
-  display: flex;
-  align-items: center;
-  color: #ae2c2c;
+  flex: 1;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
   cursor: pointer;
 }
+
 
 .searchBar {
   position: relative;
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 2;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-.adminLogOutNav {
-  color: #242121;
-  text-decoration: none;
-}
-
-.searchBar input[type="text"] {
+.searchInput {
   width: 100%;
-  padding: 13px 40px 13px 20px;
-  border: 1px solid #ffffff;
-  border-radius: 6px;
-  outline: none;
-  box-shadow: inset 0px 0px 5px #d1a0a060;
+  padding: 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   font-size: 1rem;
-  appearance: none;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
 }
 
-.searchBar .clearIcon {
+.searchIcon {
   position: absolute;
-  right: 10px;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
   cursor: pointer;
-  color: #999;
-  font-size: 1.2rem;
-}
-
-.searchBar .searchIcon {
-  position: absolute;
-  right: 10px;
-  color: #807d7d;
-  font-size: 1.2rem;
   width: 20px;
   height: 20px;
 }
 
-.cartHeader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.searchResults {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
 }
 
-.cartHeader i {
-  font-size: 1.5em;
+.searchResultItem {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
   cursor: pointer;
 }
 
-.listNav {
-  text-decoration: none;
-  color: rgb(255, 255, 255);
+.searchResultItem:hover {
+  background-color: #f9f9f9;
 }
 
-.cartHeader span {
-  background-color: #f79831;
-  padding: 3px 6px;
-  margin-left: 3px;
-  border-radius: 5px;
-  color: #fff;
-}
-
-.categoriesItems {
-  align-items: left;
-  top: 30px;
-  left: 0 !important;
-  width: 100px;
-  display: flex;
-  flex-direction: column;
-  padding: 11px !important;
-  background-color: #ffffff;
-}
-
-.categoriesItems p {
-  display: flex;
-  text-decoration: none;
-}
-
-.categoriesItemsLink {
-  width: 100%;
-  text-decoration: none;
-  font-size: 13px;
-}
-
-/* Responsiveness for search bar */
-@media (max-width: 576px) {
-  .searchBar input[type="search"] {
-    padding: 8px 30px 8px 15px;
-  }
-
-  .searchBar .clearIcon {
-    right: 30px;
-  }
-
-  .searchBar .searchIcon {
-    right: 5px;
-  }
-
-  .cartHeader i {
-    font-size: 1em;
-  }
-
-  .cartHeader span {
-    font-size: 0.7em;
-    padding: 1px 4px;
-  }
-}
-
-/* Main Navigations */
-.mainNavigations {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 78px;
-  z-index: 2;
-  padding: 8px 0 15px;
-  background-image: linear-gradient(to right, #000000 10%, #f8f8f8 400%);
-
-
-}
-
-.mainNavigationsDiv {
-  display: flex;
-
-
-}
-
-.mainNavigationsUl {
-  width: 100%;
-  margin: auto;
-  padding-left: 40px;
-  display: flex;
-  gap: 70px;
-  justify-content: left;
-
-}
-
-.mainNavigationsLi {
-  justify-self: center;
+.profileHeader {
   position: relative;
-  list-style: none;
-  color: #ffffff;
-
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
-.mobileHide {
+.profileIcon {
+  display: flex;
+  align-items: center;
+}
+
+.profilePhoto {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.profileDropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  min-width: 160px;
+}
+
+.profileDropdown a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.profileDropdown a:hover {
+  background-color: #f5f5f5;
+}
+
+.profileDropdown.showDropdown {
   display: block;
 }
 
+.signUpBtn {
+  padding: 5px 20px;
+  background-color: #ff0d0d;
+  color: #fff;
+  border: 1px solid #ff0d0d;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.signUpBtn:hover {
+  padding: 5px 20px;
+  background-color:  #fff;;
+  color:#ff0d0d;
+  border: 1px solid #ff0d0d;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Toggle Button (for mobile) */
+.toggleBtn {
+
+  display: none;
+  background: transparent;
+  color: #000000;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+
+  font-size: 20px;
+}
+
+/* Main Navigation */
+.mainNavigationsUl {
+  display: flex;
+  padding: 10px;
+  list-style-type: none;
+  margin: 0;
+  background-color: black;
+}
+
+.mainNavigationsUl.show {
+  display: flex;
+}
+
+.mainNavigationsLi {
+  margin-right: 20px;
+}
+
+.mainNavigationsLi a {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.mainNavigationsLi a:hover {
+  background-color: #000000;
+}
+
+
 .categories {
   text-decoration: none;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .categoriesItems {
   position: absolute;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
   padding: 10px;
   border-radius: 5px;
   width: 150px;
@@ -207,155 +212,119 @@
 .mainNavigationsLi:hover .categoriesItems {
   opacity: 1;
   visibility: visible;
-}
-
-.categoriesItems p {
-  margin-bottom: 19px;
-}
-
-.categoriesItems p a {
-  color: #000000;
-  text-decoration: none;
-}
-
-.signUpBtn {
-  background-color: rgb(219, 52, 52);
-  padding: 2px 15px;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  margin-left: 20px;
-  font-size: 14px;
-  color: white;
-}
-
-.signUpBtn:hover {
-  background-color: rgba(255, 255, 255, 0);
-  padding: 2px 15px;
-  border: 1px solid rgb(219, 52, 52);
-  border-radius: 1px;
-  color:rgb(219, 52, 52);
-}
-
-.cartHeader {
-  display: flex;
-  align-items: center;
-}
-
-/* Profile Header (align right) */
-.profileHeader {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  position: relative;
-  cursor: pointer;
-  padding-right: 30px;
 
 }
 
-.profileIcon {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  position: relative;
-}
 
-.profilePhoto {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+/* Hide search bar, profile, and navigation items by default on mobile */
+@media (max-width: 768px) {
+  
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 20px;
+    padding-bottom: 0px;
+    
+  }
 
-.profileIcon span {
-  margin-left: 8px;
-  color: #000000;
-  font-size: 0.8rem;
-}
-
-.profileDropdown {
-  position: absolute;
-  top: 55px;
-  left: -25px;
-  right: 0;
-  background-color: rgb(255, 255, 255);
-  padding: 10px;
-  border-radius: 5px;
-  width: 150px;
-  border: 1px solid rgba(0, 0, 0, 0.13);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
-}
-
-.profileDropdown a {
-  display: block;
-  padding: 8px;
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.profileDropdown a:hover {
-  background-color: #ff242f;
-  border-radius: 4px;
-  color: #f8f8f8;
-}
-
-.profileHeader.active .profileDropdown {
-
-  opacity: 1;
-  visibility: visible;
-}
-
-.searchResults {
-  position: absolute;
-  top: 100%;
-  /* Position below the search bar */
-  left: 0;
-  width: 100%;
-  max-height: 300px;
-  /* Adjust height as needed */
-  overflow-y: auto;
-  /* Scroll if results exceed max height */
-  background: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  /* Ensure it appears above other content */
-  border-radius: 4px;
-  /* Rounded corners */
-}
-
-.searchResultItem {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  cursor: pointer;
-}
-
-.searchResultItem:hover {
-  background-color: #f0f0f0;
-  /* Highlight on hover */
-}
-
-.searchBar {
-  position: relative;
-  /* Ensure search results dropdown is positioned correctly */
-}
-
-
-
-/* Media Queries */
-@media (max-width: 510px) {
-  .mainNavigationsUl {
+  .logo {
+    display: flex;
+    flex: 1;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
     justify-content: space-between;
   }
 
-  .mobileHide {
+  .toggleBtn {
+    display: block;
+  }
+
+  .searchBar,
+  .profileHeader,
+  .mainNavigationsUl {
+    display: none;
+    /* Hidden by default on mobile */
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  /* When the toggle is clicked, show all elements (search, profile, and menu items) */
+  .show {
+    display: flex;
+    /* Show search, profile, and menu items */
+    flex-direction: column;
+    gap: 20px;
+   
+  }
+
+  .mainNavigationsUl {
+    display: none;
+    width: 100%;
+  }
+
+  .mainNavigationsLi {
+    margin-right: 0;
+    margin-bottom: 0px;
+  }
+
+  .searchInput {
+    width: 100%;
+  }
+
+  .profileDropdown.showDropdown {
+    display: flex;
+
+  }
+
+
+  .profileIcon {
+    border: 1px solid rgb(24, 21, 21);
+    padding: 5px 10px;
+    width: 100%;
+    border-radius: 5px;
+    max-width: 500px;
+  }
+
+  .profileDropdown {
+    position: static;
+    display: flex;
+    background: #fff;
+    border-left: 1px solid rgba(0, 0, 0, 0.133);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0px;
+    min-width: 50px;
+    font-size: 12px;
+    margin-left: 15px;
+  }
+
+
+  /* When the toggle button is clicked, search bar, profile, and menu should show */
+  .searchBar.show,
+  .profileHeader.show,
+  .mainNavigationsUl.show {
+    display: flex;
+    
+  }
+}
+
+/* Desktop Styles (same as before) */
+@media (min-width: 769px) {
+  .profileHeader {
+    display: flex;
+    align-items: center;
+  }
+
+  .profileDropdown {
     display: none;
   }
 
-  .profileIcon span {
-    display: none;
-    /* Hide username on small screens */
+  .mainNavigationsUl {
+    display: flex;
+    width: 100%;
   }
 }

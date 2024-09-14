@@ -99,13 +99,12 @@ const SeatsPage: React.FC = () => {
             {seats.map((seat) => (
               <div
                 key={seat.seatNumber}
-                className={`${styles.seat} ${
-                  seat.isBooked
+                className={`${styles.seat} ${seat.isBooked
                     ? styles.booked
                     : selectedSeats.includes(seat.seatNumber)
-                    ? styles.selected
-                    : styles.available
-                }`}
+                      ? styles.selected
+                      : styles.available
+                  }`}
                 onClick={() => handleSeatClick(seat)}
               >
                 {seat.seatNumber}

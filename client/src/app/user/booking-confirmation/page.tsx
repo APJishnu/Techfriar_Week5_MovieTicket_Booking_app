@@ -10,6 +10,7 @@ interface UserDetails {
   firstname: string; // Updated to match the expected prop names in BookingConfirmation
   lastname: string;
   email: string;
+  phone:string;
 }
 
 const BookingConfirmationPage: React.FC = () => {
@@ -21,6 +22,7 @@ const BookingConfirmationPage: React.FC = () => {
     firstname: "",
     lastname: "",
     email: "",
+    phone:"",
   });
 
   // Extracting booking-related data from URL search params
@@ -44,6 +46,7 @@ const BookingConfirmationPage: React.FC = () => {
         firstname: parsedDetails.firstname || "", // Updated to match BookingConfirmation expectations
         lastname: parsedDetails.lastname || "",
         email: parsedDetails.email || "",
+        phone: parsedDetails.phone || "",
       });
     }
   }, []);
