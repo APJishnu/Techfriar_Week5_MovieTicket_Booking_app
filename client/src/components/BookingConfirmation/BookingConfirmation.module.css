@@ -15,72 +15,75 @@
 .details {
   background-color: #fff;
   padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
 }
 
 .details h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 20px;
+  margin-bottom: 15px;
   color: #333;
 }
 
 .details p {
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
-  margin: 5px 0;
+  margin: 8px 0;
 }
 
 .confirmButton {
   background-color: #f12f3f;
   border: none;
   color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 12px 24px;
+  border-radius: 8px;
   cursor: pointer;
   margin-top: 20px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
+
 .confirmButton:disabled {
   background-color: #ffacb3;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
   cursor: not-allowed;
-  margin-top: 20px;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
 }
 
 .confirmButton:hover {
   background-color: #e02424;
 }
 
+.phoneVerification{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
 .phoneInput {
-  width: calc(100% - 120px);
-  padding: 10px;
-  margin-top: 5px;
+  height: 100%;
+  width: calc(100%);
+  padding: 12px;
+  outline: none;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 16px;
 }
 
 .verifyButton {
-  padding: 10px;
+  width: 40%;
+  padding: 12px ;
   margin-left: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   background-color: #f12f3f;
   color: white;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
@@ -90,25 +93,27 @@
 }
 
 .otpSection {
-  margin-top: 15px;
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .otpInput {
-  width: 100px;
-  padding: 10px;
+  width: 100%;
+  padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-  margin-right: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-right: 0px;
 }
 
 .errorMessage {
   color: #d9534f;
-  font-size: 14px;
+  font-size: 16px;
   margin-top: 10px;
 }
-
-
 
 @media (max-width: 768px) {
   .bookingConfirmation {
@@ -120,6 +125,15 @@
   }
 
   .confirmButton {
-    padding: 8px 16px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .phoneInput {
+    width: calc(100% - 90px);
+  }
+
+  .otpInput {
+    width: 100px;
   }
 }

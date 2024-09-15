@@ -125,22 +125,19 @@ const ScheduleList: React.FC = () => {
                 {groupedSchedules[theatreName].map((schedule) => (
                   <div key={schedule._id} className={styles.movieCard}>
                     <div className={styles.movieContent}>
-                      <div className={styles.movieHeader}>
-                        <h4 className={styles.movieTitle}>
-                          {schedule.movies.map(movieSchedule => movieSchedule.movie.title).join(', ')}
-                        </h4>
-                        
-                      </div>
+
 
                       <div className={styles.movieDetails}>
                         {schedule.movies.map((movieSchedule) => (
                           <div key={movieSchedule.movie._id} className={styles.movieDetailsSection}>
-                          
+                            <div className={styles.movieTitle}>{movieSchedule.movie.title}</div>
                             {Array.isArray(movieSchedule.showDates) && movieSchedule.showDates.length > 0 ? (
                               movieSchedule.showDates
                                 .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                                 .map((showDate) => (
+                                  
                                   <div key={showDate.date} className={styles.dateCard}>
+                                  
                                     <strong>Date: {showDate.date}</strong>
                                     {showDate.times
                                       .sort((a, b) => a.time.localeCompare(b.time)) // Sort times in ascending order

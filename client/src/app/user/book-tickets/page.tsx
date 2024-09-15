@@ -104,26 +104,32 @@ const MovieSchedule: React.FC = () => {
 
     fetchSchedule();
   }, [movieId]);
-
   const calculateWeekdays = (): WeekdayButtons => {
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     const today = new Date();
-    const currentDayIndex = today.getDay();
-    const mondayOffset = currentDayIndex === 0 ? -6 : 1 - currentDayIndex;
-    const monday = new Date(today.setDate(today.getDate() + mondayOffset));
-
+    const currentDayIndex = today.getDay(); // 0 for Sunday, 1 for Monday, etc.
+  
+    // Calculate how many days are left until Sunday
+    const daysUntilSunday = (7 - currentDayIndex) % 7; // This will be 0 if today is Sunday
+  
     const weekdayButtons: WeekdayButtons = {};
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(monday);
-      date.setDate(monday.getDate() + i);
-      const formattedDate = date.toISOString().split("T")[0];
-      const dayName = days[i];
-      const dayNumber = date.getDate();
-      const month = date.toLocaleString('default', { month: 'long' });
+  
+    // Loop from today until the upcoming Sunday
+    for (let i = 0; i <= daysUntilSunday; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i); // Add 'i' days to the current date
+  
+      const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
+      const dayName = date.toLocaleDateString('en-IN', { weekday: 'long' }); // Get day name in Indian locale
+      const dayNumber = date.getDate(); // Day of the month
+      const month = date.toLocaleDateString('en-IN', { month: 'long' }); // Get month name in Indian locale
+  
       weekdayButtons[formattedDate] = { dayName, dayNumber, month };
     }
+  
     return weekdayButtons;
   };
+  
+  
 
   useEffect(() => {
     filterSchedules();

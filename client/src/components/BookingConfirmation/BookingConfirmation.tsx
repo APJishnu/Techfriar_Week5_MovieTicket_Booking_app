@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./BookingConfirmation.module.css";
+import { useRouter } from 'next/navigation';
 
 interface BookingConfirmationProps {
   userDetails: {
@@ -35,6 +36,9 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const [otpError, setOtpError] = useState("");
   const [loading, setLoading] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false); // To track phone verification status
+
+  const router = useRouter();
+
 
   useEffect(() => {
     const loadRazorpayScript = async () => {
@@ -95,8 +99,28 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         totalPrice,
         paymentId,
       });
-      if (response.data.success) alert("Booking confirmed!");
-      else alert("Error confirming booking.");
+      if (response.data.success) {
+        const bookingDetails = response.data.booking;
+        const qrCodeUrl = response.data.qrCodeUrl;
+
+        // Convert bookingDetails to a JSON string and encode it
+        const encodedBookingDetails = encodeURIComponent(JSON.stringify(bookingDetails));
+        const encodedQrCodeUrl = encodeURIComponent(qrCodeUrl);
+
+        const queryParams = new URLSearchParams({
+            bookingDetails: encodedBookingDetails,
+            qrCodeUrl: encodedQrCodeUrl,
+        }).toString();
+
+        // Redirect to the booking QR page
+        router.push(`/user/booking-qr-code?${queryParams}`);
+    
+    
+    
+    
+      } else {
+        alert("Error confirming booking.");
+      }
     } catch (error) {
       console.error("Error confirming booking", error);
       alert("Issue confirming booking.");
@@ -182,6 +206,8 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         <div className={styles.phoneSection}>
           <p>
             Add your Phone number to receive a booking receipt:
+            </p>
+            <div className={styles.phoneVerification} >
             <input
               type="tel"
               value={phone}
@@ -190,6 +216,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
               placeholder="Enter your phone number"
               disabled={phoneVerified} // Disable input after verification
             />
+           
             {!phoneVerified ? (
               <button
                 onClick={sendOtp}
@@ -201,7 +228,8 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
             ) : (
               <span className={styles.verifiedText}>Verified</span> // Show Verified text
             )}
-          </p>
+            </div>
+     
           {otpSent && !phoneVerified && (
             <div className={styles.otpSection}>
               <input

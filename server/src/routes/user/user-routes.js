@@ -6,6 +6,7 @@ const router = express.Router();
 const Razorpay = require("razorpay");
 const twilio = require('twilio');
 require('dotenv').config();
+const QRCode = require('qrcode');
 
 
 
@@ -240,7 +241,19 @@ router.post('/confirm-booking', async (req, res) => {
       userId: userDetails.userId,
     });
 
-    // Send a WhatsApp message with booking details using Twilio
+
+     // Generate a QR code containing booking details
+     const qrData = `
+     Movie: ${movieTitle}
+     Theatre: ${theatreId}
+     Date: ${showDate}
+     Time: ${showTime}
+     Seats: ${selectedSeats.join(", ")}
+     Total Price: Rs. ${totalPrice}
+   `;
+   const qrCodeUrl = await QRCode.toDataURL(qrData); 
+
+  
     const messageBody = `
       Hello ${userDetails.firstname} ${userDetails.lastname},
       Your booking for the movie "${movieTitle}" has been confirmed!
@@ -250,8 +263,9 @@ router.post('/confirm-booking', async (req, res) => {
       - Time: ${showTime}
       - Seats: ${selectedSeats.join(", ")}
       - Total Price: Rs. ${totalPrice}
-      
+   
       Thank you for booking with us!
+      Here is your QR code for the booking:
     `;
 
     // Sending the WhatsApp message to the user's phone number
@@ -259,11 +273,15 @@ router.post('/confirm-booking', async (req, res) => {
       from: 'whatsapp:+14155238886', // Use your Twilio WhatsApp number
       to: `whatsapp:+91${userDetails.phone}`, // Send to the user's phone number
       body: messageBody,
-    });
 
+      
+    });
+ 
     console.log('WhatsApp message sent:', whatsappMessage.sid);
 
-    res.json({ success: true, booking });
+    console.log(booking,qrCodeUrl)
+    
+    res.json({ success: true, booking, qrCodeUrl  });
   } catch (error) {
     console.error('Error confirming booking or sending WhatsApp message:', error);
     res.status(500).json({ success: false, message: error.message });

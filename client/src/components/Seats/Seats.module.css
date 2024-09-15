@@ -146,6 +146,47 @@
   background-color: #ff6b81;
 }
 
+
+/* Seats.module.css */
+
+/* Add other existing styles */
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  
+}
+
+.notification {
+  color: red;
+}
+.closeBtn{
+  color: white;
+  outline: none;
+  border: 0;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #ff6b81;
+}
+
 @media (max-width: 768px) {
   .seatsWrapper {
     padding: 0 0px; /* Add some padding for smaller screens */

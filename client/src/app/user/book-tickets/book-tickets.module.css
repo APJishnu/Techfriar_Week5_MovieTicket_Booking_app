@@ -211,7 +211,7 @@
   cursor: pointer;
   scroll-snap-align: start;
   height: 60px;
-  width: 100px;
+  width: 100px!important;
   border-radius: 10px;
   font-size: 10px;
   transition: background-color 0.3s, transform 0.3s;

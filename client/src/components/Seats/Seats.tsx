@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import Modal from "react-modal"; // Import react-modal
 import styles from "./Seats.module.css"; // Import the CSS module
 
 interface Seat {
@@ -17,6 +18,8 @@ interface SeatsProps {
   showTime: string;
 }
 
+const MAX_SEATS = 10; // Define the maximum number of seats allowed
+
 const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime }) => {
   const [seats, setSeats] = useState<Seat[]>([]);
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]); // To track selected seats
@@ -24,6 +27,8 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
   const [loading, setLoading] = useState<boolean>(true); // Loading state
   const [movieTitle, setMovieTitle] = useState<string>("N/A"); // To track the movie title
   const [price, setPrice] = useState<number>(0); // To track price
+  const [notification, setNotification] = useState<string>(""); // To show notifications
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // State for modal visibility
   const router = useRouter(); // Initialize router
 
   // Handle page refresh and back button navigation
@@ -76,12 +81,21 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
       return;
     }
 
+    // Check if adding this seat exceeds the allowed limit
+    const newSelectedSeats = selectedSeats.includes(seat.seatNumber)
+      ? selectedSeats.filter(s => s !== seat.seatNumber)
+      : [...selectedSeats, seat.seatNumber];
+
+    if (newSelectedSeats.length > MAX_SEATS) {
+      setNotification(`You cannot book more than ${MAX_SEATS} seats.`);
+      setIsModalOpen(true); // Open the modal
+      return;
+    } else {
+      setNotification(""); // Clear notification if within limit
+    }
+
     // Toggle seat selection
-    setSelectedSeats(prevSelectedSeats =>
-      prevSelectedSeats.includes(seat.seatNumber)
-        ? prevSelectedSeats.filter(s => s !== seat.seatNumber)
-        : [...prevSelectedSeats, seat.seatNumber]
-    );
+    setSelectedSeats(newSelectedSeats);
   };
 
   // Calculate total price based on selected seats
@@ -107,6 +121,11 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
     router.push(`/user/booking-confirmation?${queryParams}`);
   };
 
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className={styles.seatsWrapper}>
       {loading ? (
@@ -121,7 +140,6 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
 
             {error && <p className={styles.error}>{error}</p>}
           </div>
-
 
           <div className={styles.seatsContainer}>
             {seats.map((seat) => (
@@ -139,22 +157,39 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
               </div>
             ))}
           </div>
+
           {/* Screen Div */}
           <div className={styles.screen}>
             <p className={styles.screenLabel}>SCREEN</p>
           </div>
-
 
           {selectedSeats.length > 0 && (
             <div className={styles.paymentSection}>
               <p className={styles.totalPrice}>
                 Total Price: Rs. {totalPrice}
               </p>
-              <button className={styles.payButton} onClick={handlePayClick}>
+              <button
+                className={styles.payButton}
+                onClick={handlePayClick}
+                disabled={selectedSeats.length > MAX_SEATS} // Disable button if seat limit exceeded
+              >
                 Pay Rs. {totalPrice}
               </button>
             </div>
           )}
+
+          {/* Modal for notifications */}
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            contentLabel="Notification"
+            className={styles.modal} // Define styles for modal in CSS module
+            overlayClassName={styles.overlay} // Define styles for overlay in CSS module
+          >
+            <h2>Notification</h2>
+            <p>{notification}</p>
+            <button onClick={closeModal} className={styles.closeBtn}>Close</button>
+          </Modal>
         </>
       )}
     </div>

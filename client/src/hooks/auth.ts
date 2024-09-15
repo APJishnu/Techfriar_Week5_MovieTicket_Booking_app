@@ -34,12 +34,14 @@ export const getUser = async (): Promise<User | null> => {
     }
 };
 
-
-setTimeout(() => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
-    console.log("Auth token and user data have been removed due to expiration.");
-}, 3600000); // 1 hour = 3600000 milliseconds
+// Handle token expiration after 1 hour on the client side only
+if (typeof window !== 'undefined') {
+    setTimeout(() => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userData');
+        console.log("Auth token and user data have been removed due to expiration.");
+    }, 3600000); // 1 hour = 3600000 milliseconds
+}
 
 export const logout = (): void => {
     localStorage.removeItem('authToken');
