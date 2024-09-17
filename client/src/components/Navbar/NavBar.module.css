@@ -96,6 +96,7 @@
 .profileIcon {
   display: flex;
   align-items: center;
+
 }
 
 .profilePhoto {
@@ -164,10 +165,10 @@
 /* Main Navigation */
 .mainNavigationsUl {
   display: flex;
-  padding: 10px;
+  padding: 20px 30px;
   list-style-type: none;
   margin: 0;
-  background-color: black;
+  background-color: rgb(0, 0, 0);
 }
 
 .mainNavigationsUl.show {
@@ -184,12 +185,12 @@
   padding: 10px;
   border-radius: 8px;
   font-weight: bold;
+  
 }
 
 .mainNavigationsLi a:hover {
   background-color: #000000;
 }
-
 
 .categories {
   text-decoration: none;
@@ -215,6 +216,13 @@
 
 }
 
+.active .listNav,
+.active .categories {
+  background-color: #f65c5c; /* Active link color */
+  color: #ffffff; /* Change text color for the active link */
+  font-weight: bold; /* Optional: Make active link text bolder */
+  border-radius: 8px;
+}
 
 /* Hide search bar, profile, and navigation items by default on mobile */
 @media (max-width: 768px) {
@@ -225,7 +233,6 @@
     gap: 10px;
     padding: 0px 20px;
     padding-bottom: 0px;
-    
   }
 
   .logo {

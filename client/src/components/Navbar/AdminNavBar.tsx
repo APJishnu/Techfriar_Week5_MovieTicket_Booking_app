@@ -3,13 +3,14 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './NavBar.module.css';
-import { useRouter } from 'next/navigation';
+import { useRouter,usePathname } from 'next/navigation';
 
 const AdminNavbar = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [showMenu, setShowMenu] = useState(false);
     const [isSearchVisible, setIsSearchVisible] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
+    const pathname = usePathname();
     
     const router = useRouter();
 
@@ -39,7 +40,7 @@ const AdminNavbar = () => {
     };
 
     
-
+    const isActive = (path: string) => pathname === path;
 
     return (
         <>
@@ -76,24 +77,27 @@ const AdminNavbar = () => {
                     </div>
                 </nav>
 
+             
                 <ul className={`${styles.mainNavigationsUl} ${showMenu ? styles.show : styles.hidden}`}>
-                    <li className={styles.mainNavigationsLi}>
-                        <Link className={styles.listNav} href="/admin/dashboard">Admin Dashboard</Link>
+                    <li className={`${styles.mainNavigationsLi} ${isActive('/admin/dashboard') ? styles.active : ''}`}>
+                        <Link className={styles.listNav} href="/admin/dashboard">
+                            Admin Dashboard
+                        </Link>
                     </li>
-                    <li className={styles.mainNavigationsLi}>
-                        
-                        <Link className={styles.categories} href="/admin/movies-list">movies</Link> <i className="fas fa-caret-down"></i>
-                        
-
+                    <li className={`${styles.mainNavigationsLi} ${isActive('/admin/movies-list') ? styles.active : ''}`}>
+                        <Link className={styles.categories} href="/admin/movies-list">
+                            Movies
+                        </Link>
                     </li>
-                    <li className={styles.mainNavigationsLi}>
-                    
-                        <Link className={styles.categories} href="/admin/theatres-list">Theaters</Link> <i className="fas fa-caret-down"></i>
-                        
-                    
+                    <li className={`${styles.mainNavigationsLi} ${isActive('/admin/theatres-list') ? styles.active : ''}`}>
+                        <Link className={styles.categories} href="/admin/theatres-list">
+                            Theaters
+                        </Link>
                     </li>
-                    <li className={styles.mainNavigationsLi}>
-                        <Link className={styles.listNav} href="/admin/movie-scheduled-list">Movie Schedule</Link>
+                    <li className={`${styles.mainNavigationsLi} ${isActive('/admin/movie-scheduled-list') ? styles.active : ''}`}>
+                        <Link className={styles.listNav} href="/admin/movie-scheduled-list">
+                            Movie Schedule
+                        </Link>
                     </li>
                 </ul>
             </header>

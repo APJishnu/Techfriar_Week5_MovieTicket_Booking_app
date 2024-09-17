@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import OTPInput from "../../../components/OtpInput/OtpInput";
 import styles from "../../../components/OtpInput/OtpInput.module.css";
-import { getUser, isAuthenticated, User } from '../../../hooks/auth';
+import { getUser, isAuthenticated, User } from '../../../utils/auth';
 import { useRouter } from 'next/navigation'; // Import useRouter
 import PopUpVerification from '../../../components/PopUpVerification/PopUpVerification';
 
@@ -23,6 +23,17 @@ const EmailVerification: React.FC = () => {
    // State to manage both initial and success popups
    const [showInitialPopup, setShowInitialPopup] = useState<boolean>(true); 
    const [showSuccessPopup, setShowSuccessPopup] = useState<boolean>(false);
+
+   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const userDetails = urlParams.get('user');
+    if (token && userDetails) {
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userData', userDetails);
+        console.log(userDetails);
+    }
+}, []);
 
   useEffect(() => {
     const fetchUser = async () => {

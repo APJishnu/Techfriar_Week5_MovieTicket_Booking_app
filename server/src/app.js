@@ -2,11 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const adminRoutes = require('./routes/admin/admin-routes');
-const userRoutes= require('./routes/user/user-routes');
+const adminRoutes = require('./routes/admin-routes');
+const userRoutes= require('./routes/user-routes');
 const passport = require('passport');  
 const authRoutes = require('./routes/auth-routes'); // Add auth routes
-const jwt = require('jsonwebtoken');
+
 
 const session = require('express-session');
 const { db } = require('./config/database')

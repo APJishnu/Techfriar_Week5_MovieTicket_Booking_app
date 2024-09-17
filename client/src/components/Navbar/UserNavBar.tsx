@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import SignUpPopup from './components/signin-popup/SignUpPopUp';
-import { getUser, isAuthenticated, logout, User } from '../../hooks/auth';
+import { getUser, isAuthenticated, logout, User } from '../../utils/auth';
 import { useRouter } from 'next/navigation';
 
 interface Movie {
@@ -39,16 +39,16 @@ const Navbar = () => {
         setShowMenu(!showMenu);
     };
 
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        const userDetails = urlParams.get('user');
-        if (token && userDetails) {
-            localStorage.setItem('authToken', token);
-            localStorage.setItem('userData', userDetails);
-            console.log(userDetails);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const token = urlParams.get('token');
+    //     const userDetails = urlParams.get('user');
+    //     if (token && userDetails) {
+    //         localStorage.setItem('authToken', token);
+    //         localStorage.setItem('userData', userDetails);
+    //         console.log(userDetails);
+    //     }
+    // }, []);
 
     const handleClearSearch = () => {
         setSearchTerm("");
@@ -147,6 +147,7 @@ const Navbar = () => {
                                 <div className={`${styles.profileDropdown} ${showDropdown ? styles.showDropdown : ''}`}>
                                     <Link href="/profile">Account Settings</Link>
                                     <Link href="/user/email-verification">Two Factor Authentication</Link>
+                                    <Link href="/user/booking-details">Movie Booking Collection</Link>
                                     <a onClick={handleLogout}>Logout</a>
                                 </div>
                             </div>

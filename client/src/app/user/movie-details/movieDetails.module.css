@@ -74,23 +74,23 @@
 }
 
 .ratingBox {
-  width: 350px;
+  width: 400px;
   background-color: #ffffffa8;
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   padding: 20px;
   border-radius: 20px;
   color: #ffef62;
 }
 
-.rateNow{
+.rateNow {
   color: white;
-  background-color:  hsl(357, 100%, 61%);
+  background-color: hsl(357, 100%, 61%);
   border-radius: 5px;
   padding: 10px 20px;
   border: 0px;
-  margin-left:20px ;
+  margin-left: 20px;
 }
 
 .ratingBox span {
@@ -186,10 +186,11 @@
 
 @media (max-width: 768px) {
   .detailsSection {
-    padding:15px;
+    padding: 15px;
     padding-top: 100px;
     background-color: #f9f9f9;
-    background-image: none; /* Remove the background image for 768px */
+    background-image: none;
+    /* Remove the background image for 768px */
   }
 
   .movieInfoContainer {
@@ -197,8 +198,9 @@
     align-items: center;
     padding: 15px;
     padding-top: 30px;
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque for better readability */
-   
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Slightly more opaque for better readability */
+
   }
 
   .movieInfoContainer::before {
@@ -221,11 +223,13 @@
     width: 230px;
     height: 300px;
     margin-right: 0;
-    margin-bottom: 10px; /* Add space between the image and the details */
+    margin-bottom: 10px;
+    /* Add space between the image and the details */
   }
 
   .movieInfo {
-    align-items: center; /* Center the movie info */
+    align-items: center;
+    /* Center the movie info */
     text-align: center;
     gap: 3px;
 
@@ -250,25 +254,30 @@
     padding: 10px 0;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px; /* Add space between details and button */
+    margin-top: 20px;
+    /* Add space between details and button */
     font-size: 1rem;
   }
 
-  .aboutSection, .castCrewSection {
+  .aboutSection,
+  .castCrewSection {
     padding: 15px;
     margin-bottom: 15px;
   }
 
-  .aboutSection h3, .castCrewSection h3 {
+  .aboutSection h3,
+  .castCrewSection h3 {
     font-size: 1rem;
   }
 
-  .actorImage, .crewImage {
+  .actorImage,
+  .crewImage {
     width: 90px;
     height: 80px;
   }
 
-  .castMember p, .crewMember p {
+  .castMember p,
+  .crewMember p {
     font-size: 0.875rem;
   }
 }

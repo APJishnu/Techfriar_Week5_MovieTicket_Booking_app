@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./BookingConfirmation.module.css";
 import { useRouter } from 'next/navigation';
+import { sendOtp, verifyOtp, getVerifiedPhone, isPhoneVerificationExpired } from "../../utils/verification";
 
 interface BookingConfirmationProps {
   userDetails: {
@@ -40,7 +41,17 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const router = useRouter();
 
 
+  
   useEffect(() => {
+    const storedPhone = getVerifiedPhone();
+    if (storedPhone) {
+      setPhone(storedPhone);
+      setPhoneVerified(true);
+    }
+
+
+
+
     const loadRazorpayScript = async () => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -115,9 +126,6 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         // Redirect to the booking QR page
         router.push(`/user/booking-qr-code?${queryParams}`);
     
-    
-    
-    
       } else {
         alert("Error confirming booking.");
       }
@@ -130,60 +138,34 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(event.target.value);
   };
-
-  const sendOtp = async () => {
+  const handleSendOtp = async () => {
     setOtpError("");
-    setLoading(true); // Start loading
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/send-otp",
-        {
-          field: "phone",
-          value: phone,
-        },
-        { withCredentials: true }
-      );
-      if (response.data.message === "OTP sent successfully.") {
-        setOtpSent(true);
-      } else {
-        setOtpError("Failed to send OTP. Please try again.");
-      }
-    } catch (error) {
-      setOtpError("Failed to send OTP. Please try again.");
-    } finally {
-      setLoading(false); // End loading
+    setLoading(true);
+    const result = await sendOtp(phone);
+    setLoading(false);
+    if (result.success) {
+      setOtpSent(true);
+    } else {
+      setOtpError(result.error || "Failed to send OTP.");
     }
   };
 
-  const verifyOtp = async () => {
+  const handleVerifyOtp = async () => {
     if (otp.length !== 4) {
       setOtpError("Please enter a valid 4-digit OTP.");
       return;
     }
 
-    setLoading(true); // Start loading
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/verify-otp",
-        {
-          field: "phone",
-          value: phone,
-          otp,
-          userId: userDetails.userId,
-        },
-        { withCredentials: true }
-      );
-      if (response.data.verified) {
-        alert("Phone number verified successfully!");
-        setOtpSent(false);
-        setPhoneVerified(true); // Set phone as verified
-      } else {
-        setOtpError("Incorrect OTP. Please try again.");
-      }
-    } catch (error) {
-      setOtpError("Verification failed. Please try again.");
-    } finally {
-      setLoading(false); // End loading
+    setLoading(true);
+    const result = await verifyOtp(phone, otp, userDetails.userId);
+    setLoading(false);
+
+    if (result.success) {
+      alert("Phone number verified successfully!");
+      setOtpSent(false);
+      setPhoneVerified(true);
+    } else {
+      setOtpError(result.error || "Incorrect OTP. Please try again.");
     }
   };
 
@@ -219,7 +201,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
            
             {!phoneVerified ? (
               <button
-                onClick={sendOtp}
+                onClick={handleSendOtp}
                 className={styles.verifyButton}
                 disabled={loading}
               >
@@ -240,7 +222,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
                 placeholder="Enter OTP"
               />
               <button
-                onClick={verifyOtp}
+                onClick={handleVerifyOtp}
                 className={styles.verifyButton}
                 disabled={loading}
               >

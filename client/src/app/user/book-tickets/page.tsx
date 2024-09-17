@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import styles from "./book-tickets.module.css";
 import Seats from "@/components/Seats/Seats";
 import Popup from "../book-tickets/components/popup/Popup"; // Import the Popup component
-import { isAuthenticated } from "../../../hooks/auth"; // Import the authentication utility
+import {isAuthenticated} from '../../../utils/auth';
 
 type Movie = {
   title: string;
@@ -107,29 +107,29 @@ const MovieSchedule: React.FC = () => {
   const calculateWeekdays = (): WeekdayButtons => {
     const today = new Date();
     const currentDayIndex = today.getDay(); // 0 for Sunday, 1 for Monday, etc.
-  
+
     // Calculate how many days are left until Sunday
     const daysUntilSunday = (7 - currentDayIndex) % 7; // This will be 0 if today is Sunday
-  
+
     const weekdayButtons: WeekdayButtons = {};
-  
+
     // Loop from today until the upcoming Sunday
     for (let i = 0; i <= daysUntilSunday; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i); // Add 'i' days to the current date
-  
+
       const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
       const dayName = date.toLocaleDateString('en-IN', { weekday: 'long' }); // Get day name in Indian locale
       const dayNumber = date.getDate(); // Day of the month
       const month = date.toLocaleDateString('en-IN', { month: 'long' }); // Get month name in Indian locale
-  
+
       weekdayButtons[formattedDate] = { dayName, dayNumber, month };
     }
-  
+
     return weekdayButtons;
   };
-  
-  
+
+
 
   useEffect(() => {
     filterSchedules();
@@ -219,8 +219,8 @@ const MovieSchedule: React.FC = () => {
         <Popup
           message="Please log in or register to book tickets."
           onClose={handlePopupClose}
-         
-         // Redirect to register page
+
+        // Redirect to register page
         />
       )}
       {selectedShowtime ? (

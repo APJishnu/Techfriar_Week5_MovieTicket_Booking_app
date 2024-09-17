@@ -100,6 +100,11 @@
   justify-content: center;
 }
 
+.verifiedText{
+  margin-left: 10px;
+  
+  color: green;
+}
 .otpInput {
   width: 100%;
   padding: 12px;
