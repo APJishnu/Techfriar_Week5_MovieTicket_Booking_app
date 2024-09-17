@@ -4,12 +4,12 @@ const Booking = require('../models/booking-model');
 const User = require('../models/user-models');
 
 module.exports = {
+
   getAllMovies: async () => {
     try {
       // Find all schedules and extract movie IDs
       const schedules = await movieSchedule.find().populate('movies.movie');
 
-      // Extract movies from the schedules
       const movies = schedules.flatMap(schedule =>
         schedule.movies.map(movieEntry => movieEntry.movie)
       );
@@ -19,7 +19,6 @@ module.exports = {
 
       return uniqueMovies;
     } catch (error) {
-      console.error('Error fetching all movies:', error);
       throw new Error('Error fetching all movies');
     }
   },
@@ -171,7 +170,6 @@ module.exports = {
   confirmBooking: async (bookingData) => {
     try {
 
-      console.log("bookind data", bookingData.userDetails.userId);
 
       // Check if the user already has a booking
       let existingBooking = await Booking.findOne({ userId: bookingData.userDetails.userId });
@@ -217,7 +215,6 @@ module.exports = {
         return savedBooking;
       }
     } catch (error) {
-      console.error('Error saving booking:', error);
       throw new Error('Unable to save booking.');
     }
   },
@@ -248,7 +245,6 @@ module.exports = {
         throw new Error('Schedule not found for this theatre and movie.');
       }
 
-      // Find the movie in the schedule
       const MovieSchedule = schedule.movies.find(m => m.movie.toString() === movie._id.toString());
       if (!MovieSchedule) {
         throw new Error('Movie not found in the schedule.');
@@ -278,7 +274,6 @@ module.exports = {
       // Save the updated schedule
       await schedule.save();
     } catch (error) {
-      console.error('Error updating movie schedule:', error);
       throw new Error('Unable to update movie schedule.');
     }
   },
@@ -293,10 +288,8 @@ module.exports = {
       if (!userBooking) {
         return { status: 404, message: 'No bookings found for this user.' };
       }
-
       return { status: 200, data: userBooking };
     } catch (error) {
-      console.error('Error fetching booking details:', error);
       throw new Error('Unable to fetch booking details.');
     }
   },

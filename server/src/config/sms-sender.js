@@ -38,11 +38,10 @@ const sendWhatsAppMessage = async (phoneNumber, messageBody, mediaUrl) => {
       body: messageBody,
       mediaUrl: [mediaUrl], // Include the media URL here
     });
-    console.log(message)
     return message;
   } catch (error) {
     throw new Error(`Failed to send WhatsApp message: ${error.message}`);
   }
 };
 
-module.exports = {sendSms,sendWhatsAppMessage};
+module.exports = { sendSms, sendWhatsAppMessage };

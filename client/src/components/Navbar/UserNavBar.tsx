@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import SignUpPopup from './components/signin-popup/SignUpPopUp';
 import { getUser, isAuthenticated, logout, User } from '../../utils/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface Movie {
     _id: string;
@@ -20,7 +20,15 @@ const Navbar = () => {
     const [isSearchVisible, setIsSearchVisible] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
 
+    const pathname = usePathname();
     const router = useRouter();
+
+    const [activePath, setActivePath] = useState<string>(pathname);
+
+    useEffect(() => {
+        // Update the active path whenever the route changes
+        setActivePath(pathname);
+    }, [pathname]);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -46,7 +54,7 @@ const Navbar = () => {
     //     if (token && userDetails) {
     //         localStorage.setItem('authToken', token);
     //         localStorage.setItem('userData', userDetails);
-    //         console.log(userDetails);
+    //       
     //     }
     // }, []);
 
@@ -64,7 +72,6 @@ const Navbar = () => {
                 const response = await axios.get(`http://localhost:5000/api/search-movies?title=${value}`);
                 setSearchResults(response.data);
             } catch (error) {
-                console.error("Error searching for movies:", error);
             }
         } else {
             setSearchResults([]);
@@ -95,21 +102,22 @@ const Navbar = () => {
         setIsSearchVisible(!isSearchVisible);
     };
 
+
     return (
         <>
             <header className={styles.header}>
                 <nav className={styles.nav}>
                     <div className={styles.logo}>
-                        <h1>Logo</h1>
+                        <h1>cineMagic</h1>
                         <button className={styles.toggleBtn} onClick={handleToggleClick}>
-                    ☰ 
-                </button>
+                            {showMenu ? 'x' : '☰'}
+                        </button>
                     </div>
-                   
+
                     <div className={`${styles.searchBar} ${showMenu ? styles.show : styles.hidden}`}  >
                         <input
                             type="text"
-                            placeholder="Search..."
+                            placeholder="Search Movies..."
                             value={searchTerm}
                             onChange={handleSearchInput}
                             aria-label="Search"
@@ -118,7 +126,7 @@ const Navbar = () => {
                         {searchTerm ? (
                             <img src='/Navbar/close.svg' className={styles.searchIcon} onClick={handleClearSearch} />
                         ) : (
-                            <img className={styles.searchIcon} src='/Navbar/search.svg' onClick={handleSearchIconClick}/>
+                            <img className={styles.searchIcon} src='/Navbar/search.svg' onClick={handleSearchIconClick} />
                         )}
                         {searchResults.length > 0 && (
                             <div className={styles.searchResults}>
@@ -145,7 +153,7 @@ const Navbar = () => {
                                 )}
                                 <span>{user.firstname}</span>
                                 <div className={`${styles.profileDropdown} ${showDropdown ? styles.showDropdown : ''}`}>
-                                    <Link href="/profile">Account Settings</Link>
+
                                     <Link href="/user/email-verification">Two Factor Authentication</Link>
                                     <Link href="/user/booking-details">Movie Booking Collection</Link>
                                     <a onClick={handleLogout}>Logout</a>
@@ -159,22 +167,34 @@ const Navbar = () => {
                     </div>
                 </nav>
 
-               
-                <ul className={`${styles.mainNavigationsUl} ${showMenu ? styles.show : styles.hidden}`}>
-                    <li className={`${styles.mainNavigationsLi}`}>
-                        <Link className={styles.listNav} href="/">Home</Link>
+                <ul
+                    className={`${styles.mainNavigationsUl} ${showMenu ? styles.show : styles.hidden
+                        }`}
+                >
+                    <li
+                        className={styles.mainNavigationsLi}
+
+                    >
+                        <Link className={styles.listNav} href="/" style={
+                            activePath === '/'
+                                ? { backgroundColor: '#f65c5c', color: '#ffffff' }
+                                : {}
+                        }>
+                            Home
+                        </Link>
                     </li>
-                    <li className={styles.mainNavigationsLi}>
-                            <a className={styles.categories}>Categories <i className="fas fa-caret-down"></i></a>
-                            <div className={styles.categoriesItems}>
-                                <p><Link href="/category1">Category 1</Link></p>
-                                <p><Link href="/category2">Category 2</Link></p>
-                                <p><Link href="/category3">Category 3</Link></p>
-                                <p><Link href="/category4">Category 4</Link></p>
-                                <p><Link href="/category5">Category 5</Link></p>
-                            </div>
-                        </li>
-                    {/* Add more items here if needed */}
+                    <li
+                        className={styles.mainNavigationsLi}
+
+                    >
+                        <Link className={styles.categories} href="/user/movies-list" style={
+                            activePath === '/user/movies-list'
+                                ? { backgroundColor: '#f65c5c', color: '#ffffff' }
+                                : {}
+                        }>
+                            Movies
+                        </Link>
+                    </li>
                 </ul>
             </header>
 

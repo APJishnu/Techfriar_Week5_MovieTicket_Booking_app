@@ -1,7 +1,6 @@
 /* Main Section */
 .mainSection {
   padding: 20px;
-
   width: 100%;
 }
 
@@ -12,6 +11,7 @@
   width: 100%;
   max-width: 1450px;
   margin: 0 auto;
+  gap: 20px;
 
 }
 
@@ -72,38 +72,46 @@
   margin-left: 10px;
   color:  rgb(254, 105, 105);
   border: 1px solid rgb(255, 255, 255);
-
   outline: none;
+  background-image: url('../../../public/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  appearance: none;
 }
 
-/* Movies card container */
+/* Movies card container - desktop */
 .moviesCardDiv {
   width: 70%;
   display: flex;
-  flex-wrap: wrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+  flex-direction: column; /* Change to column for vertical scrolling */
+  max-height: 600px; /* Adjust the max height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden;
+  padding-right: 10px; /* Add padding for scrollbar */
+  scrollbar-width: thin;
+  box-shadow: inset 0px -100px 100px -100px rgb(145, 138, 138);
+  border-radius: 10px;
 }
 
-.moviesCardDiv::-webkit-scrollbar {
-  display: none;
-}
+
 
 /* Individual movie card */
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 22px;
+  gap: 40px;
   padding: 20px;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
+}
+
+.cardContainer::-webkit-scrollbar{
+  display: none;
 }
 
 .scheduleCard {
   width: 200px;
-
   background: white;
   border-radius: 10px;
   overflow: hidden;

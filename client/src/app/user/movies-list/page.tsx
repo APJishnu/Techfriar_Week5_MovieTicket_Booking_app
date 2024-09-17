@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styles from "./MovieDisplay.module.css"; // Import your CSS file
+import styles from "../../../components/MovieDisplay/MovieDisplay.module.css"; // Import your CSS file
+import styles2 from './movie-list.module.css'
 import { useRouter } from 'next/navigation';
 
 interface Movie {
@@ -81,7 +82,7 @@ const MovieDisplay: React.FC = () => {
   };
 
   return (
-    <div className={styles.mainSection}>
+    <div className={styles2.mainSection}>
       <h2>Movies</h2>
       <div className={styles.container}>
         <div className={styles.filterMainDiv}>

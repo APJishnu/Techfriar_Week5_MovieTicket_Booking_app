@@ -47,7 +47,6 @@ const ScheduleList: React.FC = () => {
         const response = await axios.get(
           "http://localhost:5000/api/admin/schedule-details"
         );
-        console.log(response.data); // Check if the data format is correct
         setSchedules(response.data);
       } catch (error) {
         setErrorMessage("Failed to fetch schedules.");
@@ -73,7 +72,7 @@ const ScheduleList: React.FC = () => {
         `http://localhost:5000/api/admin/schedule/${scheduleId}/showtime`,
         { data: { movieId, date, time } } // Send movieId, date, and time in request body
       );
-  
+
       // Update schedules in the state after deletion
       setSchedules((prevSchedules) =>
         prevSchedules
@@ -87,12 +86,12 @@ const ScheduleList: React.FC = () => {
                       times: showDate.times.filter((t) => t.time !== time),
                     }))
                     .filter((showDate) => showDate.times.length > 0); // Remove empty dates
-  
+
                   return { ...movieSchedule, showDates: updatedShowDates };
                 }
                 return movieSchedule;
               }).filter((movieSchedule) => movieSchedule.showDates.length > 0); // Remove movies with no showtimes
-  
+
               return { ...schedule, movies: updatedMovies };
             }
             return schedule;
@@ -103,14 +102,14 @@ const ScheduleList: React.FC = () => {
       setErrorMessage("Failed to delete showtime.");
     }
   };
-  
+
 
   return (
     <div className={styles.mainSection}>
       <div className={styles.container}>
         <div className={styles.headingWithButton}>
-        <h2>Movie Schedules</h2>
-        <button className={styles.addButton} onClick={() =>  router.push('/admin/movie-schedule')}>Add Movie</button>
+          <h2>Movie Schedules</h2>
+          <button className={styles.addButton} onClick={() => router.push('/admin/movie-schedule')}>Add MovieSchedule</button>
         </div>
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
@@ -121,7 +120,7 @@ const ScheduleList: React.FC = () => {
                 <h3>
                   {index + 1}. {theatreName}
                 </h3>
-                
+
                 {groupedSchedules[theatreName].map((schedule) => (
                   <div key={schedule._id} className={styles.movieCard}>
                     <div className={styles.movieContent}>
@@ -135,9 +134,9 @@ const ScheduleList: React.FC = () => {
                               movieSchedule.showDates
                                 .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                                 .map((showDate) => (
-                                  
+
                                   <div key={showDate.date} className={styles.dateCard}>
-                                  
+
                                     <strong>Date: {showDate.date}</strong>
                                     {showDate.times
                                       .sort((a, b) => a.time.localeCompare(b.time)) // Sort times in ascending order
@@ -151,7 +150,7 @@ const ScheduleList: React.FC = () => {
                                             onClick={() => handleDeleteShowtime(schedule._id, movieSchedule.movie._id, showDate.date, showTime.time)}
                                           />
                                         </div>
-                                  ))}
+                                      ))}
                                   </div>
                                 ))
                             ) : (

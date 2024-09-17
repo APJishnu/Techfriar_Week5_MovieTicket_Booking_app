@@ -34,7 +34,6 @@ const BookingDetails = () => {
             const userDetails = JSON.parse(storedUserDetails);
             setUserId(userDetails._id); // Assuming the user ID is saved in 'userId' field
 
-            console.log(userDetails._id)
         }
     }, []);
 

@@ -75,14 +75,17 @@
 
 }
 
-.filterSelect {
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 8px 10px;
+.filterInput::placeholder{
+  color: #f12f3f;
 }
 
+.filterSelect {
+  appearance: none;
+  background-image: url('/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  color: #f12f3f;
+}
 
 .theaterSchedulesDiv {
   width: 100%;
@@ -188,13 +191,9 @@
   justify-content: flex-start;
   overflow-x: auto;
   gap: 10px;
-
   padding: 10px 0;
-  /* Add some padding for a better visual effect */
   scroll-behavior: smooth;
-  /* Smooth scrolling effect */
   position: relative;
-  /* Position relative for absolute positioning of arrows */
 }
 
 /* Hide the scrollbar for WebKit browsers */
@@ -211,13 +210,14 @@
   text-align: center;
   cursor: pointer;
   scroll-snap-align: start;
-  height: 60px;
-  width: 100px !important;
+  height: 70px;
+  min-width: 70px !important;
   border-radius: 10px;
   font-size: 10px;
   transition: background-color 0.3s, transform 0.3s;
   /* Smooth transitions for hover effects */
 }
+
 
 .weekdayButton:hover {
   background-color: #f7bfbf;
@@ -225,28 +225,58 @@
   /* Slight scale effect on hover */
 }
 
+
 .weekdayButton.active {
   background-color: #f12f3f;
   /* Accent color for active state */
   color: #fff;
 }
 
-.arrow {
+.weekdayButton span{
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.arrowRight{
   position: relative;
   display: flex;
 
   align-items: center;
   justify-content: center;
-  background-color: rgb(122, 72, 72);
+  background-color: rgba(0, 0, 0, 0);
   border: none;
-  color: #ffffff;
-  font-size: 20px;
+  color: #000000;
+  font-size: 40px;
   cursor: pointer;
   z-index: 1;
   width: 25px;
   height: 30px;
   padding: 10px;
   border-radius: 30%;
+  background-image: url('/arrow-wide-line.svg');
+  background-repeat: no-repeat;
+  background-position: right 0px top 50%;
+}
+.arrowLeft{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  color: #000000;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1;
+  width: 25px;
+  height: 30px;
+  padding: 10px;
+  border-radius: 30%;
+  background-image: url('/arrow-wide-line.svg');
+  background-repeat: no-repeat;
+  background-position: left 0px top 50%;
+  transform: translateY(0%) rotate(-180deg); /* Adjust rotation angle */
+
 }
 
 .arrow.left {

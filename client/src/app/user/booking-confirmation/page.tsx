@@ -36,7 +36,6 @@ const BookingConfirmationPage: React.FC = () => {
   // Fetching user details from localStorage
   useEffect(() => {
     const storedUserDetails = localStorage.getItem('userData');
-    console.log("haiiiiiii", storedUserDetails)
 
     if (storedUserDetails) {
       const parsedDetails = JSON.parse(storedUserDetails);

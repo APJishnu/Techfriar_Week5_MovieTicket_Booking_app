@@ -19,6 +19,7 @@ router.get('/booking-details/:userId', userRouter.getUserBookingsRouter);
 
 
 // Admin Routes
+router.post('/admin/admin-login', adminRouter.adminLoginRouter);
 router.get('/admin/movies-lookup', adminRouter.searchMoviesByTitleRouter);
 router.post('/admin/add-movies', adminRouter.addMovieRouter);
 router.post('/admin/add-theatre', adminRouter.addTheatreRouter);
@@ -30,7 +31,4 @@ router.get('/admin/schedule-details', adminRouter.getScheduleDetailsRouter);
 router.delete('/admin/schedule/:scheduleId/showtime', adminRouter.deleteShowtimeRouter);
 
 
-
-
-
-module.exports = router;
+module.exports = router;    

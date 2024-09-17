@@ -31,7 +31,6 @@ router.get('/user-details', verifyToken, async (req, res) => {
     const user = await userHelper.getUserDetails(userId);
     res.json(user);
   } catch (error) {
-    console.error('Error fetching user details:', error);
     if (error.message === 'User not found') {
       res.status(404).json({ message: error.message });
     } else {

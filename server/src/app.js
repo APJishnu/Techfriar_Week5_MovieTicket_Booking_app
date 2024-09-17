@@ -3,9 +3,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const Routes= require('./routes/routes');
-const passport = require('passport');  
+const Routes = require('./routes/routes');
 const authRoutes = require('./routes/auth-routes'); // Add auth routes
+const passport = require('passport');
+
 
 
 const session = require('express-session');
@@ -38,7 +39,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false, httpOnly: true },
-  
+
 }));
 
 app.use(passport.initialize());
@@ -47,11 +48,9 @@ app.use(passport.session());
 // Routes
 
 
-app.use('/api', Routes); // Add the new movie routes
-
-app.use('/api/auth/', authRoutes);  
+app.use('/api/', Routes); // Add the new movie routes
+app.use('/api/auth/', authRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });

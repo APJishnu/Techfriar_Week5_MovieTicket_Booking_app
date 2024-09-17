@@ -20,14 +20,21 @@ const generateSeats = (capacity) => {
     }
     if (seats.length === capacity) break;
   }
-
   return seats;
 };
 
 
 module.exports = {
 
+  adminUser: async () => {
+    // Dummy user data for illustration purposes
+    const adminUser = {
+      email: 'admin@example.com',
+      password: '$2b$10$N9qo8uLOickgx2ZMRZoMyeQmqMv5Upjc1J7uZ1dHAs5ZXOaK5iwk2' // bcrypt hash of 'adminpassword'
+    };
 
+    return adminUser
+  },
 
   addMovie: async (movieDetails) => {
     try {
@@ -38,11 +45,9 @@ module.exports = {
       });
 
       if (existingMovie) {
-        // If the movie already exists, return an error message
         return { error: "A movie with the same title and release date already exists." };
       }
 
-      // Proceed with movie creation if no existing movie was found
       const movie = new Movie({
         title: movieDetails.title,
         description: movieDetails.description,
@@ -62,14 +67,11 @@ module.exports = {
       return movieId;
 
     } catch (error) {
-      // Handle and return any errors that occur
       return error.message;
     }
-
   },
 
   addTheatre: async (theatreDetials) => {
-
     try {
 
       const newTheatre = new Theatre({
@@ -96,12 +98,10 @@ module.exports = {
 
 
   getMoviesList: async () => {
-
     try {
       const movies = await Movie.find();
       return movies;
     } catch (error) {
-      console.error('Error fetching movie details:', error);
       throw new Error('Error fetching movie details');
     }
 
@@ -109,13 +109,11 @@ module.exports = {
 
 
   deleteMovie: async (movieId) => {
-
     try {
       await Movie.findByIdAndDelete(movieId);
 
       return true;
     } catch (error) {
-      console.error('Error deleting movie details:', error);
       throw new Error('Error deleting movie details');
     }
 
@@ -123,12 +121,10 @@ module.exports = {
 
 
   getTheatreList: async () => {
-
     try {
       const theatres = await Theatre.find();
       return theatres;
     } catch (error) {
-      console.error('Error fetching theatre details:', error);
       throw new Error('Error fetching theatre details');
     }
 
@@ -149,11 +145,7 @@ module.exports = {
         return { error: 'The specified movie does not exist.' };
       }
 
-      // Parse movie duration (e.g., '122 min' to 122)
-
       const durationInMinutes = parseInt(movie.duration.split(' ')[0]);
-
-
       // Parse the showtime (e.g., '10:00 AM') to a Date object
       const showtimeDate = new Date(`${showtime.date} ${showtime.time}`);
 
@@ -235,8 +227,6 @@ module.exports = {
             }]
           });
         }
-
-        // Save the updated schedule
         await schedule.save();
       }
 
@@ -251,9 +241,7 @@ module.exports = {
       }
 
       return { message: 'Movie schedule updated successfully!' };
-
     } catch (error) {
-      console.error('Error updating movie schedule:', error);
       return { error: 'Failed to update movie schedule. Please try again.' };
     }
   },
@@ -267,10 +255,8 @@ module.exports = {
         .populate('movies.movie', 'title') // Populate movie title
         .exec(); // Use exec() to get the results
 
-      console.log(schedules); // For debugging
       return schedules;
     } catch (error) {
-      console.error("Error fetching schedules:", error);
       throw error;
     }
   },
@@ -286,7 +272,6 @@ module.exports = {
       return { success: true, message: 'Showtime deleted successfully' };
 
     } catch (error) {
-      console.error(error);
       return { success: false, message: 'Failed to delete showtime' };
     }
   },

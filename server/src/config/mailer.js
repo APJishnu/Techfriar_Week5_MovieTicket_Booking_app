@@ -14,16 +14,16 @@ const sendEmail = async (recipientEmail, subject, text, html) => {
 
     // Email details
     const mailOptions = {
-      from: process.env.EMAIL_USER, 
-      to: recipientEmail, 
-      subject: subject, 
-      text: text, 
-      html: html, 
+      from: process.env.EMAIL_USER,
+      to: recipientEmail,
+      subject: subject,
+      text: text,
+      html: html,
     };
 
     // Send email 
     await transporter.sendMail(mailOptions);
-    
+
     return true;
   } catch (error) {
     return false;

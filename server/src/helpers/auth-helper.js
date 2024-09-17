@@ -1,13 +1,12 @@
 const User = require('../models/user-models');
 
 module.exports = {
+  
   emailVerified: async (email, verifiedDate) => {
     try {
-      console.log(verifiedDate)
       let updateObject = {
         emailVerifiedAt: verifiedDate,
       };
-
       const updatedEmailAt = await User.findOneAndUpdate(
         { email: email },
         {
@@ -17,28 +16,21 @@ module.exports = {
       );
 
       if (!updatedEmailAt) {
-        // If no document was found and updated, return false
         return false;
       }
-
       return true
-
     } catch (error) {
-
       return false
     }
-  }, 
+  },
 
-  
-  phoneVerified: async (phone, verifiedDate,userId) => {
+
+  phoneVerified: async (phone, verifiedDate, userId) => {
     try {
-      console.log(verifiedDate)
       let updateObject = {
-        phone:phone,
+        phone: phone,
         phoneVerifiedAt: verifiedDate,
       };
-
-
       const updatedPhoneAt = await User.findOneAndUpdate(
         { _id: userId },
         {
@@ -48,14 +40,11 @@ module.exports = {
       );
 
       if (!updatedPhoneAt) {
-        // If no document was found and updated, return false
         return false;
       }
-
       return true
 
     } catch (error) {
-
       return false
     }
   },

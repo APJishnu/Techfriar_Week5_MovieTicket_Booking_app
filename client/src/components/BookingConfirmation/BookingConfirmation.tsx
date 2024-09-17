@@ -56,7 +56,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => setRazorpayLoaded(true);
-      script.onerror = () => console.error("Failed to load Razorpay SDK.");
+     
       document.body.appendChild(script);
     };
     loadRazorpayScript();
@@ -90,7 +90,6 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       });
       rzp.open();
     } catch (error) {
-      console.error("Error initiating payment", error);
       alert("Issue with initiating payment.");
     }
   };
@@ -130,7 +129,6 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         alert("Error confirming booking.");
       }
     } catch (error) {
-      console.error("Error confirming booking", error);
       alert("Issue confirming booking.");
     }
   };

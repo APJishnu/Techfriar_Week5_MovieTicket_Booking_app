@@ -251,7 +251,7 @@ const MovieSchedule: React.FC = () => {
 
           <div className={styles.filters}>
             <div className={styles.weekdaySliderDiv}>
-              <button className={`${styles.arrow} ${styles.left}`} >&lt;</button>
+              <button className={`${styles.arrowLeft} ${styles.left}`} ></button>
               <div className={styles.weekdaySlider}>
 
                 {Object.entries(weekdays).map(([date, { dayName, dayNumber, month }]) => (
@@ -261,13 +261,13 @@ const MovieSchedule: React.FC = () => {
                     onClick={() => handleDateChange(date)}
                   >
                     <div>{dayName}</div>
-                    <div>{dayNumber}</div>
+                    <span>{dayNumber}</span>
                     <div>{month}</div>
                   </div>
                 ))}
 
               </div>
-              <button className={`${styles.arrow} ${styles.right}`}>&gt;</button>
+              <button className={`${styles.arrowRight} ${styles.right}`}></button>
             </div>
             <div>
 

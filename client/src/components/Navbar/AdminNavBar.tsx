@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
-import { useRouter,usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 const AdminNavbar = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -11,8 +11,13 @@ const AdminNavbar = () => {
     const [isSearchVisible, setIsSearchVisible] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const pathname = usePathname();
-    
-    const router = useRouter();
+
+    const [activePath, setActivePath] = useState<string>(pathname);
+
+    useEffect(() => {
+        // Update the active path whenever the route changes
+        setActivePath(pathname);
+    }, [pathname]);
 
     const handleToggleClick = () => {
         setShowMenu(!showMenu);
@@ -24,7 +29,6 @@ const AdminNavbar = () => {
 
         if (value.length > 0) {
             // Simulate search logic here
-            console.log("Searching for:", value); // Replace with actual search API call
         } else {
             setSearchResults([]);
         }
@@ -39,15 +43,15 @@ const AdminNavbar = () => {
         setIsSearchVisible(!isSearchVisible);
     };
 
-    
-    const isActive = (path: string) => pathname === path;
+
+
 
     return (
         <>
             <header className={styles.header}>
                 <nav className={styles.nav}>
                     <div className={styles.logo}>
-                        <h1>Admin Logo</h1>
+                        <h1>cineMagic.Admin</h1>
                         <button className={styles.toggleBtn} onClick={handleToggleClick}>
                             ☰
                         </button>
@@ -67,35 +71,54 @@ const AdminNavbar = () => {
                         ) : (
                             <img className={styles.searchIcon} src='/Navbar/search.svg' onClick={handleSearchIconClick} />
                         )}
-                       
+
                     </div>
 
                     <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`}>
-                        <Link className={styles.adminLogOutNav} href="/logout">
+                        <Link className={styles.adminLogOutNav} href="/">
                             Logout
                         </Link>
                     </div>
                 </nav>
 
-             
-                <ul className={`${styles.mainNavigationsUl} ${showMenu ? styles.show : styles.hidden}`}>
-                    <li className={`${styles.mainNavigationsLi} ${isActive('/admin/dashboard') ? styles.active : ''}`}>
-                        <Link className={styles.listNav} href="/admin/dashboard">
+
+                <ul
+                    className={`${styles.mainNavigationsUl} ${showMenu ? styles.show : styles.hidden
+                        }`}
+                >
+                    <li className={styles.mainNavigationsLi}>
+                        <Link href="/admin/dashboard" className={styles.listNav} style={
+                            activePath === '/admin/dashboard'
+                                ? { backgroundColor: '#f65c5c', color: '#ffffff' }
+                                : {}
+                        }>
                             Admin Dashboard
                         </Link>
                     </li>
-                    <li className={`${styles.mainNavigationsLi} ${isActive('/admin/movies-list') ? styles.active : ''}`}>
-                        <Link className={styles.categories} href="/admin/movies-list">
+                    <li className={styles.mainNavigationsLi}>
+                        <Link href="/admin/movies-list" className={styles.listNav} style={
+                            activePath === '/admin/movies-list'
+                                ? { backgroundColor: '#f65c5c', color: '#ffffff' }
+                                : {}
+                        }>
                             Movies
                         </Link>
                     </li>
-                    <li className={`${styles.mainNavigationsLi} ${isActive('/admin/theatres-list') ? styles.active : ''}`}>
-                        <Link className={styles.categories} href="/admin/theatres-list">
+                    <li className={styles.mainNavigationsLi}>
+                        <Link href="/admin/theatres-list" className={styles.listNav} style={
+                            activePath === '/admin/theatres-list'
+                                ? { backgroundColor: '#f65c5c', color: '#ffffff' }
+                                : {}
+                        }>
                             Theaters
                         </Link>
                     </li>
-                    <li className={`${styles.mainNavigationsLi} ${isActive('/admin/movie-scheduled-list') ? styles.active : ''}`}>
-                        <Link className={styles.listNav} href="/admin/movie-scheduled-list">
+                    <li className={styles.mainNavigationsLi}>
+                        <Link href="/admin/movie-scheduled-list" className={styles.listNav} style={
+                            activePath === '/admin/movie-scheduled-list'
+                                ? { backgroundColor: '#f65c5c', color: '#ffffff' }
+                                : {}
+                        }>
                             Movie Schedule
                         </Link>
                     </li>

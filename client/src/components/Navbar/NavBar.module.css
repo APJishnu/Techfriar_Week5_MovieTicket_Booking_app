@@ -20,19 +20,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1440px;
+  padding-left: 40px;
+  padding-right: 40px;
   margin: auto;
   gap: 10px;
 }
 
 .logo {
   flex: 1;
-  color: #333;
-  font-size: 1.5rem;
+  color: #ed4242;
+  font-size: 1.4rem;
   font-weight: bold;
   cursor: pointer;
 }
-
 
 .searchBar {
   position: relative;
@@ -44,12 +44,18 @@
 .searchInput {
   width: 100%;
   padding: 12px 40px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: none; 
   font-size: 1rem;
+  color: #f65c5c;
   outline: none;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fafafa;
+}
+
+.searchInput:focus{
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+.searchInput::placeholder {
+  color: #ed4242;
 }
 
 .searchIcon {
@@ -57,7 +63,7 @@
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  color: #888;
+  color: #f64e4e;
   cursor: pointer;
   width: 20px;
   height: 20px;
@@ -71,15 +77,16 @@
   max-height: 300px;
   overflow-y: auto;
   background: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px#f64e4e;
   border-radius: 8px;
   z-index: 1000;
 }
 
 .searchResultItem {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #f64e4e;
   cursor: pointer;
+  color: #f64e4e;
 }
 
 .searchResultItem:hover {
@@ -89,21 +96,30 @@
 .profileHeader {
   position: relative;
   display: flex;
+  width: 100%;
+  max-width: 100px;
   align-items: center;
+  justify-content: space-between;
   cursor: pointer;
+  background-image: url('../../../public/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: right 0 top 50%;
+  color: #000000;
+  
 }
 
 .profileIcon {
   display: flex;
   align-items: center;
+  
 
 }
 
 .profilePhoto {
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
 }
 
 .profileDropdown {
@@ -132,7 +148,9 @@
   display: block;
 }
 
-.signUpBtn {
+.signUpBtn,
+.adminLogOutNav {
+  text-decoration: none;
   padding: 5px 20px;
   background-color: #ff0d0d;
   color: #fff;
@@ -140,10 +158,12 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
 .signUpBtn:hover {
   padding: 5px 20px;
-  background-color:  #fff;;
-  color:#ff0d0d;
+  background-color: #fff;
+  ;
+  color: #ff0d0d;
   border: 1px solid #ff0d0d;
   border-radius: 8px;
   cursor: pointer;
@@ -154,7 +174,7 @@
 
   display: none;
   background: transparent;
-  color: #000000;
+  color: #f64e4e;
   border: none;
   padding: 10px;
   border-radius: 8px;
@@ -165,7 +185,7 @@
 /* Main Navigation */
 .mainNavigationsUl {
   display: flex;
-  padding: 20px 30px;
+  padding: 15px 30px;
   list-style-type: none;
   margin: 0;
   background-color: rgb(0, 0, 0);
@@ -181,52 +201,38 @@
 
 .mainNavigationsLi a {
   text-decoration: none;
-  color: #ffffff;
+
   padding: 10px;
   border-radius: 8px;
   font-weight: bold;
-  
+
 }
 
 .mainNavigationsLi a:hover {
   background-color: #000000;
 }
 
+.listNav,
 .categories {
   text-decoration: none;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
-.categoriesItems {
-  position: absolute;
-  background-color: rgb(0, 0, 0);
-  padding: 10px;
-  border-radius: 5px;
-  width: 150px;
-  border: 1px solid rgba(0, 0, 0, 0.13);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+.listNav:focus,
+.categories:focus {
+  background-color: #f65c5c;
 }
 
-.mainNavigationsLi:hover .categoriesItems {
-  opacity: 1;
-  visibility: visible;
 
+.active {
+  background-color: #f64e4e !important;
 }
 
-.active .listNav,
-.active .categories {
-  background-color: #f65c5c; /* Active link color */
-  color: #ffffff; /* Change text color for the active link */
-  font-weight: bold; /* Optional: Make active link text bolder */
-  border-radius: 8px;
-}
+
 
 /* Hide search bar, profile, and navigation items by default on mobile */
 @media (max-width: 768px) {
-  
+
   .nav {
     flex-direction: column;
     align-items: center;
@@ -238,7 +244,7 @@
   .logo {
     display: flex;
     flex: 1;
-    color: #333;
+    color: #f64e4e;
     font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
@@ -266,7 +272,7 @@
     /* Show search, profile, and menu items */
     flex-direction: column;
     gap: 20px;
-   
+
   }
 
   .mainNavigationsUl {
@@ -277,6 +283,10 @@
   .mainNavigationsLi {
     margin-right: 0;
     margin-bottom: 0px;
+  }
+
+  .active {
+    background-color: #f64e4e;
   }
 
   .searchInput {
@@ -315,7 +325,18 @@
   .profileHeader.show,
   .mainNavigationsUl.show {
     display: flex;
-    
+
+  }
+
+  .signUpBtn {
+    width: 100%;
+    max-width: 500px;
+    padding: 5px 20px;
+    background-color: #f74f4f;
+    color: #fff;
+    border: 1px solid #f74f4f;
+    border-radius: 8px;
+    cursor: pointer;
   }
 }
 
@@ -328,6 +349,11 @@
 
   .profileDropdown {
     display: none;
+
+  }
+
+  .profileIcon {
+    width: 50%;
   }
 
   .mainNavigationsUl {

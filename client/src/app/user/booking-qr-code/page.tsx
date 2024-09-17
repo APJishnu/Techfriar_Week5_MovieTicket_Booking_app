@@ -20,11 +20,9 @@ const BookingQRPage = () => {
                 const decodedBookingParam = decodeURIComponent(bookingParam);
                 const bookingData = JSON.parse(decodedBookingParam);
 
-                console.log('Decoded Booking Data:', bookingData);
                 setBooking(bookingData);
                 setQrCodeUrl(decodeURIComponent(qrCodeUrlParam));
             } catch (error) {
-                console.error('Error parsing booking details:', error);
                 setError('Error parsing booking details.');
             }
         } else {

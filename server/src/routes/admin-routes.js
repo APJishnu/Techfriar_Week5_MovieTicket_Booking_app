@@ -1,11 +1,41 @@
-const express = require('express');
-const router = express.Router();
+
 const adminHelper = require('../helpers/admin-helper');
 const adminApi = require('../helpers/admin-api');
 const axios = require('axios');
+const bcrypt = require('bcryptjs');
+
+
+
+
+
 
 // Route handlers
 module.exports = {
+
+
+  adminLoginRouter: async (req, res) => {
+    const { email, password } = req.body;
+
+    const adminUser = await adminHelper.adminUser()
+
+    if (email !== adminUser.email) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
+    }
+
+    const result = bcrypt.compare(password, adminUser.password)
+    if (!result) {
+      return res.status(500).json({ success: false, message: 'Server error.' });
+    }
+
+    if (result) {
+
+      return res.status(200).json({ success: true });
+    } else {
+      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
+    }
+
+  },
+
   searchMoviesByTitleRouter: async (req, res) => {
     try {
       const { title, year } = req.query;
@@ -18,7 +48,6 @@ module.exports = {
         res.status(200).json(movieDetails.data);
       }
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: 'Failed to fetch movie details.', error: error.message });
     }
   },
@@ -53,7 +82,6 @@ module.exports = {
 
       res.status(200).json({ success: true, message: 'Movie added successfully!', movieId: storedMovieDetails });
     } catch (error) {
-      console.error('Error while adding movie:', error);
       res.status(500).json({ error: 'An error occurred while adding the movie. Please try again.' });
     }
   },
@@ -64,7 +92,6 @@ module.exports = {
       const storedTheatreDetails = await adminHelper.addTheatre(theatreData);
       res.status(200).json({ message: 'Theatre added successfully!' });
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: 'Failed to add the theatre. Please try again.' });
     }
   },
@@ -74,7 +101,6 @@ module.exports = {
       const moviesDetails = await adminHelper.getMoviesList();
       res.status(200).json(moviesDetails);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: 'Failed to fetch movie details. Please try again.' });
     }
   },
@@ -90,7 +116,6 @@ module.exports = {
 
       res.status(200).json({ message: 'Movie deleted successfully' });
     } catch (error) {
-      console.error('Error deleting movie:', error);
       res.status(500).json({ message: 'Failed to delete the movie. Please try again.' });
     }
   },
@@ -100,7 +125,6 @@ module.exports = {
       const theatres = await adminHelper.getTheatreList();
       res.status(200).json(theatres);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: 'Failed to fetch theatres. Please try again.' });
     }
   },
@@ -120,7 +144,6 @@ module.exports = {
 
       res.status(201).json({ message: 'Movie scheduled successfully!' });
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: 'Failed to schedule the movie. Please try again.' });
     }
   },
@@ -130,7 +153,6 @@ module.exports = {
       const schedules = await adminHelper.getSchedulesList();
       res.json(schedules);
     } catch (error) {
-      console.error('Error fetching schedule details:', error);
       res.status(500).json({ error: 'Failed to fetch schedule details' });
     }
   },
@@ -147,7 +169,6 @@ module.exports = {
         return res.json(result);
       }
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: 'Failed to delete showtime', error });
     }
   }
