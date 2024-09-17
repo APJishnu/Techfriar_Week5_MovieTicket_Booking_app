@@ -75,7 +75,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         key: "rzp_test_37TZNY8cnWgUm8",
         amount: data.amount,
         currency: data.currency,
-        name: "Movie Booking",
+        name: "CineMagic",
         description: "Payment for movie booking",
         order_id: data.order_id,
         handler: (response: any) => {

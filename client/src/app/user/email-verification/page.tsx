@@ -27,11 +27,9 @@ const EmailVerification: React.FC = () => {
    useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
-    const userDetails = urlParams.get('user');
-    if (token && userDetails) {
+   
+    if (token) {
         localStorage.setItem('authToken', token);
-        localStorage.setItem('userData', userDetails);
-        console.log(userDetails);
     }
 }, []);
 

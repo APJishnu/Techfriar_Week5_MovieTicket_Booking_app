@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-exports.verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
     const token = req.headers['authorization']?.split(' ')[1];
     console.log('Token received in middleware:', token);
 
@@ -13,3 +13,5 @@ exports.verifyToken = (req, res, next) => {
         next();
     });
 };
+
+module.exports={verifyToken}

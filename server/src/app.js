@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const adminRoutes = require('./routes/admin-routes');
-const userRoutes= require('./routes/user-routes');
+
+const Routes= require('./routes/routes');
 const passport = require('passport');  
 const authRoutes = require('./routes/auth-routes'); // Add auth routes
 
@@ -47,8 +47,8 @@ app.use(passport.session());
 // Routes
 
 
-app.use('/api/admin/', adminRoutes); // Add the new movie routes
-app.use('/api/', userRoutes); // Add the new movie routes
+app.use('/api', Routes); // Add the new movie routes
+
 app.use('/api/auth/', authRoutes);  
 
 const PORT = process.env.PORT || 5000;

@@ -41,7 +41,7 @@ const BookingConfirmationPage: React.FC = () => {
     if (storedUserDetails) {
       const parsedDetails = JSON.parse(storedUserDetails);
       setUserDetails({
-        userId: parsedDetails.userId || "",
+        userId: parsedDetails._id || "",
 
         firstname: parsedDetails.firstname || "", // Updated to match BookingConfirmation expectations
         lastname: parsedDetails.lastname || "",

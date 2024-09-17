@@ -34,6 +34,7 @@ module.exports = {
     try {
       console.log(verifiedDate)
       let updateObject = {
+        phone:phone,
         phoneVerifiedAt: verifiedDate,
       };
 

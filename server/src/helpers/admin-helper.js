@@ -1,5 +1,7 @@
-const { trusted } = require('mongoose');
+
 const { Movie, Theatre, movieSchedule } = require('../models/admin-models');
+const removeMovieShowtime = require('../helpers-helper/movie-schedule-helper');
+
 const generateSeats = (capacity) => {
   const seats = [];
   const rows = Math.ceil(capacity / 20); // Assuming 10 seats per row
@@ -133,7 +135,6 @@ module.exports = {
   },
 
 
-
   addMovieSchedule: async (movieId, theatreId, showtime) => {
     try {
       // Find the theatre
@@ -147,6 +148,18 @@ module.exports = {
       if (!movie) {
         return { error: 'The specified movie does not exist.' };
       }
+
+      // Parse movie duration (e.g., '122 min' to 122)
+
+      const durationInMinutes = parseInt(movie.duration.split(' ')[0]);
+
+
+      // Parse the showtime (e.g., '10:00 AM') to a Date object
+      const showtimeDate = new Date(`${showtime.date} ${showtime.time}`);
+
+      // Calculate the end time by adding the movie duration
+      const endTime = new Date(showtimeDate);
+      endTime.setMinutes(endTime.getMinutes() + durationInMinutes);
 
       // Find or create the schedule for the theatre
       let schedule = await movieSchedule.findOne({ theatre: theatreId });
@@ -168,6 +181,17 @@ module.exports = {
         });
         await schedule.save();
       } else {
+
+        // Check for conflicts
+        const conflictingMovie = schedule.movies.find(m => {
+          return m.showDates.some(d => {
+            return d.date === showtime.date && d.times.some(t => t.time === showtime.time);
+          });
+        });
+
+        if (conflictingMovie) {
+          return { error: 'A movie is already scheduled at this time on the same date in this theatre.' };
+        }
         // Update the existing schedule
         const movieEntry = schedule.movies.find(m => m.movie.toString() === movieId.toString());
 
@@ -216,7 +240,18 @@ module.exports = {
         await schedule.save();
       }
 
+      // Set a timeout to automatically remove the showtime after the movie's duration
+      const currentTime = new Date();
+      const timeUntilRemoval = endTime - currentTime; // Calculate time until movie ends
+
+      if (timeUntilRemoval > 0) {
+        setTimeout(async () => {
+          await removeMovieShowtime(schedule._id, movieId, showtime.date, showtime.time);
+        }, timeUntilRemoval);
+      }
+
       return { message: 'Movie schedule updated successfully!' };
+
     } catch (error) {
       console.error('Error updating movie schedule:', error);
       return { error: 'Failed to update movie schedule. Please try again.' };
@@ -240,52 +275,13 @@ module.exports = {
     }
   },
 
-
   deleteShowtime: async (scheduleId, movieId, date, time) => {
     try {
-      // Find the schedule by ID
-      const schedule = await movieSchedule.findById(scheduleId);
+      const result = await removeMovieShowtime(scheduleId, movieId, date, time);
 
-      if (!schedule) {
-        return { success: false, message: 'Schedule not found' };
+      if (!result.success) {
+        return { success: false, message: result.message };
       }
-
-      // Find the movie entry in the schedule
-      const movieEntry = schedule.movies.find(movie => movie.movie._id.toString() === movieId);
-
-      if (!movieEntry) {
-        return { success: false, message: 'Movie not found in schedule' };
-      }
-
-      // Find the date entry to update
-      const showDate = movieEntry.showDates.find(st => st.date === date);
-
-      if (!showDate) {
-        return { success: false, message: 'Date not found for movie in schedule' };
-      }
-
-      // Remove the specified time from the date
-      showDate.times = showDate.times.filter(t => t.time !== time);
-
-      if (showDate.times.length === 0) {
-        // Remove the date entry if no times are left
-        movieEntry.showDates = movieEntry.showDates.filter(st => st.date !== date);
-      }
-
-      if (movieEntry.showDates.length === 0) {
-        // Remove the movie entry if no show dates are left
-        schedule.movies = schedule.movies.filter(movie => movie.movie._id.toString() !== movieId);
-      }
-
-      // Check if there are no remaining movie entries
-      if (schedule.movies.length === 0) {
-        // Delete the entire schedule if no movies are left
-        await movieSchedule.findByIdAndDelete(scheduleId);
-        return { success: true, message: 'Schedule deleted successfully' };
-      }
-
-      // Save the updated schedule
-      await schedule.save();
 
       return { success: true, message: 'Showtime deleted successfully' };
 
@@ -293,7 +289,7 @@ module.exports = {
       console.error(error);
       return { success: false, message: 'Failed to delete showtime' };
     }
-  }
+  },
 
 
 

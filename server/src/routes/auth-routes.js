@@ -7,8 +7,7 @@ const sendEmail = require('../config/mailer');
 const { sendSms } = require('../config/sms-sender');
 const authValidation = require('../helpers/auth-helper');
 const router = express.Router();
-const userHelper = require('../helpers/user-helper');
-
+const userHelper = require('../helpers/user-helper')
 
 
 // Google authentication route
@@ -16,23 +15,14 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 
 
 router.get('/google/callback', passport.authenticate('google', {
-  failureRedirect: '/login',
+  failureRedirect: 'http://localhost:3000',
 }), (req, res) => {
+  // Create a JWT token
   const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  const userData = {
-    userId: req.user._id,
-    email: req.user.email,
-    firstname: req.user.firstname,
-    lastname: req.user.lastname,
-    photo: req.user.photo,
-  };
 
-  console.log(userData);
-  console.log(token)
-  res.redirect(`http://localhost:3000/user/email-verification?token=${token}&user=${encodeURIComponent(JSON.stringify(userData))}`);
+  // Redirect with token only
+  res.redirect(`http://localhost:3000/user/email-verification?token=${token}`);
 });
-
-
 
 
 router.get('/user-details', verifyToken, async (req, res) => {
@@ -49,7 +39,6 @@ router.get('/user-details', verifyToken, async (req, res) => {
     }
   }
 });
-
 
 
 // Route to send OTP

@@ -32,9 +32,9 @@ const BookingDetails = () => {
         const storedUserDetails = localStorage.getItem('userData');
         if (storedUserDetails) {
             const userDetails = JSON.parse(storedUserDetails);
-            setUserId(userDetails.userId); // Assuming the user ID is saved in 'userId' field
+            setUserId(userDetails._id); // Assuming the user ID is saved in 'userId' field
 
-            console.log(userDetails.userId)
+            console.log(userDetails._id)
         }
     }, []);
 
