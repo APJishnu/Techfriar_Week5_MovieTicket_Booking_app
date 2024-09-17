@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import styles from './Popup.module.css';
 import SignUpPopup from '../../../../../components/Navbar/components/signin-popup/SignUpPopUp'; // Import the SignUpPopup component

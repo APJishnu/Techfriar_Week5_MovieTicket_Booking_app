@@ -205,10 +205,6 @@ const MovieSchedule: React.FC = () => {
     setShowPopup(false);
   };
 
-  const handleLoginRedirect = () => {
-    router.push('/login'); // Redirect to login page
-  };
-
   const handleBackToSchedule = () => {
     setSelectedShowtime(null);
   };

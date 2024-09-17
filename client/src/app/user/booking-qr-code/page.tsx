@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BookingQRCode from '../../../components/BookingQRCode/BookingQRCode';
 
+
 const BookingQRPage = () => {
     const searchParams = useSearchParams();
     const [booking, setBooking] = useState<any>(null);

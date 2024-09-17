@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Ensure this runs only on the client side
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -7,7 +7,7 @@ import styles from "../../../components/BookingConfirmation/BookingConfirmation.
 
 interface UserDetails {
   userId: string;
-  firstname: string; // Updated to match the expected prop names in BookingConfirmation
+  firstname: string;
   lastname: string;
   email: string;
   phone: string;
@@ -16,7 +16,6 @@ interface UserDetails {
 const BookingConfirmationPage: React.FC = () => {
   const searchParams = useSearchParams();
 
-  // State to hold user details
   const [userDetails, setUserDetails] = useState<UserDetails>({
     userId: "",
     firstname: "",
@@ -25,36 +24,48 @@ const BookingConfirmationPage: React.FC = () => {
     phone: "",
   });
 
-  // Extracting booking-related data from URL search params
-  const movieTitle = searchParams.get("movieTitle") || "";
-  const theatreId = searchParams.get("theatreId") || "";
-  const showDate = searchParams.get("showDate") || "";
-  const showTime = searchParams.get("showTime") || "";
-  const selectedSeats = JSON.parse(decodeURIComponent(searchParams.get("selectedSeats") || "[]"));
-  const totalPrice = parseFloat(searchParams.get("totalPrice") || "0");
+  // State to hold booking details (initialize with default values)
+  const [movieTitle, setMovieTitle] = useState<string>("");
+  const [theatreId, setTheatreId] = useState<string>("");
+  const [showDate, setShowDate] = useState<string>("");
+  const [showTime, setShowTime] = useState<string>("");
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  // Fetching user details from localStorage
   useEffect(() => {
-    const storedUserDetails = localStorage.getItem('userData');
-
-    if (storedUserDetails) {
-      const parsedDetails = JSON.parse(storedUserDetails);
-      setUserDetails({
-        userId: parsedDetails._id || "",
-
-        firstname: parsedDetails.firstname || "", // Updated to match BookingConfirmation expectations
-        lastname: parsedDetails.lastname || "",
-        email: parsedDetails.email || "",
-        phone: parsedDetails.phone || "",
-      });
+    // Fetch booking-related data from the URL search params
+    if (searchParams) {
+      setMovieTitle(searchParams.get("movieTitle") || "");
+      setTheatreId(searchParams.get("theatreId") || "");
+      setShowDate(searchParams.get("showDate") || "");
+      setShowTime(searchParams.get("showTime") || "");
+      setSelectedSeats(
+        JSON.parse(decodeURIComponent(searchParams.get("selectedSeats") || "[]"))
+      );
+      setTotalPrice(parseFloat(searchParams.get("totalPrice") || "0"));
     }
-  }, []);
 
+    // Fetch user details from localStorage
+    if (typeof window !== "undefined") {
+      const storedUserDetails = localStorage.getItem("userData");
+      if (storedUserDetails) {
+        const parsedDetails = JSON.parse(storedUserDetails);
+        setUserDetails({
+          userId: parsedDetails._id || "",
+          firstname: parsedDetails.firstname || "",
+          lastname: parsedDetails.lastname || "",
+          email: parsedDetails.email || "",
+          phone: parsedDetails.phone || "",
+        });
+      }
+    }
+  }, [searchParams]);
+
+  // Render the booking confirmation page
   return (
     <div className={styles.bookingConfirmationPage}>
       <BookingConfirmation
-
-        userDetails={userDetails} // Now using details with correct property names
+        userDetails={userDetails}
         movieTitle={movieTitle}
         theatreId={theatreId}
         showDate={showDate}
@@ -62,7 +73,6 @@ const BookingConfirmationPage: React.FC = () => {
         selectedSeats={selectedSeats}
         totalPrice={totalPrice}
       />
-      {/* Display additional info */}
     </div>
   );
 };

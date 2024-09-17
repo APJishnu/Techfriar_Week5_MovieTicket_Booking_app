@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./movieDetails.module.css";
 import { useSearchParams, useRouter } from "next/navigation";
+const API_BASE_URL ='http://localhost:5000';
 
 // Define TypeScript interfaces
 interface Movie {
@@ -38,23 +39,23 @@ const MovieDetails: React.FC = () => {
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  useEffect(() => {
-    const fetchMovieDetails = async () => {
-      if (movieId) {
-        try {
-          const response = await axios.get(`http://localhost:5000/api/movie-details/${movieId}`);
-          setSchedule(response.data);
-        } catch (error) {
-          setErrorMessage("Failed to fetch movie details.");
-        }
-      } else {
-        setErrorMessage("Movie ID is missing in query parameters.");
+  
+useEffect(() => {
+  const fetchMovieDetails = async () => {
+    if (movieId) {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/movie-details/${movieId}`);
+        setSchedule(response.data);
+      } catch (error) {
+        setErrorMessage("Failed to fetch movie details.");
       }
-    };
+    } else {
+      setErrorMessage("Movie ID is missing in query parameters.");
+    }
+  };
 
-    fetchMovieDetails();
-  }, [movieId]);
-
+  fetchMovieDetails();
+}, [movieId]);
 
   const handleBookTickets = () => {
     router.push(`/user/book-tickets?movieId=${movieId}`);
