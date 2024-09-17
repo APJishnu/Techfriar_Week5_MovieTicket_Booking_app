@@ -73,7 +73,6 @@ module.exports = {
 
   addTheatre: async (theatreDetials) => {
     try {
-
       const newTheatre = new Theatre({
         theatreName: theatreDetials.theatreName,
         location: theatreDetials.location,

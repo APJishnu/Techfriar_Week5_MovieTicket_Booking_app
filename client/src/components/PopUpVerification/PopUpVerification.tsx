@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./popUpVerification.module.css";
+import styles from "./PopUpVerification.module.css";
 
 interface PopUpVerificationProps {
   onClose: () => void;

@@ -121,7 +121,7 @@ const AddMovies: React.FC = () => {
           router.push("/admin/movies-list");
         }, 1000); // Adjust the timeout as needed
       }
-      
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrorMessage(
