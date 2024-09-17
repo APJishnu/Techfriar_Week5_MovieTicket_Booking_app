@@ -74,7 +74,7 @@ const AdminNavbar = () => {
 
                     </div>
 
-                    <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`}>
+                    <div className={`${styles.profileHeaderAdmin} ${showMenu ? styles.show : styles.hidden}`}>
                         <Link className={styles.adminLogOutNav} href="/">
                             Logout
                         </Link>

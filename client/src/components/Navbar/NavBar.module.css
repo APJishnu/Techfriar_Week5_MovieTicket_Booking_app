@@ -107,6 +107,16 @@
   color: #000000;
   
 }
+.profileHeaderAdmin{
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: #000000;
+  display: none;
+}
 
 .profileIcon {
   display: flex;
@@ -162,7 +172,6 @@
 .signUpBtn:hover {
   padding: 5px 20px;
   background-color: #fff;
-  ;
   color: #ff0d0d;
   border: 1px solid #ff0d0d;
   border-radius: 8px;
@@ -202,7 +211,7 @@
 .mainNavigationsLi a {
   text-decoration: none;
 
-  padding: 10px;
+  padding: 5px 15px;
   border-radius: 8px;
   font-weight: bold;
 
@@ -220,12 +229,12 @@
 
 .listNav:focus,
 .categories:focus {
-  background-color: #f65c5c;
+  background-color: #fc1212;
 }
 
 
 .active {
-  background-color: #f64e4e !important;
+  background-color: #fc1212 !important;
 }
 
 
@@ -245,7 +254,7 @@
     display: flex;
     flex: 1;
     color: #f64e4e;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
     width: 100%;
@@ -255,6 +264,10 @@
   .toggleBtn {
     display: block;
   }
+  .profileHeader{
+    max-width: 500px;
+    background-image: none;
+  }
 
   .searchBar,
   .profileHeader,
@@ -262,6 +275,7 @@
     display: none;
     /* Hidden by default on mobile */
     width: 100%;
+   
     text-align: center;
     flex-direction: column;
   }
@@ -293,8 +307,10 @@
     width: 100%;
   }
 
+
   .profileDropdown.showDropdown {
     display: flex;
+    width: 100%;
 
   }
 
@@ -325,18 +341,24 @@
   .profileHeader.show,
   .mainNavigationsUl.show {
     display: flex;
-
+  
   }
 
   .signUpBtn {
     width: 100%;
     max-width: 500px;
     padding: 5px 20px;
-    background-color: #f74f4f;
+    background-color:#ff0d0d;
     color: #fff;
-    border: 1px solid #f74f4f;
+    border: 1px solid #ff0d0d;
     border-radius: 8px;
     cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  .profileDropdown {
+    font-size: 8px;
   }
 }
 

@@ -142,9 +142,9 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-
+                    {user ? (
                     <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
-                        {user ? (
+                        
                             <div className={styles.profileIcon}>
                                 {user.photo ? (
                                     <img src={user.photo} alt={user.firstname} className={styles.profilePhoto} />
@@ -159,12 +159,13 @@ const Navbar = () => {
                                     <a onClick={handleLogout}>Logout</a>
                                 </div>
                             </div>
+                            </div>
                         ) : (
                             <button onClick={toggleSignUpPopup} className={styles.signUpBtn}>
                                 <i className="fas fa-user"></i> Sign Up
                             </button>
                         )}
-                    </div>
+                    
                 </nav>
 
                 <ul
@@ -177,7 +178,7 @@ const Navbar = () => {
                     >
                         <Link className={styles.listNav} href="/" style={
                             activePath === '/'
-                                ? { backgroundColor: '#f65c5c', color: '#ffffff' }
+                                ? { backgroundColor: '#fc1212', color: '#ffffff' }
                                 : {}
                         }>
                             Home
@@ -189,7 +190,7 @@ const Navbar = () => {
                     >
                         <Link className={styles.categories} href="/user/movies-list" style={
                             activePath === '/user/movies-list'
-                                ? { backgroundColor: '#f65c5c', color: '#ffffff' }
+                                ? { backgroundColor: '#fc1212', color: '#ffffff' }
                                 : {}
                         }>
                             Movies

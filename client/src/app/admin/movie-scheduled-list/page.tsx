@@ -137,7 +137,7 @@ const ScheduleList: React.FC = () => {
 
                                   <div key={showDate.date} className={styles.dateCard}>
 
-                                    <strong>Date: {showDate.date}</strong>
+                                    <strong>{showDate.date}</strong>
                                     {showDate.times
                                       .sort((a, b) => a.time.localeCompare(b.time)) // Sort times in ascending order
                                       .map((showTime) => (

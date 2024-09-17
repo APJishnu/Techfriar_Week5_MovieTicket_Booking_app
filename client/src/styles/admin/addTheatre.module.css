@@ -3,19 +3,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 80px;
     padding-top: 170px;
+    background-color: #f9f9f9;
   }
   
   .addTheatreContainer {
     width: 100%;
-    max-width: 600px;
-    background-color: #f9f9f9;
+    max-width: 900px;
+    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 30px;
   }
   
+  .addTheatreContainer h2{
+    text-align: center;
+    color: #000000;
+  }
 
   
   .successMessage {
@@ -32,6 +37,7 @@
   
   /* styles/admin/addTheatre.module.css */
 .theatreForm {
+  padding-top: 50px;
     display: flex;
     flex-direction: column;
   }
@@ -39,22 +45,35 @@
   .formGroup {
     margin-bottom: 15px;
   }
+  .formGroup label {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ff0000;
+  }
   
   .inputField {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px 0px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 0;
+    border-bottom: 2px solid #ddd;
+    color: #000000;
+  }
+  .inputField:focus {
+    outline: none;
+    border-color: #ec1717;
   }
   
   .submitButton {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color:  #ec1717;
+    color: white;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 5px;
+    padding: 15px 20px;
     font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
   }
   
   .submitButton:hover {

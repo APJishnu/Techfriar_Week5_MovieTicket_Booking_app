@@ -86,10 +86,12 @@ const TheatreList: React.FC = () => {
                                         <span>{theatre.capacity}</span>
                                         <span>{theatre.amenities.join(', ')}</span>
                                         <div className={styles.cardActions}>
-                                            <button onClick={() => handleDelete(theatre._id)} className={styles.deleteButton}>
-                                                Delete
+                                            <button>
+                                            <img src="/admin/trash.svg"
+                                            alt="Delete Showtime"
+                                            onClick={() => handleDelete(theatre._id)} className={styles.deleteButton}/>
+                                              
                                             </button>
-                                            <button className={styles.editButton}>Edit</button>
                                         </div>
                                     </div>
                                 </div>

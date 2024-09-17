@@ -92,7 +92,7 @@
   .verifyButton {
     width: 100%;
     padding: 10px;
-    background-color: #235ba06d;
+    background-color:#ff0d0d7a;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -106,18 +106,18 @@
   }
   
   .verifyButton:hover:not(:disabled) {
-    background-color: #286ac0;
+    background-color: #ff0d0d;
   }
   
   .verifyButton:not(:disabled) {
-    background-color: #1d4f91;
+    background-color: #f56f6f;
     cursor: pointer;
   }
   
   .sendButton {
     width: 100%;
     padding: 10px;
-    background-color: #235ba0;
+    background-color: #fe2c2c;
     color: #fff;
     border: none;
     border-radius: 4px;

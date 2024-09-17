@@ -21,6 +21,7 @@
   }
   .container h2{
     text-align: center;
+    color: #000000;
   }
   
   /* Form Styles */
@@ -29,43 +30,46 @@
     flex-direction: column;
     background-color: #ffffff;
     border-radius: 12px;
-    padding: 25px;
+    padding: 20px;
     margin-top: 30px;
   }
   
   .movieForm {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
   }
   
   /* Form Group */
   .formGroup {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     width: 100%;
   }
   
   .label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
+    font-size: 17px;
+    font-weight: 700;
+    color: #ff0000;
   }
   
   .selectField,
   .inputField {
     width: 100%;
-    padding: 12px;
+    padding: 12px 0px;
     font-size: 14px;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 0;
+    border-bottom: 2px solid #ddd;
+    color: #000000;
+    
   }
-  
+
   .selectField:focus,
   .inputField:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #ec1717;
   }
   
   /* Showtime Section */
@@ -86,23 +90,11 @@
     border: 1px solid #ddd;
   }
   
-  .addButton {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .addButton:hover {
-    background-color: #218838;
-  }
+ 
   
   /* Submit Button */
   .submitButton {
-    background-color: #007bff;
+    background-color:  #ec1717;
     color: white;
     border: none;
     border-radius: 5px;
@@ -113,7 +105,7 @@
   }
   
   .submitButton:hover {
-    background-color: #0056b3;
+    background-color: rgb(244, 111, 111)7;
   }
   
   /* Messages */

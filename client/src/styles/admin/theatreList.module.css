@@ -1,6 +1,6 @@
 .mainSection {
     width: 100%;
-    padding: 130px 120px;
+    padding: 130px 80px;
     background-color: #f9f9f9;
     display: flex;
     justify-content: center;
@@ -17,11 +17,10 @@
     position: fixed;
     background-color: #f9f9f9;
     width: 100%;
-    margin-left: -120px;
-    padding: 20px;
-
-    padding-left: 120px;
-    padding-right: 120px;
+    margin-left: -80px;
+    padding: 10px;
+    padding-left: 80px;
+    padding-right: 80px;
     overflow: hidden;
     padding-bottom: 0px;
 }
@@ -31,7 +30,7 @@
 }
 
 .cardContainer {
-    padding-top: 220px;
+    padding-top: 180px;
     overflow: scroll;
 }
 .cardContainer::-webkit-scrollbar {
@@ -53,22 +52,24 @@
 }
 
 .title {
-    font-family: 'Arial Black', sans-serif;
-    font-size: 34px;
+    color: #ff4b4b;
+    font-size: 40px;
 
 }
 
 .addButton {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
+    background-color: #ff4b4b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  height: 50px;
 }
 
 .addButton:hover {
-    background-color: #218838;
+    background-color:#df6464;
 }
 
 .error {
@@ -96,18 +97,17 @@
     flex-direction: column;
     gap: 20px;
 }
-
 .theatreCardHeading {
-    background-color: #9b9b9b;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 0;
+    border-bottom: 2px solid #353434;
+    
+  
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 30px;
-    color: white;
+    color:  #ff4b4b;
 }
 
 .theatreCard {
@@ -138,20 +138,23 @@
     gap: 10px;
 }
 
-.deleteButton,
-.editButton {
-    background-color: #007bff;
-    color: white;
+.cardActions button{
+    background-color: white;
     border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
 }
 
-.deleteButton:hover {
-    background-color: #0056b3;
-}
+
+.deleteButton {
+    cursor: pointer;
+    width: 20px; /* Adjust size as needed */
+    height: 20px; /* Adjust size as needed */
+    transition: opacity 0.3s ease;
+  }
+  
+  .deleteButton:hover {
+    opacity: 0.7;
+  }
+
 
 .editButton {
     background-color: #ffc107;
@@ -171,7 +174,7 @@
 @media(max-width:768px) {
     .mainSection {
         padding: 20px;
-        padding-top: 60px;
+        padding-top: 90px;
     }
 
     .fixedContainer {
@@ -199,6 +202,9 @@
     
 
     }
+    .title{
+        font-size: 35px;
+    }
 
     .cardActions {
 
@@ -224,6 +230,8 @@
     .theatreCard {
         font-size: 10px;
     
-
+    }
+    .title{
+        font-size: 25px;
     }
 }
