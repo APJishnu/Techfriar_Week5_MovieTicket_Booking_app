@@ -37,9 +37,13 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     secure: process.env.NODE_ENV === 'production', // true in production (for HTTPS), false in development
-    httpOnly: true
+    httpOnly: true,
+    maxAge: 1000 * 60 * 15
   }
 }));
+
+app.set('trust proxy', 1); // Trust first proxy for secure cookies
+
 
 app.use(passport.initialize());
 app.use(passport.session());
