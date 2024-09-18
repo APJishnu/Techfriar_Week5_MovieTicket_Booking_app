@@ -13,6 +13,7 @@
   gap: 10px;
   padding-top: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
 }
 
 .nav {
@@ -170,6 +171,9 @@
   border: 1px solid #ff0d0d;
   border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .signUpBtn:hover {
@@ -244,8 +248,9 @@
 
 /* Hide search bar, profile, and navigation items by default on mobile */
 @media (max-width: 768px) {
-  .profileHeaderAdmin{
-
+  .profileHeader,
+  .profileHeaderAdmin,
+  .signUpBtn{
     display: none;
   }
   
@@ -275,6 +280,7 @@
   .profileHeader{
     max-width: 500px;
     background-image: none;
+    display: none;
   }
 
   .searchBar,
@@ -347,15 +353,20 @@
   /* When the toggle button is clicked, search bar, profile, and menu should show */
   .searchBar.show,
   .profileHeader.show,
-  .mainNavigationsUl.show {
+  .mainNavigationsUl.show,
+  .signUpBtn.show {
     display: flex;
   
   }
+
 
   .signUpBtn {
     width: 100%;
     max-width: 500px;
     padding: 5px 20px;
+    height: 40px;
+    align-items: center;
+ 
     background-color:#ff0d0d;
     color: #fff;
     border: 1px solid #ff0d0d;

@@ -161,8 +161,8 @@ const Navbar = () => {
                             </div>
                             </div>
                         ) : (
-                            <button onClick={toggleSignUpPopup} className={styles.signUpBtn}>
-                                <i className="fas fa-user"></i> Sign Up
+                            <button onClick={toggleSignUpPopup} className={`${styles.signUpBtn} ${showMenu ? styles.show : styles.hidden}`}>
+                                 Sign Up
                             </button>
                         )}
                     

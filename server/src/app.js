@@ -22,11 +22,8 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 
 // CORS configuration
-app.use(cors({
-  origin: 'techfriar-week5-movie-ticket-booking-app-f73m.vercel.app/',  // Adjust this to your frontend URL
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true                 // Allow cookies
-}));
+app.use(cors());
+
 
 
 app.use('/uploads', express.static('uploads'));
