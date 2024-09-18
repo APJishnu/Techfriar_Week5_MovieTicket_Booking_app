@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -58,10 +59,10 @@ const timeCategories: { [key: string]: string[] } = {
 
 const MovieSchedule: React.FC = () => {
   const searchParams = useSearchParams();
-  const movieId = searchParams.get("movieId");
+  
 
   const router = useRouter();
-
+  const [movieId, setMovieId] = useState<string | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
   const [theaterSchedules, setTheaterSchedules] = useState<TheaterSchedule[]>([]);
   const [filteredSchedules, setFilteredSchedules] = useState<TheaterSchedule[]>([]);
@@ -71,7 +72,17 @@ const MovieSchedule: React.FC = () => {
   const [selectedTime, setSelectedTime] = useState<string>("All");
   const [weekdays, setWeekdays] = useState<WeekdayButtons>({});
   const [selectedShowtime, setSelectedShowtime] = useState<SelectedShowtime | null>(null);
+
   const [showPopup, setShowPopup] = useState<boolean>(false); // Manage popup state
+
+  
+  useEffect(() => {
+    // Set movieId only in the client
+    if (typeof window !== "undefined") {
+      const id = searchParams.get("movieId");
+      setMovieId(id);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -103,7 +114,8 @@ const MovieSchedule: React.FC = () => {
     };
 
     fetchSchedule();
-  }, [movieId]);
+  }, [movieId, selectedDate]);
+
   const calculateWeekdays = (): WeekdayButtons => {
     const today = new Date();
     const currentDayIndex = today.getDay(); // 0 for Sunday, 1 for Monday, etc.
@@ -205,6 +217,7 @@ const MovieSchedule: React.FC = () => {
     setShowPopup(false);
   };
 
+ 
   const handleBackToSchedule = () => {
     setSelectedShowtime(null);
   };

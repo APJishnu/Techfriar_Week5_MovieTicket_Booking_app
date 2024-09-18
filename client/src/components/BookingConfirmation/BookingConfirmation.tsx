@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./BookingConfirmation.module.css";
 import { useRouter } from 'next/navigation';
-import { sendOtp, verifyOtp, getVerifiedPhone, isPhoneVerificationExpired } from "../../utils/verification";
+import { sendOtp, verifyOtp, getVerifiedPhone } from "../../utils/verification";
+
 
 interface BookingConfirmationProps {
   userDetails: {
@@ -41,6 +42,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const router = useRouter();
 
 
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
   
   useEffect(() => {
     const storedPhone = getVerifiedPhone();
@@ -67,7 +69,8 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     if (!phoneVerified) return alert("Please verify your phone number before proceeding.");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/razorpay-order", { amount: totalPrice * 100 });
+      const response = await axios.post(`${apiBaseUrl}/api/razorpay-order`, { amount: totalPrice * 100 });
+
       const { data } = response;
       if (!data.success) return alert("Error initiating payment.");
 
@@ -122,8 +125,11 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
             qrCodeUrl: encodedQrCodeUrl,
         }).toString();
 
-        // Redirect to the booking QR page
-        router.push(`/user/booking-qr-code?${queryParams}`);
+        try {
+          router.push(`/user/booking-qr-code?${queryParams}`);
+        } catch (error) {
+          console.error('Navigation error:', error);
+        }
     
       } else {
         alert("Error confirming booking.");
