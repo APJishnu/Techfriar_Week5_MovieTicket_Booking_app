@@ -31,21 +31,12 @@ interface Schedule {
   showtimes: Showtime[];
 }
 
-const MovieDetailsPageComponent: React.FC = () => {
+const MovieDetails: React.FC = () => {
   const searchParams = useSearchParams();
-
+  const movieId = searchParams.get("movieId");
   const router = useRouter();
-  const [movieId, setMovieId] = useState<string | null>(null);
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const id = searchParams.get("movieId");
-      setMovieId(id);
-    }
-  }, [searchParams]);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -124,4 +115,4 @@ const MovieDetailsPageComponent: React.FC = () => {
   );
 };
 
-export default MovieDetailsPageComponent;
+export default MovieDetails;

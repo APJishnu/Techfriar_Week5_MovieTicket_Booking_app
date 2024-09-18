@@ -4,7 +4,7 @@ import MovieDetailsPageComponent from "./component/MovieDetailsPageComponent";
 const MovieDetailsPage: React.FC = () => {
 
   return (
-    <Suspense fallback={<div>Loading QR Code...</div>}>
+    <Suspense fallback={<div>Loading ...</div>}>
     <div>
         <MovieDetailsPageComponent />
     </div>

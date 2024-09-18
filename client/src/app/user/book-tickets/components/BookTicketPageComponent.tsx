@@ -1,11 +1,10 @@
-"use client"; // Ensure client-side rendering
-
+"use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams, useRouter } from "next/navigation";
 import styles from "../book-tickets.module.css";
-import Seats from "@/components/Seats/Seats";
-import Popup from "./popup/Popup"; // Import the Popup component
+import Seats from "../../../../components/Seats/Seats";
+import Popup from "../../book-tickets/components/popup/Popup"; // Import the Popup component
 import {isAuthenticated} from '../../../../utils/auth';
 
 type Movie = {
@@ -57,28 +56,22 @@ const timeCategories: { [key: string]: string[] } = {
   Night: ["23:00"],
 };
 
-const BookTicketPageComponent: React.FC = () => {
+const MovieSchedule: React.FC = () => {
   const searchParams = useSearchParams();
+  const movieId = searchParams.get("movieId");
+
   const router = useRouter();
-  const [movieId, setMovieId] = useState<string | null>(null);
+
   const [movie, setMovie] = useState<Movie | null>(null);
   const [theaterSchedules, setTheaterSchedules] = useState<TheaterSchedule[]>([]);
   const [filteredSchedules, setFilteredSchedules] = useState<TheaterSchedule[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split("T")[0]);
   const [searchTheater, setSearchTheater] = useState<string>("");
-
   const [selectedTime, setSelectedTime] = useState<string>("All");
   const [weekdays, setWeekdays] = useState<WeekdayButtons>({});
   const [selectedShowtime, setSelectedShowtime] = useState<SelectedShowtime | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false); // Manage popup state
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const id = searchParams.get("movieId");
-      setMovieId(id);
-    }
-  }, [searchParams]);
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -110,30 +103,33 @@ const BookTicketPageComponent: React.FC = () => {
     };
 
     fetchSchedule();
-  }, [movieId, selectedDate]);
-
+  }, [movieId]);
   const calculateWeekdays = (): WeekdayButtons => {
     const today = new Date();
-    const currentDayIndex = today.getDay();
+    const currentDayIndex = today.getDay(); // 0 for Sunday, 1 for Monday, etc.
 
-    const daysUntilSunday = (7 - currentDayIndex) % 7;
+    // Calculate how many days are left until Sunday
+    const daysUntilSunday = (7 - currentDayIndex) % 7; // This will be 0 if today is Sunday
 
     const weekdayButtons: WeekdayButtons = {};
 
+    // Loop from today until the upcoming Sunday
     for (let i = 0; i <= daysUntilSunday; i++) {
       const date = new Date(today);
-      date.setDate(today.getDate() + i);
+      date.setDate(today.getDate() + i); // Add 'i' days to the current date
 
-      const formattedDate = date.toISOString().split("T")[0];
-      const dayName = date.toLocaleDateString('en-IN', { weekday: 'long' });
-      const dayNumber = date.getDate();
-      const month = date.toLocaleDateString('en-IN', { month: 'long' });
+      const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
+      const dayName = date.toLocaleDateString('en-IN', { weekday: 'long' }); // Get day name in Indian locale
+      const dayNumber = date.getDate(); // Day of the month
+      const month = date.toLocaleDateString('en-IN', { month: 'long' }); // Get month name in Indian locale
 
       weekdayButtons[formattedDate] = { dayName, dayNumber, month };
     }
 
     return weekdayButtons;
   };
+
+
 
   useEffect(() => {
     filterSchedules();
@@ -201,7 +197,7 @@ const BookTicketPageComponent: React.FC = () => {
     if (isAuthenticated()) {
       setSelectedShowtime({ theatreId, date: showDate, time: showTime });
     } else {
-      setShowPopup(true);
+      setShowPopup(true); // Show the popup if not authenticated
     }
   };
 
@@ -209,22 +205,29 @@ const BookTicketPageComponent: React.FC = () => {
     setShowPopup(false);
   };
 
+  const handleLoginRedirect = () => {
+    router.push('/login'); // Redirect to login page
+  };
+
   const handleBackToSchedule = () => {
     setSelectedShowtime(null);
   };
 
   return (
+    <>
     <section className={styles.scheduleSection}>
       {showPopup && (
         <Popup
           message="Please log in or register to book tickets."
           onClose={handlePopupClose}
+
+        // Redirect to register page
         />
       )}
       {selectedShowtime ? (
         <div className={styles.seatsSection}>
           <button onClick={handleBackToSchedule} className={styles.backButton}>
-            Back
+            back
           </button>
           <Seats
             movieId={movieId!}
@@ -237,40 +240,86 @@ const BookTicketPageComponent: React.FC = () => {
         <>
           <div className={styles.movieHeader}>
             <h2>{movie?.title}</h2>
-            {movie?.genre?.split(",").map((g, index) => (
+            {movie?.genre?.split(',').map((g, index) => (
               <span className={styles.genre} key={index}>
-                {g.trim()}
-                {index < (movie.genre?.split(",").length ?? 0) - 1 ? " " : ""}
+                {g.trim()}{index < (movie.genre?.split(',').length ?? 0) - 1 ? ' ' : ''}
               </span>
             ))}
-            <p>{movie?.language} | {movie?.duration}</p>
+
+            <p>{movie?.language} | {movie?.duration} </p>
             <p>Rating: {movie?.rating} | Release Date: {movie?.releaseDate}</p>
           </div>
 
           <div className={styles.filters}>
-            {/* Weekday slider and filters */}
+            <div className={styles.weekdaySliderDiv}>
+              <button className={`${styles.arrowLeft} ${styles.left}`} ></button>
+              <div className={styles.weekdaySlider}>
+
+                {Object.entries(weekdays).map(([date, { dayName, dayNumber, month }]) => (
+                  <div
+                    key={date}
+                    className={`${styles.weekdayButton} ${selectedDate === date ? styles.active : ""}`}
+                    onClick={() => handleDateChange(date)}
+                  >
+                    <div>{dayName}</div>
+                    <span>{dayNumber}</span>
+                    <div>{month}</div>
+                  </div>
+                ))}
+
+              </div>
+              <button className={`${styles.arrowRight} ${styles.right}`}></button>
+            </div>
+            <div>
+
+              <input
+                type="text"
+                placeholder="Search by cinemas ..."
+                value={searchTheater}
+                onChange={handleSearchChange}
+                className={styles.filterInput}
+              />
+
+              <select value={selectedTime} onChange={handleTimeChange} className={styles.filterSelect}>
+                <option value="All">All Times</option>
+                {Object.keys(timeCategories).map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+
+            </div>
           </div>
 
           <div className={styles.scheduleList}>
-            {filteredSchedules.length === 0 ? (
-              <p className={styles.noSchedules}>No schedules found. Please try again later.</p>
+            {!filteredSchedules ? (
+              <p>Loading schedules...</p> // Display loading message when data is undefined or not yet available
+            ) : filteredSchedules.length === 0 ? (
+              <p className={styles.noSchedules}>No schedules found. Please try again later.</p> // Display error message if no schedules are available
             ) : (
               filteredSchedules.map((schedule) => (
                 <div key={schedule.theatreName} className={styles.theatreContainer}>
-                  <h3>{schedule.theatreName} - {schedule.location}</h3>
-                  {schedule.movies.map((movie, movieIndex) => (
-                    <div key={movie.movieTitle + movieIndex} className={styles.movieSchedule}>
-                      {movie.showDates.map((showDate, dateIndex) => (
-                        <div key={showDate.date + dateIndex} className={styles.dateSchedule}>
-                          <h4>{new Date(showDate.date).toLocaleDateString()}</h4>
-                          <div className={styles.showtimes}>
-                            {showDate.times.map((showTime, timeIndex) => (
+                  <h3>
+                    {schedule.theatreName} - {schedule.location}
+                  </h3>
+                  {schedule.movies.map((movie) => (
+                    <div key={movie.movieTitle} className={styles.movieContainer}>
+                      {movie.showDates.map((showDate) => (
+                        <div key={showDate.date} className={styles.showDateContainer}>
+                          <h5>{new Date(showDate.date).toDateString()}</h5>
+                          <div className={styles.showTimes}>
+                            {showDate.times.map((showTime, index) => (
                               <button
-                                key={showTime.time + timeIndex}
-                                className={styles.showtimeButton}
+                                key={index}
                                 onClick={() =>
-                                  handleShowtimeClick(schedule.theatreName, showDate.date, showTime.time)
+                                  handleShowtimeClick(
+                                    schedule.theatreName,
+                                    showDate.date,
+                                    showTime.time
+                                  )
                                 }
+                                className={styles.showtimeButton}
                               >
                                 {showTime.time}
                               </button>
@@ -287,7 +336,8 @@ const BookTicketPageComponent: React.FC = () => {
         </>
       )}
     </section>
+    </>
   );
 };
 
-export default BookTicketPageComponent;
+export default MovieSchedule;
