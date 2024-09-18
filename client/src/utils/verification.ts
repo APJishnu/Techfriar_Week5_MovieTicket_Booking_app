@@ -6,7 +6,7 @@ import axios from "axios";
 export const sendOtp = async (phone: string) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/send-otp",
+      "https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/send-otp",
       { field: "phone", value: phone },
       { withCredentials: true }
     );
@@ -28,7 +28,7 @@ export const verifyOtp = async (
 ) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/verify-otp",
+      "https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/verify-otp",
       {
         field: "phone",
         value: phone,

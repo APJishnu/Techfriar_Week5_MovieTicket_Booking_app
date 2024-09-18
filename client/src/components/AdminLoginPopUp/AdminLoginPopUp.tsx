@@ -24,7 +24,7 @@ const AdminLoginPopup: React.FC<AdminLoginPopupProps> = ({ onClose }) => {
     setSuccess(null);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/admin/admin-login', { email, password });
+      const response = await axios.post('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/admin-login', { email, password });
       const data = response.data;
       
       if (data.success) {

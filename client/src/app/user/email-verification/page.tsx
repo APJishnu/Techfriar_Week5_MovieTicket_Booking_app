@@ -58,7 +58,7 @@ const EmailVerification: React.FC = () => {
     setError("");
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/send-otp",
+        "https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/send-otp",
         { field: "email", value: email },
         { withCredentials: true }
       );
@@ -85,7 +85,7 @@ const EmailVerification: React.FC = () => {
     setError("");
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/verify-otp",
+        "https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/verify-otp",
         { field: "email", value: email, otp },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );

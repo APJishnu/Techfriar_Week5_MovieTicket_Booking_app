@@ -77,7 +77,7 @@ const MovieSchedule: React.FC = () => {
     const fetchSchedule = async () => {
       if (movieId) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/book-tickets/${movieId}`);
+          const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/book-tickets/${movieId}`);
           const scheduleData = response.data;
 
           if (scheduleData.length > 0) {

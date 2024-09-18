@@ -42,8 +42,8 @@ const ScheduleMovie: React.FC = () => {
     const fetchData = async () => {
       try {
         const [moviesResponse, theatresResponse] = await Promise.all([
-          axios.get('http://localhost:5000/api/admin/movies-list'),
-          axios.get('http://localhost:5000/api/admin/theatre-list')
+          axios.get('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/movies-list'),
+          axios.get('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/theatre-list')
         ]);
         setMovies(moviesResponse.data);
         setTheatres(theatresResponse.data);
@@ -72,7 +72,7 @@ const ScheduleMovie: React.FC = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/admin/add-movie-schedule', {
+      const response = await axios.post('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/add-movie-schedule', {
         movie: selectedMovie,
         theatre: selectedTheatre,
         showtime

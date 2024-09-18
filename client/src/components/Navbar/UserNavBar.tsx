@@ -69,7 +69,7 @@ const Navbar = () => {
 
         if (value.length > 0) {
             try {
-                const response = await axios.get(`http://localhost:5000/api/search-movies?title=${value}`);
+                const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/search-movies?title=${value}`);
                 setSearchResults(response.data);
             } catch (error) {
             }

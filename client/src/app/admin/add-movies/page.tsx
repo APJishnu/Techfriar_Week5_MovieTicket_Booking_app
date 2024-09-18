@@ -37,7 +37,7 @@ const AddMovies: React.FC = () => {
     setSuccessMessage("");
 
     try {
-      const response = await axios.get(`http://localhost:5000/api/admin/movies-lookup`, {
+      const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/movies-lookup`, {
         params: {
           title: searchTitle,
           year: searchYear

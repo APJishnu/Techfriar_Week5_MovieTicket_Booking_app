@@ -45,7 +45,7 @@ const ScheduleList: React.FC = () => {
     const fetchSchedules = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/admin/schedule-details"
+          "https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/schedule-details"
         );
         setSchedules(response.data);
       } catch (error) {
@@ -69,7 +69,7 @@ const ScheduleList: React.FC = () => {
   const handleDeleteShowtime = async (scheduleId: string, movieId: string, date: string, time: string) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/admin/schedule/${scheduleId}/showtime`,
+        `https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/schedule/${scheduleId}/showtime`,
         { data: { movieId, date, time } } // Send movieId, date, and time in request body
       );
 

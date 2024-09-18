@@ -53,7 +53,7 @@ const Seats: React.FC<SeatsProps> = ({ movieId, theatreId, showDate, showTime })
     const fetchSeats = async () => {
       setLoading(true); // Set loading to true when fetching data
       try {
-        const response = await axios.get("http://localhost:5000/api/seats", {
+        const response = await axios.get("https://techfriar-week5-movieticket-booking-app.onrender.com/api/seats", {
           params: {
             movieId,
             theatreId,

@@ -42,7 +42,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const router = useRouter();
 
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://techfriar-week5-movieticket-booking-app.onrender.com';
   
   useEffect(() => {
     const storedPhone = getVerifiedPhone();

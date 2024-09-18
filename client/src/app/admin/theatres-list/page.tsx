@@ -22,7 +22,7 @@ const TheatreList: React.FC = () => {
     useEffect(() => {
         const fetchTheatres = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/admin/theatre-list');
+                const response = await axios.get('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/theatre-list');
                 setTheatres(response.data);
             } catch (error) {
                 setErrorMessage('Failed to fetch theatres. Please try again later.');
@@ -33,7 +33,7 @@ const TheatreList: React.FC = () => {
 
     const handleDelete = async (theatreId: string) => {
         try {
-            await axios.delete(`http://localhost:5000/api/admin/theatre-delete/${theatreId}`);
+            await axios.delete(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/theatre-delete/${theatreId}`);
             setTheatres(theatres.filter((theatre) => theatre._id !== theatreId));
         } catch (error) {
             setErrorMessage('Failed to delete the theatre. Please try again.');

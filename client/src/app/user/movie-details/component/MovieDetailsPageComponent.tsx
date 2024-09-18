@@ -42,7 +42,7 @@ const MovieDetails: React.FC = () => {
     const fetchMovieDetails = async () => {
       if (movieId) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/movie-details/${movieId}`);
+          const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/movie-details/${movieId}`);
           setSchedule(response.data);
         } catch (error) {
           setErrorMessage("Failed to fetch movie details.");

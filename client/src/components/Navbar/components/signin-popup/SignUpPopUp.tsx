@@ -7,7 +7,7 @@
 
     const SignUpPopup: React.FC<{ toggleSignUpPopup: () => void }> = ({ toggleSignUpPopup }) => {
         const handleGoogleSignIn = () => {
-          window.location.href = 'http://localhost:5000/api/auth/google';
+          window.location.href = 'https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/google';
         };
         return (
             <div className={styles.signUpPopupOverlay}>

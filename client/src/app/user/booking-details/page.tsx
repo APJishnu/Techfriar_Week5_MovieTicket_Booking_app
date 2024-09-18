@@ -41,7 +41,7 @@ const BookingDetails = () => {
         const fetchBookingDetails = async () => {
             if (userId) {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/booking-details/${userId}`);
+                    const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/booking-details/${userId}`);
                     setBookingData(response.data);
                     setLoading(false);
                 } catch (err) {

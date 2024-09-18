@@ -45,7 +45,7 @@ const AddTheatre: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/admin/add-theatre", theatreData);
+      const response = await axios.post("https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/add-theatre", theatreData);
 
       if (response.status === 200) {
         setSuccessMessage("Theatre added successfully!");

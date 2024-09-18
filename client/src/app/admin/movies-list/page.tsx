@@ -24,7 +24,7 @@ const MovieList: React.FC = () => {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/admin/movies-list');
+                const response = await axios.get('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/movies-list');
                 setMovies(response.data);
             } catch (error) {
                 setErrorMessage('Failed to fetch movies. Please try again later.');
@@ -35,7 +35,7 @@ const MovieList: React.FC = () => {
 
     const handleDelete = async (movieId: string) => {
         try {
-            await axios.delete(`http://localhost:5000/api/admin/movie-delete/${movieId}`);
+            await axios.delete(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/movie-delete/${movieId}`);
             setMovies(movies.filter((movie) => movie._id !== movieId));
         } catch (error) {
             setErrorMessage('Failed to delete the movie. Please try again.');
