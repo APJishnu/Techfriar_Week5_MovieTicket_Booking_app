@@ -31,9 +31,7 @@
     "passport-google-oauth20": "^2.0.0",
     "qrcode": "^1.5.4",
     "razorpay": "^2.9.4",
-    "twilio": "^5.3.0"
-  },
-  "devDependencies": {
+    "twilio": "^5.3.0",
     "nodemon": "^3.1.4"
   }
 }
