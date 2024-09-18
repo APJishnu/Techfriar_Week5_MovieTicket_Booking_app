@@ -99,7 +99,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://techfriar-week5-m
 
   const confirmBooking = async (paymentId: string) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/confirm-booking", {
+      const response = await axios.post("https://techfriar-week5-movieticket-booking-app.onrender.com/api/confirm-booking", {
         userDetails: {
           ...userDetails,
           phone,
