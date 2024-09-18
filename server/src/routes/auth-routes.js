@@ -15,13 +15,13 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 
 
 router.get('/google/callback', passport.authenticate('google', {
-  failureRedirect: 'http://localhost:3000',
+  failureRedirect: 'techfriar-week5-movie-ticket-booking-app-f73m.vercel.app/',
 }), (req, res) => {
   // Create a JWT token
   const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
   // Redirect with token only
-  res.redirect(`http://localhost:3000/user/email-verification?token=${token}`);
+  res.redirect(`techfriar-week5-movie-ticket-booking-app-f73m.vercel.app/user/email-verification?token=${token}`);
 });
 
 

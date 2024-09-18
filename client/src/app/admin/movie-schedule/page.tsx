@@ -22,7 +22,7 @@ interface Showtime {
 const predefinedShowtimes = [
   "06:30",
   "10:00",
-  "13:30" ,
+  "13:30",
   "16:00",
   "19:30",
   "23:00",
@@ -38,6 +38,12 @@ const ScheduleMovie: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string>('');
 
   useEffect(() => {
+
+    const now = new Date();
+    const currentDate = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+    const currentTime = now.toTimeString().split(' ')[0].substring(0, 5); // HH:MM format
+
+    setShowtime({ date: currentDate, time: currentTime })
     // Fetch movies and theatres
     const fetchData = async () => {
       try {
@@ -87,8 +93,8 @@ const ScheduleMovie: React.FC = () => {
         setErrorMessage('Failed to schedule the movie. Please try again.');
       }
     }
-  };  
-               
+  };
+
   return (
     <div className={styles.mainSection}>
       <div className={styles.container}>

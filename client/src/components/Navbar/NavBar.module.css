@@ -111,12 +111,15 @@
   position: relative;
   display: flex;
   width: 100%;
+  max-width: 100px;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
   color: #000000;
-  display: none;
+  display: flex;
 }
+
+
 
 .profileIcon {
   display: flex;
@@ -241,6 +244,11 @@
 
 /* Hide search bar, profile, and navigation items by default on mobile */
 @media (max-width: 768px) {
+  .profileHeaderAdmin{
+
+    display: none;
+  }
+  
 
   .nav {
     flex-direction: column;
