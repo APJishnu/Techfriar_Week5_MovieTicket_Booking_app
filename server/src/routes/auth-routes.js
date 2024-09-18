@@ -87,9 +87,11 @@ router.post('/send-otp', async (req, res) => {
 
 // Route to verify OTP
 router.post('/verify-otp', async (req, res) => {
-  
+
   const { field, value, otp, userId } = req.body;
   try {
+    console.log(req.session);
+    
     const sessionOtp = req.session.otp;
 
     if (!sessionOtp) {
