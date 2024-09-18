@@ -32,7 +32,7 @@ app.use('/uploads', express.static('uploads'));
 
 // Session configuration
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false, httpOnly: true },

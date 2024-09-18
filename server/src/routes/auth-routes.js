@@ -87,13 +87,13 @@ router.post('/send-otp', async (req, res) => {
 
 // Route to verify OTP
 router.post('/verify-otp', async (req, res) => {
+  
   const { field, value, otp, userId } = req.body;
-
   try {
     const sessionOtp = req.session.otp;
 
     if (!sessionOtp) {
-      return res.status(400).json({ message: 'No OTP found. Please request an OTP first.' });
+      return res.status(200).json({ message: 'No OTP found. Please request an OTP first.' });
     }
     // Check if OTP has expired
     if (Date.now() > sessionOtp.expiryTime) {
