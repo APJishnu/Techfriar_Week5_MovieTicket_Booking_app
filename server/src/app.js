@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const MongoStore = require('connect-mongo');
 const Routes = require('./routes/routes');
 const authRoutes = require('./routes/auth-routes'); // Add auth routes
 const passport = require('passport');
@@ -35,12 +35,16 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl:process.env.MONGO_URI,
+  }),
   cookie: {
     secure: process.env.NODE_ENV === 'production', // true in production (for HTTPS), false in development
-    httpOnly: true,
+    httpOnly:  process.env.NODE_ENV === 'development',
     maxAge: 1000 * 60 * 15
   }
 }));
+
 
 app.set('trust proxy', 1); // Trust first proxy for secure cookies
 
