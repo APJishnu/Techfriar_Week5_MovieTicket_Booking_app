@@ -24,13 +24,20 @@ const Navbar = () => {
 
     const pathname = usePathname();
     const router = useRouter();
-
     const [activePath, setActivePath] = useState<string>(pathname);
 
     useEffect(() => {
         // Update the active path whenever the route changes
         setActivePath(pathname);
     }, [pathname]);
+    useEffect(() => {
+        if(!user){
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            localStorage.removeItem("verifiedPhone");
+            localStorage.removeItem("phoneVerified");
+        }
+    }, []);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -44,6 +51,7 @@ const Navbar = () => {
 
         fetchUser();
     }, []);
+
 
     const handleToggleClick = () => {
         setShowMenu(!showMenu);
@@ -144,7 +152,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    {user ? (
+                    {user? (
                     <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
                         
                             <div className={styles.profileIcon}>
