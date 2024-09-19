@@ -65,15 +65,6 @@ const Navbar = () => {
         setSearchResults([]);
     };
 
-    useEffect(() => {
-        if(!user){
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userData');
-            localStorage.removeItem("verifiedPhone");
-            localStorage.removeItem("phoneVerified");
-        }
-    }, []);
-
     const handleSearchInput = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchTerm(value);
@@ -153,7 +144,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    {user ? (
+                    {user? (
                     <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
                         
                             <div className={styles.profileIcon}>
