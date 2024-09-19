@@ -15,12 +15,12 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 
 
 router.get('/google/callback', passport.authenticate('google', {
-  failureRedirect: 'https://techfriar-week5-movie-ticket-booking-app-f73-apjishnus-projects.vercel.app',
+  failureRedirect: 'https://techfriar-week5-movie-ticket-booking-app.vercel.app',
 }), (req, res) => {
   // Create a JWT token
   const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
   // Redirect with token only
-  res.redirect(`https://techfriar-week5-movie-ticket-booking-app-f73-apjishnus-projects.vercel.app/user/email-verification?token=${token}`);
+  res.redirect(`https://techfriar-week5-movie-ticket-booking-app.vercel.app/user/email-verification?token=${token}`);
 });
 
 
@@ -28,7 +28,7 @@ router.get('/user-details', verifyToken, async (req, res) => {
   try {
     const userId = req.user.id; // Assuming verifyToken middleware adds user to req
     const user = await userHelper.getUserDetails(userId);
-    console.log(user)
+
     res.json(user);
   } catch (error) {
     if (error.message === 'User not found') {
