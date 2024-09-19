@@ -112,7 +112,7 @@ const Navbar = () => {
                     <div className={styles.logo}>
                         <h1>cineMagic</h1>
                         <button className={styles.toggleBtn} onClick={handleToggleClick}>
-                            {showMenu ? 'x' : '☰'}
+                            {showMenu ? ' ✕' : '☰'}
                         </button>
                     </div>
 
@@ -148,7 +148,7 @@ const Navbar = () => {
                     <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
                         
                             <div className={styles.profileIcon}>
-                                {user.photo ? (
+                                {user.photo? (
                                     <img src={user.photo} alt={user.firstname} className={styles.profilePhoto} />
                                 ) : (
                                     <i className="fas fa-user-circle"></i>

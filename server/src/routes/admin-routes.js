@@ -96,6 +96,21 @@ module.exports = {
     }
   },
 
+  deleteTheatreRouter: async (req, res) => {
+    try {
+      const theatreId = req.params.id;
+      const deletedTheatre = await adminHelper.deleteTheatre(theatreId);
+
+      if (!deletedTheatre) {
+        return res.status(204).json({ message: 'Movie not found' });
+      }
+
+      res.status(200).json({ message: 'Theatre deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to delete the Theatre. Please try again.' });
+    }
+  },
+
   getMoviesListRouter: async (req, res) => {
     try {
       const moviesDetails = await adminHelper.getMoviesList();
@@ -134,15 +149,15 @@ module.exports = {
 
     try {
       if (!movie || !theatre || !showtime || !showtime.date || !showtime.time) {
-        return res.status(400).json({ error: 'Movie, theatre, and showtime (including date and time) are required.' });
+        return res.status(401).json({ error: 'Movie, theatre, and showtime (including date and time) are required.' });
       }
 
       const addedSchedule = await adminHelper.addMovieSchedule(movie, theatre, showtime);
       if (addedSchedule.error) {
-        return res.status(400).json({ error: addedSchedule.error });
+        return res.status(401).json({ error: addedSchedule.error });
       }
 
-      res.status(201).json({ message: 'Movie scheduled successfully!' });
+      res.status(200).json({ message: 'Movie scheduled successfully!' });
     } catch (error) {
       res.status(500).json({ error: 'Failed to schedule the movie. Please try again.' });
     }

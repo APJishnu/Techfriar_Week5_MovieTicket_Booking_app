@@ -130,6 +130,7 @@
 .aboutSection h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
+  color: #e50914;
 }
 
 .aboutSection p {
@@ -142,7 +143,7 @@
   /* Slightly transparent background for readability */
   padding: 20px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.259);
+  border: 1px solid rgba(63, 62, 62, 0.259);
   position: relative;
   z-index: 1;
   /* Ensure this content is above the background */
@@ -151,6 +152,7 @@
 .castCrewSection h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
+  color: #e50914;
 }
 
 .castList,
@@ -171,7 +173,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: fill;
   margin-bottom: 10px;
 }
 
@@ -206,14 +208,14 @@
   .movieInfoContainer::before {
     content: "";
     position: absolute;
-    top: 350px;
+    top: 0px;
     left: 0px;
     width: 100%;
     /* Adjust width for blur effect on the left side */
     height: 5800px;
     background: rgb(0, 0, 0);
     /* Semi-transparent black overlay */
-    filter: blur(30px);
+    filter: blur(50px);
     /* Adjust blur strength as needed */
     z-index: -1;
     /* Place it behind the content */

@@ -12,7 +12,7 @@
   background: #ffffff;
   gap: 10px;
   padding-top: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
   
 }
 
@@ -253,7 +253,8 @@
   .signUpBtn{
     display: none;
   }
-  
+
+
 
   .nav {
     flex-direction: column;
@@ -301,6 +302,7 @@
     flex-direction: column;
     gap: 20px;
 
+
   }
 
   .mainNavigationsUl {
@@ -321,10 +323,10 @@
     width: 100%;
   }
 
-
   .profileDropdown.showDropdown {
     display: flex;
     width: 100%;
+    
 
   }
 
@@ -356,9 +358,13 @@
   .mainNavigationsUl.show,
   .signUpBtn.show {
     display: flex;
+    
   
   }
+  .mainNavigationsUl.show{
+  box-shadow: 0px 200px 70px 160px rgba(0, 0, 0, 0.495);
 
+  }
 
   .signUpBtn {
     width: 100%;
@@ -366,7 +372,6 @@
     padding: 5px 20px;
     height: 40px;
     align-items: center;
- 
     background-color:#ff0d0d;
     color: #fff;
     border: 1px solid #ff0d0d;

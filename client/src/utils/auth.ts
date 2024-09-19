@@ -19,7 +19,7 @@ export const getUser = async (): Promise<User | null> => {
     if (!token) return null;
 
     try {
-        const response = await axios.get(`${API_URL}/user-details`, {
+        const response = await axios.get(`${API_URL}/api/auth/user-details`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 

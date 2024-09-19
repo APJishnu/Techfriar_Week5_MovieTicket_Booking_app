@@ -47,7 +47,7 @@ const ScheduleList: React.FC = () => {
     const fetchSchedules = async () => {
       try {
         const response = await axios.get(
-          "https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/schedule-details"
+          `${API_URL}/api/admin/schedule-details`
         );
         setSchedules(response.data);
       } catch (error) {
@@ -57,13 +57,16 @@ const ScheduleList: React.FC = () => {
     fetchSchedules();
   }, []);
 
+  
   // Group schedules by theatre name
   const groupedSchedules = schedules.reduce((acc, schedule) => {
-    const theatreName = schedule.theatre.theatreName;
-    if (!acc[theatreName]) {
-      acc[theatreName] = [];
+    const theatreName = schedule.theatre?.theatreName;  // Use optional chaining here
+    if (theatreName) {
+      if (!acc[theatreName]) {
+        acc[theatreName] = [];
+      }
+      acc[theatreName].push(schedule);
     }
-    acc[theatreName].push(schedule);
     return acc;
   }, {} as { [theatreName: string]: Schedule[] });
 

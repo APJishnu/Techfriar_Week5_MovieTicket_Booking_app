@@ -104,19 +104,19 @@
 
     .carousel {
         width: 100%;
-        height: 200px; /* Adjusted height for better alignment on tablets */
+        height: 300px; /* Adjusted height for better alignment on tablets */
         border-radius: 12px; /* Slightly smaller border-radius for smaller screens */
        
     }
 
     .carouselSlide {
         width: 100%;
-        height: 200px;
+        height: 300px;
     }
 
     .carouselSlide img {
         width: 100%;
-        height: 200px;
+        height: 300px;
         object-fit: cover; /* Ensures images retain aspect ratio while covering the container */
     }
 
@@ -153,24 +153,25 @@
     .carouselContainer {
         width: 100vh;
         padding: 0;
+     
     }
 
     .carousel {
-        height: 150px; /* Adjusted height for better alignment on tablets */
+        height: 200px; /* Adjusted height for better alignment on tablets */
         border-radius: 12px; /* Slightly smaller border-radius for smaller screens */
        
     }
 
     .carouselSlide {
-        height: 150px;
+        height: 200px;
     }
 
     .carouselSlide img {
-        height: 150px;
-        object-fit: cover; /* Ensures images retain aspect ratio while covering the container */
+        height: 200px;
+        object-fit:fill; /* Ensures images retain aspect ratio while covering the container */
     }
     .carouselOverlay {
         bottom: 5%; /* Adjusted to keep the text closer to the bottom */
-        left: 22%;
+        left: 27%;
     }
 }

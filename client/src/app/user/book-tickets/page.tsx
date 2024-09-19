@@ -5,7 +5,7 @@ import BookTicketPageComponent from "./components/BookTicketPageComponent";
 
 const BookTicketsPage = () => {
   return (
-    <Suspense fallback={<div>Loading QR Code...</div>}>
+    <Suspense fallback={<div>Loading ...</div>}>
     <div>
       <BookTicketPageComponent />
     </div>

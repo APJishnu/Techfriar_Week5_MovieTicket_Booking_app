@@ -98,7 +98,7 @@ const MovieDetails: React.FC = () => {
         <div className={styles.castList}>
           {schedule.movie.cast.map((actor, index) => (
             <div key={index} className={styles.castMember}>
-              <img src={!actor ? `/images/actors/${actor}.jpg` : '/profile.svg'} alt={actor} className={styles.actorImage} />
+              <img src={!actor ? `/images/actors/${actor}.jpg` : '/profile.png'} alt={actor} className={styles.actorImage} />
               <p>{actor}</p>
             </div>
           ))}
@@ -107,7 +107,7 @@ const MovieDetails: React.FC = () => {
         <h3>Crew</h3>
         <div className={styles.crewList}>
           <div className={styles.crewMember}>
-            <img src="/profile.svg" alt={schedule.movie.director} className={styles.crewImage} />
+            <img src="/profile.png" alt={schedule.movie.director} className={styles.crewImage} />
             <p>{schedule.movie.director} - Director</p>
           </div>
         </div>

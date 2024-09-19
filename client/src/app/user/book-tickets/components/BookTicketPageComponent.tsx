@@ -6,6 +6,7 @@ import styles from "../book-tickets.module.css";
 import Seats from "../../../../components/Seats/Seats";
 import Popup from "../../book-tickets/components/popup/Popup"; // Import the Popup component
 import {isAuthenticated} from '../../../../utils/auth';
+import { API_URL } from "@/utils/api";
 
 type Movie = {
   title: string;
@@ -77,7 +78,7 @@ const MovieSchedule: React.FC = () => {
     const fetchSchedule = async () => {
       if (movieId) {
         try {
-          const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/book-tickets/${movieId}`);
+          const response = await axios.get(`${API_URL}/api/book-tickets/${movieId}`);
           const scheduleData = response.data;
 
           if (scheduleData.length > 0) {

@@ -118,6 +118,18 @@ module.exports = {
 
   },
 
+  deleteTheatre: async (theatreId) => {
+    try {
+      await Theatre.findByIdAndDelete(theatreId);
+      await movieSchedule.findByIdAndDelete(theatreId);
+
+      return true;
+    } catch (error) {
+      throw new Error('Error deleting Theatre details');
+    }
+
+  },
+
 
   getTheatreList: async () => {
     try {

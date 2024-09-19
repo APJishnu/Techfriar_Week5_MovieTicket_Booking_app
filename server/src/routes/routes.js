@@ -26,6 +26,7 @@ router.post('/admin/add-theatre', adminRouter.addTheatreRouter);
 router.get('/admin/movies-list', adminRouter.getMoviesListRouter);
 router.delete('/admin/movie-delete/:id', adminRouter.deleteMovieRouter);
 router.get('/admin/theatre-list', adminRouter.getTheatreListRouter);
+router.delete('/admin/Theatre-delete/:id', adminRouter.deleteTheatreRouter);
 router.post('/admin/add-movie-schedule', adminRouter.addMovieScheduleRouter);
 router.get('/admin/schedule-details', adminRouter.getScheduleDetailsRouter);
 router.delete('/admin/schedule/:scheduleId/showtime', adminRouter.deleteShowtimeRouter);

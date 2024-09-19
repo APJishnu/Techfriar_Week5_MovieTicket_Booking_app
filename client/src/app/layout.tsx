@@ -27,16 +27,20 @@ export default function RootLayout({
     // Check for token in URL and store it in localStorage
     const token = new URLSearchParams(window.location.search).get('token');
     if (token) {
-      localStorage.setItem('jwtToken', token);
+      localStorage.setItem('authToken', token);
     }
-
+ 
+    
     // Retrieve the token from localStorage
-    const storedToken = localStorage.getItem('jwtToken');
+    const storedToken = localStorage.getItem('authToken');
 
     if (storedToken) {
       // Set a timer to remove the token after 1 hour
       const tokenExpirationTimer = setTimeout(() => {
-        localStorage.removeItem('jwtToken');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userData');
+        localStorage.removeItem("verifiedPhone");
+        localStorage.removeItem("phoneVerified");
         alert('Your session has expired. Please log in again.');
       }, 3600 * 1000); // 1 hour in milliseconds
 

@@ -94,8 +94,8 @@
 }
 
 
-
-/* Individual movie card */
+@media(min-width:769px) {
+  /* Individual movie card */
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
@@ -105,6 +105,8 @@
   -webkit-overflow-scrolling: touch;
 
 }
+}
+
 
 .cardContainer::-webkit-scrollbar{
   display: none;
@@ -213,7 +215,7 @@
 
   .moviesCardDiv {
     width: 100%;
-    overflow-x: auto;
+    overflow-x:scroll;
     overflow-y: hidden;
     white-space: nowrap;
     scroll-snap-type: x mandatory;
@@ -245,6 +247,7 @@
 
   .scheduleDetails {
     padding: 10px;
+
   }
 
   .movieTitle {
