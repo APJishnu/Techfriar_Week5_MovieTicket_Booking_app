@@ -39,7 +39,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const [otpSent, setOtpSent] = useState(false);
   const [otpError, setOtpError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [phoneVerified, setPhoneVerified] = useState(true); // To track phone verification status
+  const [phoneVerified, setPhoneVerified] = useState(false); // To track phone verification status
 
   const router = useRouter();
 
@@ -201,7 +201,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
               onChange={handlePhoneChange}
               className={styles.phoneInput}
               placeholder="Enter your phone number"
-              disabled={phoneVerified} // Disable input after verification
+               // Disable input after verification
             />
            
             {!phoneVerified ? (
@@ -241,7 +241,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       <button
         onClick={handleRazorpayPayment}
         className={styles.confirmButton}
-      // Disable the button if the phone is not verified
+        disabled={!phoneVerified} // Disable the button if the phone is not verified
       >
         Confirm Booking
       </button>
