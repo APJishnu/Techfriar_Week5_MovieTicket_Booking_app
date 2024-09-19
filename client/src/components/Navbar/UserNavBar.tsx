@@ -144,7 +144,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    {user? (
+                    {user ? (
                     <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
                         
                             <div className={styles.profileIcon}>
