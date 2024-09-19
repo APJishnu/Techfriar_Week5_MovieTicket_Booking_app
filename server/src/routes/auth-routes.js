@@ -19,7 +19,7 @@ router.get('/google/callback', passport.authenticate('google', {
 }), (req, res) => {
   // Create a JWT token
   const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+  res.cookie('authToken', token, { httpOnly: true, maxAge: 3600 * 1000 }); // 1 hour in milliseconds
   // Redirect with token only
   res.redirect(`https://techfriar-week5-movie-ticket-booking-app-f73m.vercel.app/user/email-verification?token=${token}`);
 });

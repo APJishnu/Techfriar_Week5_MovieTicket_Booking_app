@@ -18,14 +18,6 @@ export const getUser = async (): Promise<User | null> => {
     const token = localStorage.getItem('authToken');
     if (!token) return null;
 
-    // Handle token expiration after 1 hour on the client side
-    if (typeof window !== 'undefined') {
-        setTimeout(() => {
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userData');
-        }, 3600000); // 1 hour = 3600000 milliseconds
-    }
-
     try {
         const response = await axios.get(`${API_URL}/user-details`, {
             headers: { Authorization: `Bearer ${token}` }
