@@ -201,7 +201,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
               onChange={handlePhoneChange}
               className={styles.phoneInput}
               placeholder="Enter your phone number"
-              // Disable input after verification
+               // Disable input after verification
             />
            
             {!phoneVerified ? (
