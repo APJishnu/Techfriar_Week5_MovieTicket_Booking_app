@@ -129,7 +129,6 @@ module.exports = {
 
   },
 
-
   addMovieSchedule: async (movieId, theatreId, showtime) => {
     try {
       // Find the theatre
@@ -137,24 +136,30 @@ module.exports = {
       if (!theatre) {
         return { error: 'The specified theatre does not exist.' };
       }
-
+  
       // Find the movie
       const movie = await Movie.findById(movieId);
       if (!movie) {
         return { error: 'The specified movie does not exist.' };
       }
-
+  
       const durationInMinutes = parseInt(movie.duration.split(' ')[0]);
       // Parse the showtime (e.g., '10:00 AM') to a Date object
       const showtimeDate = new Date(`${showtime.date} ${showtime.time}`);
-
+  
+      // Check if the showtime is in the future
+      const currentTime = new Date();
+      if (showtimeDate <= currentTime) {
+        return { error: 'Showtime must be in the future.' };
+      }
+  
       // Calculate the end time by adding the movie duration
       const endTime = new Date(showtimeDate);
       endTime.setMinutes(endTime.getMinutes() + durationInMinutes);
-
+  
       // Find or create the schedule for the theatre
       let schedule = await movieSchedule.findOne({ theatre: theatreId });
-
+  
       if (!schedule) {
         // Create a new schedule if none exists
         schedule = new movieSchedule({
@@ -172,28 +177,28 @@ module.exports = {
         });
         await schedule.save();
       } else {
-
         // Check for conflicts
         const conflictingMovie = schedule.movies.find(m => {
           return m.showDates.some(d => {
             return d.date === showtime.date && d.times.some(t => t.time === showtime.time);
           });
         });
-
+  
         if (conflictingMovie) {
           return { error: 'A movie is already scheduled at this time on the same date in this theatre.' };
         }
+  
         // Update the existing schedule
         const movieEntry = schedule.movies.find(m => m.movie.toString() === movieId.toString());
-
+  
         if (movieEntry) {
           // Update existing movie schedule
           let dateEntry = movieEntry.showDates.find(d => d.date === showtime.date);
-
+  
           if (dateEntry) {
             // Check for existing time
             let timeEntry = dateEntry.times.find(t => t.time === showtime.time);
-
+  
             if (timeEntry) {
               return { error: 'A schedule for the same movie, date, and time already exists.' };
             } else {
@@ -228,19 +233,19 @@ module.exports = {
         }
         await schedule.save();
       }
-
+  
       // Set a timeout to automatically remove the showtime after the movie's duration
-      const currentTime = new Date();
       const timeUntilRemoval = endTime - currentTime; // Calculate time until movie ends
-
+  
       if (timeUntilRemoval > 0) {
         setTimeout(async () => {
           await removeMovieShowtime(schedule._id, movieId, showtime.date, showtime.time);
         }, timeUntilRemoval);
       }
-
+  
       return { message: 'Movie schedule updated successfully!' };
     } catch (error) {
+      console.error(error);
       return { error: 'Failed to update movie schedule. Please try again.' };
     }
   },
