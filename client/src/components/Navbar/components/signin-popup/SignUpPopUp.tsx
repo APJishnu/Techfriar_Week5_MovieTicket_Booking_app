@@ -2,12 +2,14 @@
     import React from 'react';
     import styles from './SignUpPopUp.module.css';
     import Image from 'next/image';
+    import { API_URL } from '@/utils/api';
+    
 
     
 
     const SignUpPopup: React.FC<{ toggleSignUpPopup: () => void }> = ({ toggleSignUpPopup }) => {
         const handleGoogleSignIn = () => {
-          window.location.href = 'https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/google';
+          window.location.href = `${API_URL}/api/auth/google`;
         };
         return (
             <div className={styles.signUpPopupOverlay}>

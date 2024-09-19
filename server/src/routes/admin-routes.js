@@ -1,6 +1,6 @@
 
 const adminHelper = require('../helpers/admin-helper');
-const adminApi = require('../helpers/admin-api');
+const searchApi = require('../helpers/api');
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
 
@@ -39,7 +39,7 @@ module.exports = {
   searchMoviesByTitleRouter: async (req, res) => {
     try {
       const { title, year } = req.query;
-      const searchMovieApi = await adminApi.searchMovie(title, year);
+      const searchMovieApi = await searchApi.searchMovie(title, year);
       const movieDetails = await axios.get(searchMovieApi);
 
       if (movieDetails.data.Response === 'False') {

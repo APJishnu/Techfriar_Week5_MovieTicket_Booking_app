@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import styles from '../../../styles/admin/moviesList.module.css';
+import { API_URL } from '@/utils/api';
+
 
 interface Movie {
     _id: string;
@@ -24,7 +26,7 @@ const MovieList: React.FC = () => {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const response = await axios.get('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/movies-list');
+                const response = await axios.get(`${API_URL}/api/admin/movies-list`);
                 setMovies(response.data);
             } catch (error) {
                 setErrorMessage('Failed to fetch movies. Please try again later.');
@@ -35,7 +37,7 @@ const MovieList: React.FC = () => {
 
     const handleDelete = async (movieId: string) => {
         try {
-            await axios.delete(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/movie-delete/${movieId}`);
+            await axios.delete(`${API_URL}/api/admin/movie-delete/${movieId}`);
             setMovies(movies.filter((movie) => movie._id !== movieId));
         } catch (error) {
             setErrorMessage('Failed to delete the movie. Please try again.');

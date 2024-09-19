@@ -4,6 +4,8 @@ import React, {  useState } from 'react';
 import axios from 'axios';
 import styles from './AdminLoginPopUp.module.css';
 import { useRouter } from 'next/navigation';
+import { API_URL } from '@/utils/api';
+
 
 
 interface AdminLoginPopupProps {
@@ -24,7 +26,7 @@ const AdminLoginPopup: React.FC<AdminLoginPopupProps> = ({ onClose }) => {
     setSuccess(null);
 
     try {
-      const response = await axios.post('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/admin-login', { email, password });
+      const response = await axios.post(`${API_URL}/api/admin/admin-login`, { email, password });
       const data = response.data;
     
       if (data.success) {

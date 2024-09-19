@@ -7,6 +7,7 @@ import styles from "../../../components/OtpInput/OtpInput.module.css";
 import { getUser, isAuthenticated, User } from '../../../utils/auth';
 import { useRouter } from 'next/navigation'; // Import useRouter
 import PopUpVerification from '../../../components/PopUpVerification/PopUpVerification';
+import { API_URL } from "@/utils/api";
 
 
 const EmailVerification: React.FC = () => {
@@ -58,7 +59,7 @@ const EmailVerification: React.FC = () => {
     setError("");
     try {
       const response = await axios.post(
-        "https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/send-otp",
+        `${API_URL}/api/auth/send-otp`,
         { field: "email", value: email },
         { withCredentials: true }
       );
@@ -85,7 +86,7 @@ const EmailVerification: React.FC = () => {
     setError("");
     try {
       const response = await axios.post(
-        "https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/verify-otp",
+        `${API_URL}/api/auth/verify-otp`,
         { field: "email", value: email, otp },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );

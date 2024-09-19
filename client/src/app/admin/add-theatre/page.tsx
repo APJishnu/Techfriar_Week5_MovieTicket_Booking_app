@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from '../../../styles/admin/addTheatre.module.css';
+import { API_URL } from "@/utils/api";
+
 
 const AddTheatre: React.FC = () => {
   const [theatreData, setTheatreData] = useState({
@@ -45,7 +47,7 @@ const AddTheatre: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/add-theatre", theatreData);
+      const response = await axios.post(`${API_URL}/api/admin/add-theatre`, theatreData);
 
       if (response.status === 200) {
         setSuccessMessage("Theatre added successfully!");

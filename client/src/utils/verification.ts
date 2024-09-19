@@ -1,12 +1,13 @@
 // utils/auth.ts
 
 import axios from "axios";
+import { API_URL } from "./api";
 
 // Send OTP to the phone number
 export const sendOtp = async (phone: string) => {
   try {
     const response = await axios.post(
-      "https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/send-otp",
+      `${API_URL}/api/auth/send-otp`,
       { field: "phone", value: phone },
       { withCredentials: true }
     );
@@ -28,7 +29,7 @@ export const verifyOtp = async (
 ) => {
   try {
     const response = await axios.post(
-      "https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth/verify-otp",
+      `${API_URL}/api/auth/verify-otp`,
       {
         field: "phone",
         value: phone,

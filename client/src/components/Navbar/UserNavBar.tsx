@@ -5,6 +5,8 @@ import styles from './NavBar.module.css';
 import SignUpPopup from './components/signin-popup/SignUpPopUp';
 import { getUser, isAuthenticated, logout, User } from '../../utils/auth';
 import { useRouter, usePathname } from 'next/navigation';
+import { API_URL } from '@/utils/api';
+
 
 interface Movie {
     _id: string;
@@ -69,7 +71,7 @@ const Navbar = () => {
 
         if (value.length > 0) {
             try {
-                const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/search-movies?title=${value}`);
+                const response = await axios.get(`${API_URL}/api/search-movies?title=${value}`);
                 setSearchResults(response.data);
             } catch (error) {
             }

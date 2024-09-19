@@ -1,6 +1,6 @@
 import axios from 'axios';
+import { API_URL } from './api';
 
-const API_URL = 'https://techfriar-week5-movieticket-booking-app.onrender.com/api/auth'; // Adjust to your backend URL
 
 export interface User {
     firstname?: string;

@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../../../styles/admin/movieSchedule.module.css'; // Import the CSS file
+import { API_URL } from '@/utils/api';
+
 
 interface Movie {
   _id: string;
@@ -48,8 +50,8 @@ const ScheduleMovie: React.FC = () => {
     const fetchData = async () => {
       try {
         const [moviesResponse, theatresResponse] = await Promise.all([
-          axios.get('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/movies-list'),
-          axios.get('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/theatre-list')
+          axios.get(`${API_URL}/api/admin/movies-list`),
+          axios.get(`${API_URL}/api/admin/theatre-list`)
         ]);
         setMovies(moviesResponse.data);
         setTheatres(theatresResponse.data);
@@ -78,7 +80,7 @@ const ScheduleMovie: React.FC = () => {
     }
 
     try {
-      const response = await axios.post('https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/add-movie-schedule', {
+      const response = await axios.post(`${API_URL}/api/admin/add-movie-schedule`, {
         movie: selectedMovie,
         theatre: selectedTheatre,
         showtime

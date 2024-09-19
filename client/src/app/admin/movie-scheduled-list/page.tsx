@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../../../styles/admin/movieScheduleList.module.css";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/utils/api";
+
 
 interface ShowTime {
   time: string;
@@ -69,7 +71,7 @@ const ScheduleList: React.FC = () => {
   const handleDeleteShowtime = async (scheduleId: string, movieId: string, date: string, time: string) => {
     try {
       await axios.delete(
-        `https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/schedule/${scheduleId}/showtime`,
+        `${API_URL}/api/admin/schedule/${scheduleId}/showtime`,
         { data: { movieId, date, time } } // Send movieId, date, and time in request body
       );
 

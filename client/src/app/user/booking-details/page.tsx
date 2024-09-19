@@ -5,6 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './booking-details.module.css'; // Importing the CSS module
+import { API_URL } from '../../../utils/api';
 
 interface Booking {
     movie: string;
@@ -41,7 +42,7 @@ const BookingDetails = () => {
         const fetchBookingDetails = async () => {
             if (userId) {
                 try {
-                    const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/booking-details/${userId}`);
+                    const response = await axios.get(`${API_URL}/api/booking-details/${userId}`);
                     setBookingData(response.data);
                     setLoading(false);
                 } catch (err) {

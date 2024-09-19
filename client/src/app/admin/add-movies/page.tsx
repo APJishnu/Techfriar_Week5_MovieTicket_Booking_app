@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from '../../../styles/admin/addMovies.module.css';
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/utils/api";
+
 
 const AddMovies: React.FC = () => {
   const [movieData, setMovieData] = useState({
@@ -37,7 +39,7 @@ const AddMovies: React.FC = () => {
     setSuccessMessage("");
 
     try {
-      const response = await axios.get(`https://techfriar-week5-movieticket-booking-app.onrender.com/api/admin/movies-lookup`, {
+      const response = await axios.get(`${API_URL}/api/admin/movies-lookup`, {
         params: {
           title: searchTitle,
           year: searchYear
@@ -99,7 +101,7 @@ const AddMovies: React.FC = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/admin/add-movies", formData);
+      const response = await axios.post(`${API_URL}/api/admin/add-movies`, formData);
 
       if (response.status === 200) {
         setSuccessMessage("Movie added successfully!");

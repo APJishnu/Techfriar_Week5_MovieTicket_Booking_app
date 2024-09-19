@@ -4,6 +4,8 @@ import axios from "axios";
 import styles from "./BookingConfirmation.module.css";
 import { useRouter } from 'next/navigation';
 import { sendOtp, verifyOtp, getVerifiedPhone } from "../../utils/verification";
+import { API_URL } from "@/utils/api";
+
 
 
 interface BookingConfirmationProps {
@@ -42,7 +44,6 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const router = useRouter();
 
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://techfriar-week5-movieticket-booking-app.onrender.com';
   
   useEffect(() => {
     const storedPhone = getVerifiedPhone();
@@ -69,7 +70,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://techfriar-week5-m
     if (!phoneVerified) return alert("Please verify your phone number before proceeding.");
 
     try {
-      const response = await axios.post(`${apiBaseUrl}/api/razorpay-order`, { amount: totalPrice * 100 });
+      const response = await axios.post(`${API_URL}/api/razorpay-order`, { amount: totalPrice * 100 });
 
       const { data } = response;
       if (!data.success) return alert("Error initiating payment.");
@@ -99,7 +100,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://techfriar-week5-m
 
   const confirmBooking = async (paymentId: string) => {
     try {
-      const response = await axios.post("https://techfriar-week5-movieticket-booking-app.onrender.com/api/confirm-booking", {
+      const response = await axios.post(`${API_URL}/api/confirm-booking`, {
         userDetails: {
           ...userDetails,
           phone,

@@ -5,6 +5,8 @@ import axios from "axios";
 import styles from "../../../components/MovieDisplay/MovieDisplay.module.css"; // Import your CSS file
 import styles2 from './movie-list.module.css'
 import { useRouter } from 'next/navigation';
+import { API_URL } from "@/utils/api";
+
 
 interface Movie {
   _id: string;
@@ -25,12 +27,12 @@ const MovieDisplay: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([]);
   const router = useRouter();
-
+  
   useEffect(() => {
     // Fetch movies
     const fetchMovies = async () => {
       try {
-        const response = await axios.get("https://techfriar-week5-movieticket-booking-app.onrender.com/api/all-movies");
+        const response = await axios.get(`${API_URL}/api/all-movies`);
         const moviesData: Movie[] = response.data;
         setMovies(moviesData);
         setFilteredMovies(moviesData);
