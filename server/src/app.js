@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Include 'https://' and full domain
+  origin: 'https://techfriar-week5-movie-ticket-booking-app-f73-apjishnus-projects.vercel.app', // Include 'https://' and full domain
   methods: 'GET,POST,PUT,DELETE',
   credentials: true // Allow cookies
 }));
