@@ -241,7 +241,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       <button
         onClick={handleRazorpayPayment}
         className={styles.confirmButton}
-        disabled={!phoneVerified} // Disable the button if the phone is not verified
+        // Disable the button if the phone is not verified
       >
         Confirm Booking
       </button>

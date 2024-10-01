@@ -21,18 +21,18 @@ const EmailVerification: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [otpSent, setOtpSent] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-   // State to manage both initial and success popups
-   const [showInitialPopup, setShowInitialPopup] = useState<boolean>(true); 
-   const [showSuccessPopup, setShowSuccessPopup] = useState<boolean>(false);
+  // State to manage both initial and success popups
+  const [showInitialPopup, setShowInitialPopup] = useState<boolean>(true);
+  const [showSuccessPopup, setShowSuccessPopup] = useState<boolean>(false);
 
-   useEffect(() => {
+  useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
-   
+
     if (token) {
-        localStorage.setItem('authToken', token);
+      localStorage.setItem('authToken', token);
     }
-}, []);
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -93,11 +93,11 @@ const EmailVerification: React.FC = () => {
       if (response.data.verified) {
         setSuccess(true);
         setShowSuccessPopup(true); // Show success popup
-                // Delay redirection by 5 seconds
-                setTimeout(() => {
-                  router.push('/');
-                }, 5000);
-        
+        // Delay redirection by 5 seconds
+        setTimeout(() => {
+          router.push('/');
+        }, 5000);
+
       } else {
         setError("Incorrect OTP. Please try again.");
       }
@@ -117,8 +117,8 @@ const EmailVerification: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-       {/* Initial popup to ask for email verification */}
-       {showInitialPopup && (
+      {/* Initial popup to ask for email verification */}
+      {showInitialPopup && (
         <PopUpVerification
           onClose={() => setShowInitialPopup(false)}  // Close the popup
           onProceed={() => setShowInitialPopup(false)}  // Proceed button closes the popup
@@ -161,20 +161,20 @@ const EmailVerification: React.FC = () => {
               />
             </div>
             <div className={styles.secondMaindiv}>
-            {!loading && (
-              <button
-                onClick={sendOtp}
-                disabled={countdown > 0} // Disable button after OTP sent
-                className={`${styles.sendButton} ${otpSent ? styles.activeSendButton : ""}`}
-              >
-                {countdown > 0 ? `Resend OTP (${countdown})` : "Send OTP"}
-              </button>
-            )}
-            {loading && (
-              <div className={styles.spinnerDiv}>
-                <div className={styles.loadingSpinner}></div>
-              </div>
-            )}
+              {!loading && (
+                <button
+                  onClick={sendOtp}
+                  disabled={countdown > 0} // Disable button after OTP sent
+                  className={`${styles.sendButton} ${otpSent ? styles.activeSendButton : ""}`}
+                >
+                  {countdown > 0 ? `Resend OTP (${countdown})` : "Send OTP"}
+                </button>
+              )}
+              {loading && (
+                <div className={styles.spinnerDiv}>
+                  <div className={styles.loadingSpinner}></div>
+                </div>
+              )}
               <OTPInput length={4} onChange={setOtp} />
               <button
                 onClick={verifyOtp}
