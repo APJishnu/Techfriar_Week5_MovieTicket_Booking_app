@@ -220,6 +220,7 @@
     white-space: nowrap;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    padding: 5px;
     
   }
 

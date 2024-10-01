@@ -12,7 +12,7 @@
     position: relative;
     width: 100%;
     max-width: 100%;
-    height: 36.125vw;
+    height: 32.775vw;
     overflow: hidden;
     border-radius: 23px;
     margin-top: 8px;
@@ -31,7 +31,7 @@
 .carouselSlide {
     position: relative;
     min-width: 100%;
-    height: 36.125vw;
+    height: 32.775vw;
 }
 
 .carouselSlide img {
@@ -169,7 +169,7 @@
 
     .carouselSlide img {
         height: 250px;
-        object-fit:fill; /* Ensures images retain aspect ratio while covering the container */
+        object-fit:contain; /* Ensures images retain aspect ratio while covering the container */
     }
     .carouselOverlay {
         bottom: 5%; /* Adjusted to keep the text closer to the bottom */
