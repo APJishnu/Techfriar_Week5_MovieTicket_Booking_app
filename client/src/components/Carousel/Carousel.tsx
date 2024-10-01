@@ -69,9 +69,7 @@ const Carousel: React.FC = () => {
                 <h2>{movie.title}</h2>
                 <p>Rating: {movie.rating}</p>
                 <p>{movie.description}</p>
-                <Link href={`/book-now/${movie.id}`}>
-                  <button className={styles.bookNowButton}>Book Now</button>
-                </Link>
+                
               </div>
             </div>
           ))}

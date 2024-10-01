@@ -15,6 +15,7 @@ interface Movie {
   certification: string;
   releaseDate: string;
   image: string;
+  photo: string;
   language: string; // Comma-separated string for languages
 }
 
@@ -86,37 +87,37 @@ const MovieDisplay: React.FC = () => {
       <h2>Movies</h2>
       <div className={styles.container}>
         <div className={styles.filterMainDiv}>
-         
-            <div className={styles.filterSection}>
-              <h3>Filter by</h3>
-              <div className={styles.filterRow}>
-                <div className={styles.filterItem}>
-                  <label htmlFor="genreFilter">Genre:</label>
-                  <select id="genreFilter" value={selectedGenre} onChange={handleGenreChange}>
-                    <option value="">All Genres</option>
-                    <option value="Action">Action</option>
-                    <option value="Comedy">Comedy</option>
-                    <option value="Drama">Drama</option>
-                    <option value="Horror">Horror</option>
-                    <option value="Musical">Musical</option>
-                    <option value="Romance">Romance</option>
-                    {/* Add more genres as needed */}
-                  </select>
-                </div>
-                <div className={styles.filterItem}>
-                  <label htmlFor="languageFilter">Language:</label>
-                  <select id="languageFilter" value={selectedLanguage} onChange={handleLanguageChange}>
-                    <option value="">All Languages</option>
-                    {availableLanguages.map((language, index) => (
-                      <option key={index} value={language}>
-                        {language}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+
+          <div className={styles.filterSection}>
+            <h3>Filter by</h3>
+            <div className={styles.filterRow}>
+              <div className={styles.filterItem}>
+                <label htmlFor="genreFilter">Genre:</label>
+                <select id="genreFilter" value={selectedGenre} onChange={handleGenreChange}>
+                  <option value="">All Genres</option>
+                  <option value="Action">Action</option>
+                  <option value="Comedy">Comedy</option>
+                  <option value="Drama">Drama</option>
+                  <option value="Horror">Horror</option>
+                  <option value="Musical">Musical</option>
+                  <option value="Romance">Romance</option>
+                  {/* Add more genres as needed */}
+                </select>
+              </div>
+              <div className={styles.filterItem}>
+                <label htmlFor="languageFilter">Language:</label>
+                <select id="languageFilter" value={selectedLanguage} onChange={handleLanguageChange}>
+                  <option value="">All Languages</option>
+                  {availableLanguages.map((language, index) => (
+                    <option key={index} value={language}>
+                      {language}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-         
+          </div>
+
         </div>
 
         <div className={styles.moviesCardDiv}>
@@ -128,7 +129,11 @@ const MovieDisplay: React.FC = () => {
                   className={styles.scheduleCard}
                   onClick={() => handleCardClick(movie._id)}
                 >
-                  <img src={movie.image} alt={movie.title} className={styles.movieImage} />
+                  <img
+                    src={movie.photo ? `http://localhost:5000${movie.photo}` : movie.image} // Replace with your default image path
+                    alt={movie.title}
+                    className={styles.movieImage}
+                  />
                   <div className={styles.scheduleDetails}>
                     <h4 className={styles.movieTitle}>{movie.title}</h4>
                     <p className={styles.movieInfo}>Duration: {movie.duration}</p>

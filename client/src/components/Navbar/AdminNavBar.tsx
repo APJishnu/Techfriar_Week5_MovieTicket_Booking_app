@@ -87,8 +87,8 @@ const AdminNavbar = () => {
                         }`}
                 >
                     <li className={styles.mainNavigationsLi}>
-                        <Link href="/admin/dashboard" className={styles.listNav} style={
-                            activePath === '/admin/dashboard'
+                        <Link href="/admin/admin-dashboard" className={styles.listNav} style={
+                            activePath === '/admin/admin-dashboard'
                                 ? { backgroundColor: '#f65c5c', color: '#ffffff' }
                                 : {}
                         }>

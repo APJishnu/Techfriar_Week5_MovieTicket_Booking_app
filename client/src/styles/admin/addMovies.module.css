@@ -239,6 +239,53 @@
 
 
 
+/* Custom styling for file input label */
+.uploadLabel {
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+  padding: 10px 20px;
+  background-color: #074990;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.uploadLabel:hover {
+  cursor: pointer;
+  background-color: #0056b3;
+}
+
+/* Wrapper around file input for better control */
+.fileInputWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+
+.photoInput:hover {
+  border-color: #235ba0;
+}
+
+.photoInput:focus {
+  outline: none;
+  border-color: #1d2a5c;
+}
+
+/* Adding animation to the button when clicked */
+.uploadPhotoBtn:active,
+.removePhotoBtn:active {
+  transform: scale(0.98);
+ 
+}
+
+
 @media (max-width:768px){
   .mainSection{
 

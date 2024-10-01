@@ -16,6 +16,7 @@ interface Movie {
     certification: string;
     releaseDate: string;
     image: string;
+    photo:string;
 }
 
 const MovieList: React.FC = () => {
@@ -28,6 +29,7 @@ const MovieList: React.FC = () => {
             try {
                 const response = await axios.get(`${API_URL}/api/admin/movies-list`);
                 setMovies(response.data);
+                console.log(response.data)
             } catch (error) {
                 setErrorMessage('Failed to fetch movies. Please try again later.');
             }
@@ -49,16 +51,21 @@ const MovieList: React.FC = () => {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h2 className={styles.title}>Movie List</h2>
-                    <button className={styles.addButton} onClick={() =>  router.push('/admin/add-movies')}>Add Movie</button>
+                    <button className={styles.addButton} onClick={() => router.push('/admin/add-movies')}>Add Movie</button>
                 </div>
                 {errorMessage && <div className={styles.error}>{errorMessage}</div>}
                 {movies.length > 0 ? (
                     <div className={styles.movieTable}>
                         {movies.map((movie, index) => (
-                            
+
                             <div key={movie._id} className={styles.movieCard}>
-                                <span className={styles.movieIndex}>{index + 1}</span>          
-                                <img src={movie.image} alt={movie.title} className={styles.movieImage} />
+                                <span className={styles.movieIndex}>{index + 1}</span>
+                                <img
+                                    src={ movie.photo ?`${API_URL}${movie.photo}`: movie.image} // Replace with your default image path
+                                    alt={movie.title}
+                                    className={styles.movieImage}
+                                />
+
                                 <div className={styles.movieContent}>
                                     <div className={styles.movieHeader}>
                                         <span className={styles.movieTitle}>{movie.title}</span>
@@ -72,16 +79,16 @@ const MovieList: React.FC = () => {
                                     <div className={styles.movieDescription}>
                                         {movie.description}
 
-                                        
+
                                     </div>
-                                    
+
                                 </div>
                                 <div className={styles.movieActions}>
-                                        <button onClick={() => handleDelete(movie._id)} className={styles.deleteButton}>
-                                            Delete
-                                        </button>
-                                        <button className={styles.editButton}>Edit</button>
-                                    </div>
+                                    <button onClick={() => handleDelete(movie._id)} className={styles.deleteButton}>
+                                        Delete
+                                    </button>
+                                    <button className={styles.editButton}>Edit</button>
+                                </div>
                             </div>
                         ))}
                     </div>

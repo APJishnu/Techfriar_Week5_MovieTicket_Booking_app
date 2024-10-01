@@ -49,16 +49,6 @@ const Navbar = () => {
         setShowMenu(!showMenu);
     };
 
-    // useEffect(() => {
-    //     const urlParams = new URLSearchParams(window.location.search);
-    //     const token = urlParams.get('token');
-    //     const userDetails = urlParams.get('user');
-    //     if (token && userDetails) {
-    //         localStorage.setItem('authToken', token);
-    //         localStorage.setItem('userData', userDetails);
-    //       
-    //     }
-    // }, []);
 
     const handleClearSearch = () => {
         setSearchTerm("");
@@ -105,6 +95,8 @@ const Navbar = () => {
     };
 
 
+   
+
     return (
         <>
             <header className={styles.header}>
@@ -144,11 +136,11 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    {user ? (
-                    <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
-                        
+                    {user? (
+                        <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
+
                             <div className={styles.profileIcon}>
-                                {user.photo? (
+                                {user.photo?(
                                     <img src={user.photo} alt={user.firstname} className={styles.profilePhoto} />
                                 ) : (
                                     <i className="fas fa-user-circle"></i>
@@ -161,13 +153,13 @@ const Navbar = () => {
                                     <a onClick={handleLogout}>Logout</a>
                                 </div>
                             </div>
-                            </div>
-                        ) : (
-                            <button onClick={toggleSignUpPopup} className={`${styles.signUpBtn} ${showMenu ? styles.show : styles.hidden}`}>
-                                 Sign Up
-                            </button>
-                        )}
-                    
+                        </div>
+                    ) : (
+                        <button onClick={toggleSignUpPopup} className={`${styles.signUpBtn} ${showMenu ? styles.show : styles.hidden}`}>
+                            Sign Up
+                        </button>
+                    )}
+
                 </nav>
 
                 <ul

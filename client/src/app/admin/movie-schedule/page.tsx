@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../../../styles/admin/movieSchedule.module.css'; // Import the CSS file
 import { API_URL } from '@/utils/api';
+import { useRouter } from "next/navigation"; // Make sure router is imported
 
 
 interface Movie {
@@ -38,6 +39,8 @@ const ScheduleMovie: React.FC = () => {
   const [showtime, setShowtime] = useState<Showtime>({ date: '', time: '' });
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
+
+  const router = useRouter()
 
   useEffect(() => {
 
@@ -87,6 +90,14 @@ const ScheduleMovie: React.FC = () => {
       });
 
       setSuccessMessage(response.data.message);
+
+
+        // Redirect to movie schedule list after 5 seconds
+    setTimeout(() => {
+      router.push("/admin/movie-scheduled-list");
+    }, 1500); // 5 seconds delay
+
+
     } catch (error: any) {
       const errorResponse = error.response?.data?.error;
       if (errorResponse) {

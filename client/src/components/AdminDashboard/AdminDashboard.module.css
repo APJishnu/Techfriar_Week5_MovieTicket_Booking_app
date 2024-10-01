@@ -1,0 +1,86 @@
+/* AdminDashboard.module.css */
+
+.detailsSection {
+    padding: 40px;
+    padding-top: 170px;
+    background-color: #f9f9f9;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 100vh;
+  }
+  
+  .movieInfoContainer {
+    display: flex;
+    align-items: flex-start;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .movieInfoContainer::before {
+    content: "";
+    position: absolute;
+    top: -1000px;
+    left: -200px;
+    width: 70%;
+    height: 5800px;
+    background: rgb(0, 0, 0);
+    filter: blur(150px);
+    z-index: -1;
+  }
+  
+  .movieInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .movieInfo h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #f9f9f9;
+  }
+  
+  .movieInfo p {
+    font-size: 1rem;
+    color: #ffffff;
+  }
+  
+  .bookButton {
+    width: 170px;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .detailsSection {
+      padding: 15px;
+      padding-top: 100px;
+      background-color: #f9f9f9;
+    }
+  
+    .movieInfoContainer {
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+  
+    .movieInfo h2 {
+      font-size: 1.2rem;
+    }
+  }
+  

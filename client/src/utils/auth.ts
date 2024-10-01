@@ -23,6 +23,12 @@ export const getUser = async (): Promise<User | null> => {
             headers: { Authorization: `Bearer ${token}` }
         });
 
+        if (!response || !response.data) {
+            localStorage.removeItem('authToken'); // Remove authToken if response is null
+            localStorage.removeItem('userData');  // Clear userData as well
+            return null;
+        }
+
         localStorage.setItem('userData', JSON.stringify(response.data));
 
         return response.data;
