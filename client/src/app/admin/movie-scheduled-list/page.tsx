@@ -47,17 +47,19 @@ const ScheduleList: React.FC = () => {
       try {
         const response = await axios.get(`${API_URL}/api/admin/schedule-details`);
         setSchedules(response.data);
+        console.log("Fetched schedules:", response.data); // Log the fetched data
       } catch (error) {
         setErrorMessage("Failed to fetch schedules.");
+        console.error(error); // Log the error for debugging
       }
     };
     fetchSchedules();
-  }, []);
+  }, []); // Ensure this runs only once when the component mounts
 
   // Group schedules by theatre name, but only include those with movies
   const groupedSchedules = schedules.reduce((acc, schedule) => {
     const theatreName = schedule.theatre?.theatreName;
-    if (theatreName && schedule.movies.length > 0) { // Only add theatres with movies
+    if (theatreName && schedule.movies.length > 0) {
       if (!acc[theatreName]) {
         acc[theatreName] = [];
       }
@@ -102,6 +104,7 @@ const ScheduleList: React.FC = () => {
       );
     } catch (error) {
       setErrorMessage("Failed to delete showtime.");
+      console.error(error); // Log the error for debugging
     }
   };
 
@@ -114,7 +117,7 @@ const ScheduleList: React.FC = () => {
             className={styles.addButton}
             onClick={() => router.push("/admin/movie-schedule")}
           >
-            Add MovieSchedule
+            Add Movie Schedule
           </button>
         </div>
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
@@ -133,35 +136,22 @@ const ScheduleList: React.FC = () => {
                       <div className={styles.movieDetails}>
                         {schedule.movies.map((movieSchedule) => (
                           <div
-                            key={movieSchedule.movie._id}
+                            key={movieSchedule.movie?._id} // Use optional chaining
                             className={styles.movieDetailsSection}
                           >
                             <div className={styles.movieTitle}>
-                              {movieSchedule.movie.title}
+                              {movieSchedule.movie?.title ? movieSchedule.movie.title : "No Title"} {/* Handle null title */}
                             </div>
-                            {Array.isArray(movieSchedule.showDates) &&
-                            movieSchedule.showDates.length > 0 ? (
+                            {Array.isArray(movieSchedule.showDates) && movieSchedule.showDates.length > 0 ? (
                               movieSchedule.showDates
-                                .sort(
-                                  (a, b) =>
-                                    new Date(a.date).getTime() -
-                                    new Date(b.date).getTime()
-                                )
+                                .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                                 .map((showDate) => (
-                                  <div
-                                    key={showDate.date}
-                                    className={styles.dateCard}
-                                  >
+                                  <div key={showDate.date} className={styles.dateCard}>
                                     <strong>{showDate.date}</strong>
                                     {showDate.times
-                                      .sort((a, b) =>
-                                        a.time.localeCompare(b.time)
-                                      ) // Sort times in ascending order
+                                      .sort((a, b) => a.time.localeCompare(b.time))
                                       .map((showTime) => (
-                                        <div
-                                          key={`${showDate.date}-${showTime.time}`}
-                                          className={styles.showtime}
-                                        >
+                                        <div key={`${showDate.date}-${showTime.time}`} className={styles.showtime}>
                                           <span>{showTime.time}</span>
                                           <img
                                             src="/admin/trash.svg"
@@ -170,7 +160,7 @@ const ScheduleList: React.FC = () => {
                                             onClick={() =>
                                               handleDeleteShowtime(
                                                 schedule._id,
-                                                movieSchedule.movie._id,
+                                                movieSchedule.movie?._id, // Use optional chaining
                                                 showDate.date,
                                                 showTime.time
                                               )
@@ -185,6 +175,11 @@ const ScheduleList: React.FC = () => {
                             )}
                           </div>
                         ))}
+
+                        {/* Fallback if there are no movies */}
+                        {schedule.movies.length === 0 && (
+                          <p>No movies available for this schedule.</p>
+                        )}
                       </div>
                     </div>
                   </div>
