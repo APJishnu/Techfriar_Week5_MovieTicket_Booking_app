@@ -36,7 +36,7 @@ const MovieDisplay: React.FC = () => {
         setMovies(moviesData);
         setFilteredMovies(moviesData);
 
-        console.log(response)
+        console.log("haii",response)
         // Extract unique languages from the fetched movies
         const allLanguages = moviesData
           .flatMap(movie => movie.language.split(',').map(lang => lang.trim()))
@@ -131,7 +131,7 @@ const MovieDisplay: React.FC = () => {
                   onClick={() => handleCardClick(movie._id)}
                 >
                   <img
-                    src={movie.photo ? `http://localhost:5000${movie.photo}` : movie.image} // Replace with your default image path
+                    src={movie.photo ? `${API_URL}${movie.photo}` : movie.image} // Replace with your default image path
                     alt={movie.title}
                     className={styles.movieImage}
                   />
