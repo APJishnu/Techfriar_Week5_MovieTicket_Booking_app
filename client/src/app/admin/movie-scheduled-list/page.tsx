@@ -82,7 +82,7 @@ const ScheduleList: React.FC = () => {
             if (schedule._id === scheduleId) {
               const updatedMovies = schedule.movies
                 .map((movieSchedule) => {
-                  if (movieSchedule.movie._id === movieId) {
+                  if (movieSchedule.movie?._id === movieId) { // Added optional chaining
                     const updatedShowDates = movieSchedule.showDates
                       .map((showDate) => ({
                         ...showDate,
@@ -134,47 +134,52 @@ const ScheduleList: React.FC = () => {
                   <div key={schedule._id} className={styles.movieCard}>
                     <div className={styles.movieContent}>
                       <div className={styles.movieDetails}>
-                        {schedule.movies.map((movieSchedule) => (
-                          <div
-                            key={movieSchedule.movie?._id} // Use optional chaining
-                            className={styles.movieDetailsSection}
-                          >
-                            <div className={styles.movieTitle}>
-                              {movieSchedule.movie?.title ? movieSchedule.movie.title : "No Title"} {/* Handle null title */}
+                        {schedule.movies.map((movieSchedule) => {
+                          const movieId = movieSchedule.movie?._id; // Use optional chaining
+                          if (!movieId) {
+                            console.warn("Movie ID is null or undefined for schedule:", schedule);
+                            return null; // Skip this movie if the ID is not available
+                          }
+
+                          return (
+                            <div key={movieId} className={styles.movieDetailsSection}>
+                              <div className={styles.movieTitle}>
+                                {movieSchedule.movie?.title || "No Title"} {/* Handle null title */}
+                              </div>
+                              {Array.isArray(movieSchedule.showDates) && movieSchedule.showDates.length > 0 ? (
+                                movieSchedule.showDates
+                                  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+                                  .map((showDate) => (
+                                    <div key={showDate.date} className={styles.dateCard}>
+                                      <strong>{showDate.date}</strong>
+                                      {showDate.times
+                                        .sort((a, b) => a.time.localeCompare(b.time))
+                                        .map((showTime) => (
+                                          <div key={`${showDate.date}-${showTime.time}`} className={styles.showtime}>
+                                            <span>{showTime.time}</span>
+                                            <img
+                                              src="/admin/trash.svg"
+                                              alt="Delete Showtime"
+                                              className={styles.deleteIcon}
+                                              onClick={() =>
+                                                handleDeleteShowtime(
+                                                  schedule._id,
+                                                  movieId, // Use movieId directly
+                                                  showDate.date,
+                                                  showTime.time
+                                                )
+                                              }
+                                            />
+                                          </div>
+                                        ))}
+                                    </div>
+                                  ))
+                              ) : (
+                                <p>No showtimes available for this movie.</p>
+                              )}
                             </div>
-                            {Array.isArray(movieSchedule.showDates) && movieSchedule.showDates.length > 0 ? (
-                              movieSchedule.showDates
-                                .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-                                .map((showDate) => (
-                                  <div key={showDate.date} className={styles.dateCard}>
-                                    <strong>{showDate.date}</strong>
-                                    {showDate.times
-                                      .sort((a, b) => a.time.localeCompare(b.time))
-                                      .map((showTime) => (
-                                        <div key={`${showDate.date}-${showTime.time}`} className={styles.showtime}>
-                                          <span>{showTime.time}</span>
-                                          <img
-                                            src="/admin/trash.svg"
-                                            alt="Delete Showtime"
-                                            className={styles.deleteIcon}
-                                            onClick={() =>
-                                              handleDeleteShowtime(
-                                                schedule._id,
-                                                movieSchedule.movie?._id, // Use optional chaining
-                                                showDate.date,
-                                                showTime.time
-                                              )
-                                            }
-                                          />
-                                        </div>
-                                      ))}
-                                  </div>
-                                ))
-                            ) : (
-                              <p>No showtimes available for this movie.</p>
-                            )}
-                          </div>
-                        ))}
+                          );
+                        })}
 
                         {/* Fallback if there are no movies */}
                         {schedule.movies.length === 0 && (
