@@ -204,38 +204,9 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
               disabled={phoneVerified} // Disable input after verification
             />
            
-            {!phoneVerified ? (
-              <button
-                onClick={handleSendOtp}
-                className={styles.verifyButton}
-                disabled={loading}
-              >
-                {loading ? "Sending..." : "Verify"}
-              </button>
-            ) : (
-              <span className={styles.verifiedText}>Verified</span> // Show Verified text
-            )}
+         
             </div>
-     
-          {otpSent && !phoneVerified && (
-            <div className={styles.otpSection}>
-              <input
-                type="text"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                className={styles.otpInput}
-                placeholder="Enter OTP"
-              />
-              <button
-                onClick={handleVerifyOtp}
-                className={styles.verifyButton}
-                disabled={loading}
-              >
-                {loading ? "Verifying..." : "Verify OTP"}
-              </button>
-            </div>
-          )}
-          {otpError && <p className={styles.errorMessage}>{otpError}</p>}
+    
         </div>
       </div>
       <button
