@@ -9,6 +9,7 @@ const movieSchema = new mongoose.Schema({
   certification: { type: String, required: true },
   releaseDate: { type: Date, required: true },
   image: { type: String, required: true },
+  photo:{type: String, required: false ,default:null},
   director: { type: String, required: false }, // Add director
   cast: { type: [String], required: false }, // Add cast (actors)
   imdbRating: { type: String, required: false }, // Add IMDb rating

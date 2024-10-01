@@ -8,7 +8,6 @@ const bcrypt = require('bcryptjs');
 
 
 
-
 // Route handlers
 module.exports = {
 
@@ -55,11 +54,13 @@ module.exports = {
   addMovieRouter: async (req, res) => {
     try {
       const { title, description, duration, genre, certification, releaseDate, imageUrl, director, cast, imdbRating, language } = req.body;
-
+      const moviePhoto = req.file; // Check for the uploaded file
+      console.log(moviePhoto)
       if (!title || !description || !duration || !genre || !certification || !releaseDate) {
         return res.status(400).json({ error: 'All required fields must be provided.' });
       }
 
+      // If imageUrl is not provided, use the uploaded file's path
       const movieDetails = {
         title,
         description,
@@ -67,7 +68,8 @@ module.exports = {
         genre,
         certification,
         releaseDate,
-        imageUrl,
+        imageUrl: imageUrl || null,
+        photo: moviePhoto ? `/uploads/${moviePhoto.filename}` : null, // Store the file path
         director,
         cast: cast.split(',').map(actor => actor.trim()),
         imdbRating,
@@ -85,6 +87,10 @@ module.exports = {
       res.status(500).json({ error: 'An error occurred while adding the movie. Please try again.' });
     }
   },
+
+
+
+
 
   addTheatreRouter: async (req, res) => {
     try {
