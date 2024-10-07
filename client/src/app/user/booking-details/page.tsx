@@ -4,6 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import jsPDF from 'jspdf';
 import styles from './booking-details.module.css'; // Importing the CSS module
 import { API_URL } from '../../../utils/api';
 
@@ -26,15 +27,17 @@ const BookingDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [userId, setUserId] = useState<string | null>(null);
-    const [expandedMovies, setExpandedMovies] = useState<string[]>([]); // State to track expanded movies
+    const [expandedMovies, setExpandedMovies] = useState<string[]>([]);
+    
+    // States for filters
+    const [movieFilter, setMovieFilter] = useState('');
+    const [dateFilter, setDateFilter] = useState('');
 
     useEffect(() => {
-        // Retrieve userId from localStorage
         const storedUserDetails = localStorage.getItem('userData');
         if (storedUserDetails) {
             const userDetails = JSON.parse(storedUserDetails);
             setUserId(userDetails._id); // Assuming the user ID is saved in 'userId' field
-
         }
     }, []);
 
@@ -68,6 +71,25 @@ const BookingDetails = () => {
         }, {});
     };
 
+    // Function to filter bookings
+    const applyFilters = (bookings: Booking[]): Booking[] => {
+        let filteredBookings = bookings;
+
+        if (movieFilter) {
+            filteredBookings = filteredBookings.filter((booking) =>
+                booking.movie.toLowerCase().includes(movieFilter.toLowerCase())
+            );
+        }
+
+        if (dateFilter) {
+            filteredBookings = filteredBookings.filter((booking) =>
+                booking.date === dateFilter
+            );
+        }
+
+        return filteredBookings;
+    };
+
     // Function to toggle movie details visibility
     const toggleMovieDetails = (movie: string) => {
         if (expandedMovies.includes(movie)) {
@@ -77,14 +99,52 @@ const BookingDetails = () => {
         }
     };
 
+    // Function to download PDF slip for a booking
+    const downloadPDF = (booking: Booking) => {
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.text('Booking Slip', 105, 20);
+        doc.setFontSize(12);
+
+        doc.text(`Movie: ${booking.movie}`, 20, 40);
+        doc.text(`Theatre: ${booking.theatre}`, 20, 50);
+        doc.text(`Date: ${booking.date}`, 20, 60);
+        doc.text(`Time: ${booking.time}`, 20, 70);
+        doc.text(`Seats: ${booking.seats.join(', ')}`, 20, 80);
+        doc.text(`Total Price: ₹${booking.totalPrice}`, 20, 90);
+        doc.text(`Payment ID: ${booking.paymentId}`, 20, 100);
+
+        doc.save(`Booking_Slip_${booking.movie}_${booking.date}.pdf`);
+    };
+
     if (loading) return <div className={styles.loading}>Loading...</div>;
     if (error) return <div className={styles.errorMessage}>{error}</div>;
 
-    const groupedBookings = bookingData ? groupBookingsByMovie(bookingData.bookings) : {};
+    const allBookings = bookingData ? bookingData.bookings : [];
+    const filteredBookings = applyFilters(allBookings);
+    const groupedBookings = groupBookingsByMovie(filteredBookings);
 
     return (
         <div className={styles.bookingDetailsContainer}>
             <h1 className={styles.mainHeader}>Booking Details</h1>
+
+            {/* Filter Section */}
+            <div className={styles.filterSection}>
+                <input
+                    type="text"
+                    placeholder="Filter by movie name"
+                    value={movieFilter}
+                    onChange={(e) => setMovieFilter(e.target.value)}
+                    className={styles.filterInput}
+                />
+                <input
+                    type="date"
+                    value={dateFilter}
+                    onChange={(e) => setDateFilter(e.target.value)}
+                    className={styles.filterInput}
+                />
+            </div>
+
             {bookingData ? (
                 <div className={styles.bookingCard}>
                     <div className={styles.userInfo}>
@@ -96,22 +156,25 @@ const BookingDetails = () => {
                     <div className={styles.bookingInfo}>
                         {Object.keys(groupedBookings).map((movie, index) => (
                             <div key={index} className={styles.movieGroup}>
-                                {/* Movie name clickable to toggle details */}
                                 <h3 onClick={() => toggleMovieDetails(movie)} className={styles.movieTitle}>
                                     {movie}
                                 </h3>
 
-                                {/* Conditional rendering of movie details */}
                                 {expandedMovies.includes(movie) && (
                                     <div className={styles.movieDetails}>
                                         {groupedBookings[movie].map((booking, i) => (
                                             <div key={i} className={styles.bookingItem}>
-                                                <p>Theatre<p>:</p> <span>{booking.theatre}</span></p>
-                                                <p>Date<p>:</p><span>{booking.date}</span></p>
-                                                <p>Time<p>:</p> <span>{booking.time}</span></p>
-                                                <p>Seats<p>:</p> <span>{booking.seats.join(', ')}</span></p>
-                                                <p>Total Price<p>:</p> <span>₹{booking.totalPrice}</span></p>
-
+                                                <p>Theatre: <span>{booking.theatre}</span></p>
+                                                <p>Date: <span>{booking.date}</span></p>
+                                                <p>Time: <span>{booking.time}</span></p>
+                                                <p>Seats: <span>{booking.seats.join(', ')}</span></p>
+                                                <p>Total Price: <span>₹{booking.totalPrice}</span></p>
+                                                <button
+                                                    onClick={() => downloadPDF(booking)}
+                                                    className={styles.downloadButton}
+                                                >
+                                                    Download Slip
+                                                </button>
                                             </div>
                                         ))}
                                     </div>

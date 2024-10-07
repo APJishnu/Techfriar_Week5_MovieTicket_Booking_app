@@ -35,7 +35,7 @@
     border: none;
     border-bottom: 2px solid #9f9f9f;
     outline: none;
-    max-width: 400px;
+    min-width: 400px;
 }
 
 .title {
@@ -243,22 +243,30 @@
 
     .header {
         display: flex;
+      
         width: 100%;
-        padding: 30px;
+        padding: 20px;
         margin-left: -20px;
         align-items: center;
         justify-content: space-between;
+        gap: 10px;
     }
 
     .title {
-        font-size: 25px;
-        margin-bottom: 10px;
+        font-size: 18px;
+        margin-bottom: 0px;
     }
-
+    .movieTable {
+        overflow-y: scroll;
+        width: 100%;
+        padding-top: 100px;
+    }
+    
 
     .addButton {
         padding: 0px 6px;
         font-size: 10px;
+        max-height: 40px;
     }
 
     .movieTable {
@@ -329,5 +337,9 @@
     .editButton {
         width: 100%;
         padding: 8px 10px;
+    }
+
+    .searchInput{
+        min-width: 150px;
     }
 }

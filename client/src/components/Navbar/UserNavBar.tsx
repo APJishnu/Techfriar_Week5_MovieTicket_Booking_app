@@ -190,6 +190,18 @@ const Navbar = () => {
                             Movies
                         </Link>
                     </li>
+                    <li
+                        className={styles.mainNavigationsLi}
+
+                    >
+                        <Link className={styles.categories} href="/admin/admin-login" style={
+                            activePath === '/admin/admin-login'
+                                ? { backgroundColor: '#fc1212', color: '#ffffff' }
+                                : {}
+                        }>
+                            Admin
+                        </Link>
+                    </li>
                 </ul>
             </header>
 

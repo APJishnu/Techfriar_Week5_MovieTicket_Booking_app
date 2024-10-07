@@ -48,7 +48,7 @@
     border: none;
     border-bottom: 2px solid #9f9f9f;
     outline: none;
-    max-width: 400px;
+    min-width: 400px;
 }
 
 
@@ -232,7 +232,7 @@
 @media(max-width:768px) {
     .mainSection {
         padding: 20px;
-        padding-top: 90px;
+        padding-top: 60px;
     }
 
     .fixedContainer {
@@ -251,7 +251,7 @@
     }
 
     .cardContainer {
-        padding-top: 220px;
+        padding-top: 200px;
         overflow: scroll;
     }
 
@@ -262,7 +262,7 @@
     }
 
     .title {
-        font-size: 25px;
+        font-size: 18px;
     }
 
     .cardActions {
@@ -275,6 +275,11 @@
     .addButton {
         padding: 0px 5px;
         font-size: 10px;
+        max-height: 40px;
+    }
+
+    .searchInput{
+        min-width: 170px;
     }
 
 }
@@ -298,6 +303,6 @@
     }
 
     .title {
-        font-size: 25px;
+        font-size: 18px;
     }
 }

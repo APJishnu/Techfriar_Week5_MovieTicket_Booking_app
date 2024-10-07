@@ -1,146 +1,193 @@
+/* Booking details container */
 .bookingDetailsContainer {
-    width: 100%;
-    /* Set a max-width to prevent stretching on large screens */
-    margin: 0 auto; /* Center the container */
-    display: grid;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  padding-top: 130px;
+  border-radius: 12px;
+}
 
-    gap: 20px;
-    padding: 20px 60px;
-    padding-top: 140px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Main header */
+.mainHeader {
+  text-align: center;
+  font-size: 34px;
+  color: #ff4c4c;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+.filterSection {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.filterInput {
+  width: 48%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+}
+
+.filterInput:focus {
+  border-color: #ff0048;
+  outline: none;
+}
+
+/* User information */
+.userInfo {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #ff4c4c;
+  margin-bottom: 40px;
+}
+
+.userInfo h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.userInfo p {
+  font-size: 16px;
+  color: #666;
+  margin: 6px 0;
+}
+
+/* Booking card and grid layout */
+.bookingCard {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+.bookingInfo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Each booking item */
+.bookingItem {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid rgba(255, 76, 76, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.bookingItem:hover {
+  transform: translateY(-5px);
+}
+
+/* Movie title toggle */
+.movieTitle {
+  font-size: 24px;
+  color: #ff4c4c;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.movieTitle:hover {
+  color: #d94444;
+}
+
+/* Movie details */
+.movieDetails {
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+  border-left: 4px solid #ffcccc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bookingItem p {
+  font-size: 15px;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.bookingItem p span {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Loading and error message */
+.loading {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.errorMessage {
+  font-size: 18px;
+  color: #ff4c4c;
+  text-align: center;
+  padding: 30px 0;
+}
+
+/* Add this to booking-details.module.css */
+.downloadButton {
+  padding: 10px 15px;
+  background-color: #ff4c4c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.downloadButton:hover {
+  background-color: #d94444;
+}
+
+
+/* Media queries */
+@media (max-width: 768px) {
+  .bookingDetailsContainer {
+    padding: 15px;
+    padding-top: 80px;
   }
-  
-  /* Styling for the title */
+
   .mainHeader {
-    text-align:left;
+    text-align: center;
     font-size: 28px;
-    margin-bottom: 0px;
-    color:#e02828;
-   
-  } 
-  
-  .userInfo {
-     /* Make user info span across the grid */
-    text-align: left;
-    margin-bottom: 20px;
-    background-color: #f9c5c532;
-    padding: 15px;
-    border-radius: 6px;
-    border-bottom:1px solid #2c2a2a ;
-    
-  }
-  
-  .userInfo h2 {
-    font-size: 22px;
-    margin: 0;
-    color: #e02828;
-  }
-  
-  .userInfo p {
-    margin: 0px 0;
-    font-size: 13px;
-    color: #000000;
-  }
-  
-  .bookingCard {
-    text-align: center;
-    width: 100%;
-    background-color: #ffffff;
-    padding: 0px;
-    padding-bottom: 20px;
-    border-radius: 6px;
-    border: 1px solid #2c2a2a;
-    box-shadow: 0 1px 5px rgba(222, 50, 50, 0.184);
-  }
-  
-  .bookingInfo {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid for booking items */
-    gap: 20px;
-  }
-  
-  .bookingItem {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid rgba(222, 50, 50, 0.184);
-    gap: 30px;
-  }
-  
-  .bookingItem h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #e3432e; /* Change the color for a more modern look */
-  }
-  
-  .bookingItem p {
-    text-align: left;
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 0px;
-    font-weight: 500;
-    color: #e3432e;
-    margin: 0px 0;
-  }
-  .bookingItem p span{
-    text-align: left;
-    font-size: 12px;
-    color: #494747;
-    margin: 0px 0;
-  }
-  
-  .movieTitle {
-    cursor: pointer;
-    color: #ff0000; /* Highlight movie title with blue */
+    color: #ff4c4c;
+    margin-bottom: 25px;
     font-weight: bold;
-    transition: color 0.3s;
   }
-  
-  .movieTitle:hover {
-    color: #f25959; /* Change color on hover */
+  .bookingInfo {
+    grid-template-columns: 1fr;
   }
-  
-  .movieDetails {
-    padding-left: 15px; /* Indentation for the movie details */
-    margin-top: 10px;
-    background-color: #ffffff; /* Light background for distinction */
-    border-left: 3px solid #f29898;
-    border-radius: 4px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+  .userInfo h2 {
+    font-size: 20px;
   }
-  
-  .loading {
-    text-align: center;
-    font-size: 18px;
-    color: #777;
+
+  .userInfo p {
+    font-size: 14px;
   }
-  
-  .errorMessage {
-    text-align: center;
-    color: red;
-    font-size: 18px;
+
+  .movieTitle {
+    font-size: 22px;
   }
-  
-  /* Add media queries for better responsiveness */
-  @media (max-width: 768px) {
-    .bookingDetailsContainer {
-      padding: 20px;
-      grid-template-columns: 1fr; /* Single column layout on smaller screens */
-    }
-  
-    .userInfo {
-      grid-column: span 1;
-    }
-  
-    .bookingInfo {
-      grid-template-columns: 1fr; /* Single column layout for booking items */
-    }
+
+  .bookingItem p {
+    font-size: 14px;
   }
-  
+}

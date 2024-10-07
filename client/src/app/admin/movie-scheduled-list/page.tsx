@@ -137,7 +137,7 @@ const ScheduleList: React.FC = () => {
             className={styles.addButton}
             onClick={() => router.push("/admin/movie-schedule")}
           >
-            Add Movie Schedule
+            Add Schedule
           </button>
         </div>
 
