@@ -63,7 +63,6 @@ const AddTheatre: React.FC = () => {
           capacity: 0
         });
 
-
         setTimeout(() => {
           router.push("/admin/theatres-list");
         }, 1500); // 5 seconds delay

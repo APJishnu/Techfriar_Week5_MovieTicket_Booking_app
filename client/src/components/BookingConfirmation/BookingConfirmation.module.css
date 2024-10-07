@@ -1,144 +1,165 @@
-.bookingConfirmation {
-  padding: 20px;
+
+
+.bookingConfirmation{
+
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding-top: 150px;
+ 
+}
+
+.bookingConfirmation h1 {
+  font-size: 40px;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+  
+}
+
+.bookingConfirmation h1:before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 30px;
+  background-color: #ef2c2c;
+  top: 40px;
+  left: 80px;
+}
+
+.container {
+  max-width: 570px;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  margin-bottom: 20px;
+  padding: 20px 0px;
+}
+
+.left {
+  width: 100px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 100%;
-  min-height: 100vh;
-  background-color: #f9f9f9;
-  border: 1px solid rgba(60, 60, 60, 0.167);
-  border-radius: 8px;
-}
-
-.details {
-  background-color: #fff;
+  font-size: 36px;
+  font-weight: bold;
+  background-color: #ff3838;
+  color: white;
   padding: 20px;
-  border-radius: 10px;
-  text-align: left;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
 }
 
-.details h3 {
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: #333;
+.right {
+  flex: 1;
+  padding-left: 20px;
 }
 
-.details p {
+.right p {
   font-size: 16px;
-  color: #666;
-  margin: 8px 0;
+  color: #a7a7a7;
+  margin-bottom: 10px;
 }
 
-.confirmButton {
-  background-color: #f12f3f;
-  border: none;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+.bookingConfirmation h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #37383a;
 }
 
-.confirmButton:disabled {
-  background-color: #ffacb3;
-  cursor: not-allowed;
+.calendar {
+  font-size: 14px;
+  color: #37383a;
+  margin-bottom: 10px;
 }
 
-.confirmButton:hover {
-  background-color: #e02424;
-}
+.mapPin{
+  font-size: 14px;
+  color: #37383a;
 
-.phoneVerification{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-}
-
-.phoneInput {
-  height: 100%;
-  width: calc(100%);
-  padding: 12px;
-  outline: none;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-.verifyButton {
-  width: 40%;
-  padding: 12px ;
-  margin-left: 10px;
-  border: none;
-  border-radius: 8px;
-  background-color: #f12f3f;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.verifyButton:hover {
-  background-color: #e02424;
-}
-
-.otpSection {
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.verifiedText{
-  margin-left: 10px;
   
-  color: green;
-}
-.otpInput {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  margin-right: 0px;
 }
 
-.errorMessage {
-  color: #d9534f;
-  font-size: 16px;
+.mapPin span{
+  font-size: 40px;
+  margin-right: 10px;
+  color: #2a2a2ae6;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.seatContainer {
   margin-top: 10px;
 }
 
-@media (max-width: 768px) {
-  .bookingConfirmation {
-    padding-top: 100px;
-  }
+.seat {
+  display: inline-block;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #ff3838;
+  border-radius: 4px;
+  background-color: #ffe7e1;
+}
 
-  .details {
-    padding: 15px;
-  }
+.phoneSection {
+  margin-top: 20px;
+}
 
-  .confirmButton {
-    padding: 10px 20px;
-    font-size: 16px;
-  }
+.phoneInput {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #9f9f9f;
+  outline: none;
+}
 
-  .phoneInput {
-    width: calc(100% - 90px);
-  }
+.priceWithButton{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+}
 
-  .otpInput {
-    width: 100px;
-  }
+.confirmButton {
+  display: inline-block;
+  background-color: #ff3838;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.confirmButton:hover {
+  background-color: #d74f4f;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.closeButton {
+  background-color: #f12f3f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }

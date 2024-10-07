@@ -27,10 +27,10 @@ app.use(cors({
   credentials: true // Allow cookies
 }));
 
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 
-console.log('Uploads path:', path.join(__dirname, '../uploads'));
+console.log('Uploads path:', path.join(__dirname, '/uploads'));
 
 
 // Session configuration
