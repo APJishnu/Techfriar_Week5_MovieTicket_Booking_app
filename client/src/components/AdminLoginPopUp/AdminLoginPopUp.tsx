@@ -32,7 +32,7 @@ const AdminLoginPopup: React.FC<AdminLoginPopupProps> = ({ onClose }) => {
       if (data.success) {
         setSuccess('Login successful! Redirecting...');
         setTimeout(() => {
-            router.push('/admin/movies-list');
+            router.push('/admin/admin-dashboard');
         }, 2000);
       } else {
         setError(data.message || 'Login failed. Please try again.');

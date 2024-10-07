@@ -95,7 +95,7 @@ const ScheduleMovie: React.FC = () => {
         // Redirect to movie schedule list after 5 seconds
     setTimeout(() => {
       router.push("/admin/movie-scheduled-list");
-    }, 1500); // 5 seconds delay
+    }, 1500);
 
 
     } catch (error: any) {

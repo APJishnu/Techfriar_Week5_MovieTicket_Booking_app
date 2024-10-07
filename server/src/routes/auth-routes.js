@@ -11,20 +11,20 @@ const userHelper = require('../helpers/user-helper')
 
 
 // Google authentication route
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google',passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 
 router.get('/google/callback', passport.authenticate('google', {
-  failureRedirect: 'https://techfriar-week5-movie-ticket-booking-app.vercel.app',
+  failureRedirect: 'https://techfriar-week5-movie-ticket-booking-app.vercel.app/',
 }), (req, res) => {
   // Create a JWT token
   const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
   // Redirect with token only
-  res.redirect(`https://techfriar-week5-movie-ticket-booking-app.vercel.app/user/email-verification?token=${token}`);
+  res.redirect(`https://techfriar-week5-movie-ticket-booking-app.vercel.app//user/email-verification?token=${token}`);
 });
 
 
-router.get('/user-details', verifyToken, async (req, res) => {
+router.get('/user-details',verifyToken, async (req, res) => {
   try {
     const userId = req.user.id; // Assuming verifyToken middleware adds user to req
     const user = await userHelper.getUserDetails(userId);
@@ -49,12 +49,17 @@ router.post('/send-otp', async (req, res) => {
     // Define expiry time for the OTP (1 minute from now)
     const expiryTime = Date.now() + 60 * 1000; // Current time + 60 seconds
 
-    req.session.otp = {
+    // req.session.otp = {
+    //   field,
+    //   value,
+    //   otp,
+    //   expiryTime
+    // };
+    const data = {
       field,
       value,
       otp,
-      expiryTime
-    };
+    }
 
     const subject = 'Your OTP for Verification';
     const text = `Your OTP is ${otp}`;
@@ -63,18 +68,18 @@ router.post('/send-otp', async (req, res) => {
     if (field === 'email') {
       const response = await sendEmail(value, subject, text, html);
       if (response) {
-        res.status(200).json({ message: 'OTP sent successfully.' });
+        res.status(200).json({ message: 'OTP sent successfully.',data:data });
       } else {
-        res.status(200).json({ message: 'Failed to send OTP. Please try again later.' });
+        res.status(200).json({ message: 'Failed to send OTP. Please try again later.',data:null });
       }
 
 
     } else if (field == 'phone') {
       const response = await sendSms(value, otp);
       if (response) {
-        res.status(200).json({ message: 'OTP sent successfully.' });
+        res.status(200).json({ message: 'OTP sent successfully.' ,data:data});
       } else {
-        res.status(200).json({ message: 'Failed to send OTP. Please try again later.' });
+        res.status(200).json({ message: 'Failed to send OTP. Please try again later.' ,data:null});
       }
     }
 
@@ -88,22 +93,13 @@ router.post('/send-otp', async (req, res) => {
 // Route to verify OTP
 router.post('/verify-otp', async (req, res) => {
 
-  const { field, value, otp, userId } = req.body;
+  const { field, value, otp, userId ,userOtp,userField,userValue} = req.body;
   try {
-    console.log(req.session);
-    
-    const sessionOtp = req.session.otp;
-
-    if (!sessionOtp) {
-      return res.status(200).json({ message: 'No OTP found. Please request an OTP first.' });
-    }
-    // Check if OTP has expired
-    if (Date.now() > sessionOtp.expiryTime) {
-      return res.status(200).json({ message: 'OTP has expired.' });
-    }
+    console.log(userOtp,userField,userValue);
+ 
 
     // Validate that the OTP matches
-    if (otp === sessionOtp.otp && field === sessionOtp.field && value === sessionOtp.value) {
+    if (otp == userOtp && field == userField && value == userValue) {
       const date = Date.now();
 
       if (field === "email") {
@@ -111,7 +107,7 @@ router.post('/verify-otp', async (req, res) => {
       } else if (field === "phone") {
         await authValidation.phoneVerified(value, date, userId);
       }
-      req.session.otp = null; // Optionally, clear OTP from session
+    
       res.status(200).json({ verified: true });
     } else {
       res.status(200).json({ message: 'Invalid OTP.' });

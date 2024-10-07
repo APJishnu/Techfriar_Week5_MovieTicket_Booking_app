@@ -8,6 +8,8 @@ import { getUser, isAuthenticated, User } from '../../../utils/auth';
 import { useRouter } from 'next/navigation'; // Import useRouter
 import PopUpVerification from '../../../components/PopUpVerification/PopUpVerification';
 import { API_URL } from "@/utils/api";
+import Cookies from 'js-cookie';
+
 
 
 const EmailVerification: React.FC = () => {
@@ -67,6 +69,13 @@ const EmailVerification: React.FC = () => {
         setOtpSent(true);
         setCountdown(60);
         startCountdown();
+
+        Cookies.set("userOtp", response.data.data.otp, { expires: 1 / 24 });
+        Cookies.set("userField", response.data.data.field, { expires: 1 / 24 });
+        Cookies.set("userValue", response.data.data.value, { expires: 1 / 24 });
+
+        console.log(response.data.data.otp)
+
       } else {
         setError("Failed to send OTP. Please try again.");
       }
@@ -85,9 +94,13 @@ const EmailVerification: React.FC = () => {
     const token = getAuthToken();
     setError("");
     try {
+      const userOtp = Cookies.get("userOtp");
+      const userField = Cookies.get("userField");
+      const userValue = Cookies.get("userValue");
+      console.log(userOtp)
       const response = await axios.post(
         `${API_URL}/api/auth/verify-otp`,
-        { field: "email", value: email, otp },
+        { field: "email", value: email, otp, userOtp, userField, userValue },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
       if (response.data.verified) {

@@ -6,8 +6,6 @@ const { sendWhatsAppMessage } = require('../config/sms-sender');
 const { generateQRCode } = require('../config/qr-code');
 
 
-
-
 module.exports = {
   // Route handlers
   getAllMoviesRouter: async (req, res) => {

@@ -39,27 +39,22 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
   const [otpSent, setOtpSent] = useState(false);
   const [otpError, setOtpError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [phoneVerified, setPhoneVerified] = useState(false); // To track phone verification status
 
   const router = useRouter();
 
 
-  
+
   useEffect(() => {
     const storedPhone = getVerifiedPhone();
     if (storedPhone) {
       setPhone(storedPhone);
-      setPhoneVerified(true);
     }
-
-
-
 
     const loadRazorpayScript = async () => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => setRazorpayLoaded(true);
-     
+
       document.body.appendChild(script);
     };
     loadRazorpayScript();
@@ -67,7 +62,6 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
   const handleRazorpayPayment = async () => {
     if (!razorpayLoaded) return alert("Razorpay SDK is not loaded.");
-    if (!phoneVerified) return alert("Please verify your phone number before proceeding.");
 
     try {
       const response = await axios.post(`${API_URL}/api/razorpay-order`, { amount: totalPrice * 100 });
@@ -122,16 +116,13 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         const encodedQrCodeUrl = encodeURIComponent(qrCodeUrl);
 
         const queryParams = new URLSearchParams({
-            bookingDetails: encodedBookingDetails,
-            qrCodeUrl: encodedQrCodeUrl,
+          bookingDetails: encodedBookingDetails,
+          qrCodeUrl: encodedQrCodeUrl,
         }).toString();
 
-        try {
-          router.push(`/user/booking-qr-code?${queryParams}`);
-        } catch (error) {
-          console.error('Navigation error:', error);
-        }
-    
+
+        router.push(`/user/booking-qr-code?${queryParams}`);
+
       } else {
         alert("Error confirming booking.");
       }
@@ -168,7 +159,6 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     if (result.success) {
       alert("Phone number verified successfully!");
       setOtpSent(false);
-      setPhoneVerified(true);
     } else {
       setOtpError(result.error || "Incorrect OTP. Please try again.");
     }
@@ -193,26 +183,25 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         <div className={styles.phoneSection}>
           <p>
             Add your Phone number to receive a booking receipt:
-            </p>
-            <div className={styles.phoneVerification} >
+          </p>
+          <div className={styles.phoneVerification} >
             <input
               type="tel"
               value={phone}
               onChange={handlePhoneChange}
               className={styles.phoneInput}
               placeholder="Enter your phone number"
-              disabled={phoneVerified} // Disable input after verification
             />
-           
-         
-            </div>
-    
+
+
+          </div>
+
+
         </div>
       </div>
       <button
         onClick={handleRazorpayPayment}
         className={styles.confirmButton}
-        // Disable the button if the phone is not verified
       >
         Confirm Booking
       </button>

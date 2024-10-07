@@ -4,9 +4,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from '../../../styles/admin/addTheatre.module.css';
 import { API_URL } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 
 const AddTheatre: React.FC = () => {
+
+  const router = useRouter()
+
   const [theatreData, setTheatreData] = useState({
     theatreName: "",
     location: "",
@@ -58,6 +62,11 @@ const AddTheatre: React.FC = () => {
           amenities: [],
           capacity: 0
         });
+
+
+        setTimeout(() => {
+          router.push("/admin/theatres-list");
+        }, 1500); // 5 seconds delay
       }
     } catch (error) {
       setErrorMessage("Failed to add the theatre. Please try again.");

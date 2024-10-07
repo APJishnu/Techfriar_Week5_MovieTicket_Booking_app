@@ -6,7 +6,7 @@ const MongoStore = require('connect-mongo');
 const Routes = require('./routes/routes');
 const authRoutes = require('./routes/auth-routes'); // Add auth routes
 const passport = require('passport');
-
+const path = require('path');
 
 
 const session = require('express-session');
@@ -22,12 +22,15 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 
 app.use(cors({
-  origin: 'https://techfriar-week5-movie-ticket-booking-app.vercel.app', // Include 'https://' and full domain
+  origin: 'https://techfriar-week5-movie-ticket-booking-app.vercel.app/', // Include 'https://' and full domain
   methods: 'GET,POST,PUT,DELETE',
   credentials: true // Allow cookies
 }));
 
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+
+console.log('Uploads path:', path.join(__dirname, '../uploads'));
 
 
 // Session configuration
@@ -36,11 +39,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl:process.env.MONGO_URI,
+    mongoUrl: process.env.MONGO_URI,
   }),
   cookie: {
     secure: process.env.NODE_ENV === 'production', // true in production (for HTTPS), false in development
-    httpOnly:  process.env.NODE_ENV === 'development',
+    httpOnly: process.env.NODE_ENV === 'development',
     maxAge: 3600 * 1000
   }
 }));
