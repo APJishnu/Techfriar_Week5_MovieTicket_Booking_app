@@ -1,2 +1,2 @@
 // apiConfig.js
-export const API_URL = 'http://localhost:5000';
+export const API_URL = 'https://techfriar-week5-movieticket-booking-app.onrender.com';
