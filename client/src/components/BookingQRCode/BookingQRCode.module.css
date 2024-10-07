@@ -1,4 +1,4 @@
-.mainDiv{
+.mainDiv {
   padding-top: 140px;
   padding-bottom: 50px;
   background-color: #595b5f61;
@@ -14,7 +14,7 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   background-color: #fff;
   margin: 0 auto;
-  
+
 }
 
 /* Dismiss button */
@@ -39,7 +39,7 @@
 
 .dismiss:hover {
   background-color: #ee0d0d;
-  
+
   color: #fff;
 }
 
@@ -144,5 +144,12 @@
 
   to {
     transform: scale(1.09);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .mainDiv{
+    padding-top: 80px;
   }
 }

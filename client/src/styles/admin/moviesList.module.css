@@ -29,10 +29,19 @@
     padding: 30px 80px;
 }
 
+.searchInput {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #9f9f9f;
+    outline: none;
+    max-width: 400px;
+}
+
 .title {
     font-size: 40px;
     color: #ff4b4b;
-    
+
 }
 
 .addButton {
@@ -44,7 +53,7 @@
     font-size: 14px;
     cursor: pointer;
     height: 50px;
-  }
+}
 
 .addButton:hover {
     background-color: #e14242;
@@ -55,7 +64,8 @@
     width: 100%;
     padding-top: 140px;
 }
-.movieTable::-webkit-scrollbar {    
+
+.movieTable::-webkit-scrollbar {
     display: none;
 }
 
@@ -67,7 +77,8 @@
     padding: 25px;
     box-sizing: border-box;
     display: flex;
-    gap: 20px; /* Gap between image and content */
+    gap: 20px;
+    /* Gap between image and content */
 }
 
 .movieIndex {
@@ -76,7 +87,8 @@
 
 
 .movieImage {
-    width: 150px; /* Adjust size if needed */
+    width: 150px;
+    /* Adjust size if needed */
     height: 180px;
     object-fit: cover;
     border-radius: 5px;
@@ -92,7 +104,8 @@
 .movieHeader {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between title and details */
+    gap: 10px;
+    /* Space between title and details */
     margin-bottom: 10px;
 }
 
@@ -173,6 +186,48 @@
     font-size: 18px;
 }
 
+.confirmationPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popupContent {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.popupActions {
+    margin-top: 10px;
+}
+
+.confirmButton {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.cancelButton {
+    background-color: #4e61f0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+
 
 /* Responsive Design for Mobile */
 @media (max-width: 786px) {
@@ -184,7 +239,7 @@
         padding-top: 60px;
     }
 
-  
+
 
     .header {
         display: flex;
@@ -196,13 +251,14 @@
     }
 
     .title {
-        font-size: 35px;
+        font-size: 25px;
         margin-bottom: 10px;
     }
 
 
     .addButton {
-        padding: 8px 16px;
+        padding: 0px 6px;
+        font-size: 10px;
     }
 
     .movieTable {
@@ -215,7 +271,8 @@
         flex-direction: row;
         align-items: flex-start;
     }
-    .movieIndex{
+
+    .movieIndex {
         display: none;
     }
 
@@ -226,40 +283,41 @@
 
 
     .movieContent {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    
-}
-    
-.movieHeader {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Space between title and details */
-    margin-bottom: 10px;
- 
-}
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-.movieTitle {
-    font-size: 17px;
-    font-weight: bold;
-    color: #333;
-}
+    }
 
-.movieDetails {
-    display: grid;
-  
-    grid-template-columns: repeat(1, 1fr);
-    gap: 3px;
-    margin-bottom: 0px;
-}
+    .movieHeader {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        /* Space between title and details */
+        margin-bottom: 10px;
 
-.movieDetail {
-    font-size: 10px;
-    color: #333;
- 
-}
+    }
+
+    .movieTitle {
+        font-size: 17px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .movieDetails {
+        display: grid;
+
+        grid-template-columns: repeat(1, 1fr);
+        gap: 3px;
+        margin-bottom: 0px;
+    }
+
+    .movieDetail {
+        font-size: 10px;
+        color: #333;
+
+    }
 
 
     .movieActions {
@@ -267,7 +325,8 @@
         gap: 10px;
     }
 
-    .deleteButton, .editButton {
+    .deleteButton,
+    .editButton {
         width: 100%;
         padding: 8px 10px;
     }

@@ -163,3 +163,113 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+
+  .bookingConfirmation {
+    padding-top: 80px;
+  }
+
+  .bookingConfirmation h1 {
+    font-size: 28px;
+    letter-spacing: 2px;
+  }
+
+  .bookingConfirmation h1:before {
+    top: 30px;
+    left: 40px;
+    width: 5px;
+    height: 20px;
+  }
+
+  .container {
+    max-width: 100%;
+    flex-direction: column;
+    margin: 0 10px;
+    padding: 15px;
+  }
+
+  .left {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 0;
+    font-size: 24px;
+  }
+
+  .right {
+    padding: 15px 0;
+  }
+
+  .right p {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .bookingConfirmation h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .calendar {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .mapPin {
+    font-size: 12px;
+  }
+
+  .mapPin span {
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+
+  .seatContainer {
+    margin-top: 8px;
+  }
+
+  .seat {
+    padding: 4px;
+    margin: 4px;
+    font-size: 12px;
+  }
+
+  .phoneSection {
+    margin-top: 15px;
+  }
+
+  .phoneInput {
+    padding: 8px;
+  }
+
+  .priceWithButton {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 5px;
+  }
+
+  .confirmButton {
+    padding: 10px 20px;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal {
+    padding: 20px;
+  }
+
+  .modalContent {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .closeButton {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}

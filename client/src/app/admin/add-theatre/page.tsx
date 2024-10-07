@@ -6,10 +6,8 @@ import styles from '../../../styles/admin/addTheatre.module.css';
 import { API_URL } from "@/utils/api";
 import { useRouter } from "next/navigation";
 
-
 const AddTheatre: React.FC = () => {
-
-  const router = useRouter()
+  const router = useRouter();
 
   const [theatreData, setTheatreData] = useState({
     theatreName: "",
@@ -18,37 +16,59 @@ const AddTheatre: React.FC = () => {
     amenities: [] as string[],
     capacity: 0
   });
+
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [validationErrors, setValidationErrors] = useState({
+    theatreName: "",
+    location: "",
+    amenities: "",
+    capacity: "",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
 
-    if (type === 'select-one') {
-      // Handle <select> changes
-      setTheatreData(prevData => ({
-        ...prevData,
-        [name]: value
-      }));
-    } else {
-      // Handle <input> and <textarea> changes
-      setTheatreData(prevData => ({
-        ...prevData,
-        [name]: value
-      }));
-    }
+    setTheatreData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
   };
 
   const handleAmenitiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setTheatreData(prevData => ({
       ...prevData,
-      amenities: value.split(",").map(item => item.trim()) // Convert comma-separated string to array
+      amenities: value.split(",").map(item => item.trim())
     }));
+  };
+
+  const validateForm = () => {
+    const errors: any = {};
+    
+    if (!theatreData.theatreName.trim()) {
+      errors.theatreName = "Theatre Name is required";
+    }
+    if (!theatreData.location.trim()) {
+      errors.location = "Location is required";
+    }
+    if (theatreData.amenities.length === 0) {
+      errors.amenities = "At least one amenity is required";
+    }
+    if (theatreData.capacity <= 0) {
+      errors.capacity = "Capacity should be greater than 0";
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
 
     try {
       const response = await axios.post(`${API_URL}/api/admin/add-theatre`, theatreData);
@@ -65,7 +85,7 @@ const AddTheatre: React.FC = () => {
 
         setTimeout(() => {
           router.push("/admin/theatres-list");
-        }, 1500); // 5 seconds delay
+        }, 1500);
       }
     } catch (error) {
       setErrorMessage("Failed to add the theatre. Please try again.");
@@ -88,9 +108,9 @@ const AddTheatre: React.FC = () => {
               name="theatreName"
               value={theatreData.theatreName}
               onChange={handleChange}
-              required
               className={styles.inputField}
             />
+            {validationErrors.theatreName && <div className={styles.errorText}>{validationErrors.theatreName}</div>}
           </div>
 
           <div className={styles.formGroup}>
@@ -101,9 +121,9 @@ const AddTheatre: React.FC = () => {
               name="location"
               value={theatreData.location}
               onChange={handleChange}
-              required
               className={styles.inputField}
             />
+            {validationErrors.location && <div className={styles.errorText}>{validationErrors.location}</div>}
           </div>
 
           <div className={styles.formGroup}>
@@ -113,7 +133,6 @@ const AddTheatre: React.FC = () => {
               name="screenResolution"
               value={theatreData.screenResolution}
               onChange={handleChange}
-              required
               className={styles.inputField}
             >
               <option value="2K">2K</option>
@@ -127,11 +146,11 @@ const AddTheatre: React.FC = () => {
               type="text"
               id="amenities"
               name="amenities"
-              value={theatreData.amenities.join(",")} // Join array into a comma-separated string for input field
+              value={theatreData.amenities.join(",")}
               onChange={handleAmenitiesChange}
-              required
               className={styles.inputField}
             />
+            {validationErrors.amenities && <div className={styles.errorText}>{validationErrors.amenities}</div>}
           </div>
 
           <div className={styles.formGroup}>
@@ -142,9 +161,9 @@ const AddTheatre: React.FC = () => {
               name="capacity"
               value={theatreData.capacity}
               onChange={handleChange}
-              required
               className={styles.inputField}
             />
+            {validationErrors.capacity && <div className={styles.errorText}>{validationErrors.capacity}</div>}
           </div>
 
           <button type="submit" className={styles.submitButton}>Add Theatre</button>
