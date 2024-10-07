@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from './api';
+import Cookies from 'js-cookie';
 
 
 export interface User {
@@ -10,12 +11,12 @@ export interface User {
 }
 
 export const isAuthenticated = (): boolean => {
-    const token = localStorage.getItem('authToken');
+    const token = Cookies.get("authToken");
     return !!token;
 };
 
 export const getUser = async (): Promise<User | null> => {
-    const token = localStorage.getItem('authToken');
+    const token = Cookies.get("authToken");
     if (!token) return null;
 
     try {
@@ -24,7 +25,7 @@ export const getUser = async (): Promise<User | null> => {
         });
 
         if (!response || !response.data) {
-            localStorage.removeItem('authToken'); // Remove authToken if response is null
+            Cookies.remove("authToken");
             localStorage.removeItem('userData');  // Clear userData as well
             return null;
         }
@@ -38,8 +39,6 @@ export const getUser = async (): Promise<User | null> => {
 };
 
 export const logout = (): void => {
-    localStorage.removeItem('authToken');
+    Cookies.remove("authToken");
     localStorage.removeItem('userData'); // Clear user data if stored
-    localStorage.removeItem("verifiedPhone");
-    localStorage.removeItem("phoneVerified");
 };

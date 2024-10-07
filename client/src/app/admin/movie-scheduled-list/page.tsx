@@ -40,6 +40,7 @@ interface Schedule {
 const ScheduleList: React.FC = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>(""); // State for search input
   const router = useRouter();
 
   useEffect(() => {
@@ -47,14 +48,14 @@ const ScheduleList: React.FC = () => {
       try {
         const response = await axios.get(`${API_URL}/api/admin/schedule-details`);
         setSchedules(response.data);
-        console.log("Fetched schedules:", response.data); // Log the fetched data
+        console.log("Fetched schedules:", response.data);
       } catch (error) {
         setErrorMessage("Failed to fetch schedules.");
-        console.error(error); // Log the error for debugging
+        console.error(error);
       }
     };
     fetchSchedules();
-  }, []); // Ensure this runs only once when the component mounts
+  }, []);
 
   // Group schedules by theatre name, but only include those with movies
   const groupedSchedules = schedules.reduce((acc, schedule) => {
@@ -68,51 +69,70 @@ const ScheduleList: React.FC = () => {
     return acc;
   }, {} as { [theatreName: string]: Schedule[] });
 
-  // Handle deleting showtimes
+  // Handle deleting showtimes (existing code)
   const handleDeleteShowtime = async (scheduleId: string, movieId: string, date: string, time: string) => {
     try {
       await axios.delete(`${API_URL}/api/admin/schedule/${scheduleId}/showtime`, {
-        data: { movieId, date, time }, // Send movieId, date, and time in request body
+        data: { movieId, date, time },
       });
 
-      // Update schedules in the state after deletion
       setSchedules((prevSchedules) =>
         prevSchedules
           .map((schedule) => {
             if (schedule._id === scheduleId) {
               const updatedMovies = schedule.movies
                 .map((movieSchedule) => {
-                  if (movieSchedule.movie?._id === movieId) { // Added optional chaining
+                  if (movieSchedule.movie?._id === movieId) {
                     const updatedShowDates = movieSchedule.showDates
                       .map((showDate) => ({
                         ...showDate,
                         times: showDate.times.filter((t) => t.time !== time),
                       }))
-                      .filter((showDate) => showDate.times.length > 0); // Remove empty dates
+                      .filter((showDate) => showDate.times.length > 0);
 
                     return { ...movieSchedule, showDates: updatedShowDates };
                   }
                   return movieSchedule;
                 })
-                .filter((movieSchedule) => movieSchedule.showDates.length > 0); // Remove movies with no showtimes
+                .filter((movieSchedule) => movieSchedule.showDates.length > 0);
 
               return { ...schedule, movies: updatedMovies };
             }
             return schedule;
           })
-          .filter((schedule) => schedule.movies.length > 0) // Remove schedules with no movies
+          .filter((schedule) => schedule.movies.length > 0)
       );
     } catch (error) {
       setErrorMessage("Failed to delete showtime.");
-      console.error(error); // Log the error for debugging
+      console.error(error);
     }
   };
+
+  // Filtered schedules based on search term
+  const filteredSchedules = Object.keys(groupedSchedules)
+    .filter((theatreName) =>
+      theatreName.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .reduce((acc, theatreName) => {
+      acc[theatreName] = groupedSchedules[theatreName];
+      return acc;
+    }, {} as { [theatreName: string]: Schedule[] });
 
   return (
     <div className={styles.mainSection}>
       <div className={styles.container}>
         <div className={styles.headingWithButton}>
           <h2>Movie Schedules</h2>
+
+          {/* Search Input */}
+          <input
+            type="text"
+            placeholder="Search by theatre name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={styles.searchInput} // You can define your own styles
+          />
+
           <button
             className={styles.addButton}
             onClick={() => router.push("/admin/movie-schedule")}
@@ -120,31 +140,32 @@ const ScheduleList: React.FC = () => {
             Add Movie Schedule
           </button>
         </div>
+
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
         <div className={styles.cardContainer}>
-          {Object.keys(groupedSchedules).length > 0 ? (
-            Object.keys(groupedSchedules).map((theatreName, index) => (
+          {Object.keys(filteredSchedules).length > 0 ? (
+            Object.keys(filteredSchedules).map((theatreName, index) => (
               <div key={theatreName} className={styles.theatreCard}>
                 <h3>
                   {index + 1}. {theatreName}
                 </h3>
 
-                {groupedSchedules[theatreName].map((schedule) => (
+                {filteredSchedules[theatreName].map((schedule) => (
                   <div key={schedule._id} className={styles.movieCard}>
                     <div className={styles.movieContent}>
                       <div className={styles.movieDetails}>
                         {schedule.movies.map((movieSchedule) => {
-                          const movieId = movieSchedule.movie?._id; // Use optional chaining
+                          const movieId = movieSchedule.movie?._id;
                           if (!movieId) {
                             console.warn("Movie ID is null or undefined for schedule:", schedule);
-                            return null; // Skip this movie if the ID is not available
+                            return null;
                           }
 
                           return (
                             <div key={movieId} className={styles.movieDetailsSection}>
                               <div className={styles.movieTitle}>
-                                {movieSchedule.movie?.title || "No Title"} {/* Handle null title */}
+                                {movieSchedule.movie?.title || "No Title"}
                               </div>
                               {Array.isArray(movieSchedule.showDates) && movieSchedule.showDates.length > 0 ? (
                                 movieSchedule.showDates
@@ -164,7 +185,7 @@ const ScheduleList: React.FC = () => {
                                               onClick={() =>
                                                 handleDeleteShowtime(
                                                   schedule._id,
-                                                  movieId, // Use movieId directly
+                                                  movieId,
                                                   showDate.date,
                                                   showTime.time
                                                 )
@@ -181,7 +202,6 @@ const ScheduleList: React.FC = () => {
                           );
                         })}
 
-                        {/* Fallback if there are no movies */}
                         {schedule.movies.length === 0 && (
                           <p>No movies available for this schedule.</p>
                         )}

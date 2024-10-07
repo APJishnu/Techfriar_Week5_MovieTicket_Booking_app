@@ -32,7 +32,7 @@ const EmailVerification: React.FC = () => {
     const token = urlParams.get('token');
 
     if (token) {
-      localStorage.setItem('authToken', token);
+      Cookies.set("authToken", token, { expires: 1 / 24 });
     }
   }, []);
 
