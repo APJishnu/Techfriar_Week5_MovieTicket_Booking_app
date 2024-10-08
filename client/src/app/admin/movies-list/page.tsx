@@ -73,7 +73,7 @@ const MovieList: React.FC = () => {
         <section className={styles.mainSection}>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Movie List</h2>
+                    <h2 className={styles.title}>Movies</h2>
                     <div className={styles.searchContainer}>
                         <input
                             type="text"

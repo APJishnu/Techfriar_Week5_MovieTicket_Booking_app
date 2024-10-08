@@ -143,18 +143,7 @@
   border-radius: 6px;
 }
 
-.confirmationModal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  z-index: 1000; /* Ensure it's on top */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+
 
 .searchInput {
   width: 100%;
@@ -164,13 +153,7 @@
   outline: none;
   max-width: 400px;
 }
-.confirmationModal p {
-  margin-bottom: 15px;
-}
 
-.confirmationModal button {
-  margin-right: 10px;
-}
 
 /* Confirmation Modal */
 .confirmationModal {
@@ -184,6 +167,11 @@
   border-radius: 8px;
   z-index: 1000; /* Ensure it's on top */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .confirmationModal p {
@@ -192,9 +180,9 @@
 }
 
 .confirmationModal button {
-  margin-right: 10px;
+  margin-right: 5px;
   padding: 8px 16px;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -230,7 +218,7 @@
 gap: 10px;  }
 
   .headingWithButton h2{
-    font-size: 18px;
+    font-size: 14px;
     color: #e24343;
   }
   .theatreCard h3 {
@@ -271,15 +259,15 @@ gap: 10px;  }
 
 @media (max-width: 576px) {
   .mainSection {
-    padding: 60px 10px;
+    padding: 60px 0px;
  
   }
   .headingWithButton h2{
-    font-size: 18px;
+    font-size: 16px;
     color: #e24343;
   }
   .searchInput{
-    min-width: 170px;
+    min-width: 160px;
   }
 
   .addButton{
@@ -288,6 +276,7 @@ gap: 10px;  }
     align-items: center;
     justify-content: center;
     max-height: 40px;
+    padding: 10px;
   }
 
   .theatreCard {
@@ -295,7 +284,7 @@ gap: 10px;  }
   }
 
   .movieCard {
-    padding: 15px;
+    padding: 10px;
   }
 
   .dateCard {

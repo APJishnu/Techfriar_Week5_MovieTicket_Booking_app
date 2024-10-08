@@ -17,6 +17,7 @@ const AdminLoginPopup: React.FC<AdminLoginPopupProps> = ({ onClose }) => {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const router = useRouter();
 
@@ -54,7 +55,10 @@ const AdminLoginPopup: React.FC<AdminLoginPopupProps> = ({ onClose }) => {
       return; // Stop if form validation fails
     }
 
+
+
     try {
+      setIsLoading(true); // Start loading
       const response = await axios.post(`${API_URL}/api/admin/admin-login`, { email, password });
       const data = response.data;
 
@@ -68,7 +72,10 @@ const AdminLoginPopup: React.FC<AdminLoginPopupProps> = ({ onClose }) => {
       }
     } catch (err) {
       setError('An error occurred. Please try again later.');
+    } finally {
+      setIsLoading(false); // Stop loading after the request completes
     }
+
   };
 
   return (
@@ -78,7 +85,7 @@ const AdminLoginPopup: React.FC<AdminLoginPopupProps> = ({ onClose }) => {
           <h2>Admin Login</h2>
           {success && <p className={styles.successMessage}>{success}</p>}
           {error && <p className={styles.errorMessage}>{error}</p>}
-          
+
           <div>
             <input
               type="text"
@@ -101,7 +108,7 @@ const AdminLoginPopup: React.FC<AdminLoginPopupProps> = ({ onClose }) => {
             {passwordError && <p className={styles.errorMessage}>{passwordError}</p>}
           </div>
 
-          <button type="submit" className={styles.loginBtn}>Login</button>
+          <button type="submit" className={styles.loginBtn} disabled={isLoading}>{isLoading ? "Logging..." : "Login"}</button>
           <button type="button" onClick={onClose} className={styles.closeButton}>X</button>
         </form>
       </div>

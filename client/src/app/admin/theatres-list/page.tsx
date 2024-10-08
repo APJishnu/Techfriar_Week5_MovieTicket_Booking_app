@@ -71,7 +71,7 @@ const TheatreList: React.FC = () => {
       <div className={styles.container}>
         <div className={styles.fixedContainer}>
           <div className={styles.header}>
-            <h2 className={styles.title}>Theatre List</h2>
+            <h2 className={styles.title}>Theatres</h2>
 
             {/* Search input */}
             <div className={styles.searchContainer}>

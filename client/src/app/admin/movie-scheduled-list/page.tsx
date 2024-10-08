@@ -138,7 +138,7 @@ const ScheduleList: React.FC = () => {
     <div className={styles.mainSection}>
       <div className={styles.container}>
         <div className={styles.headingWithButton}>
-          <h2>Movie Schedules</h2>
+          <h2>Schedules</h2>
 
           {/* Search Input */}
           <input
@@ -236,12 +236,13 @@ const ScheduleList: React.FC = () => {
       {showModal && (
         <div className={styles.confirmationModal}>
           <p>Are you sure you want to delete this showtime?</p>
-          <button onClick={handleDeleteShowtime} className={styles.confirmButton}>
-            Yes, Delete
+          <div><button onClick={handleDeleteShowtime} className={styles.confirmButton}>
+            Delete
           </button>
           <button onClick={() => setShowModal(false)} className={styles.cancelButton}>
             Cancel
-          </button>
+          </button></div>
+          
         </div>
       )}
     </div>
