@@ -36,7 +36,6 @@ const MovieDisplay: React.FC = () => {
         setMovies(moviesData);
         setFilteredMovies(moviesData);
 
-        console.log("haii",response)
         // Extract unique languages from the fetched movies
         const allLanguages = moviesData
           .flatMap(movie => movie.language.split(',').map(lang => lang.trim()))

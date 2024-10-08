@@ -19,7 +19,7 @@
   
   .addTheatreContainer h2{
     text-align: center;
-    color: #000000;
+    color: #ff2323;
   }
 
   
@@ -29,10 +29,10 @@
     margin-bottom: 20px;
   }
   
-  .errorMessage {
-    color: red;
-    text-align: center;
-    margin-bottom: 20px;
+  .errorMessage,.errorText {
+    color: rgb(255, 132, 132);
+    margin-bottom: 0px;
+    font-size: 10px;
   }
   
   /* styles/admin/addTheatre.module.css */
@@ -43,12 +43,12 @@
   }
   
   .formGroup {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
   .formGroup label {
     font-size: 17px;
     font-weight: 700;
-    color: #ff0000;
+    color: #575454;
   }
   
   .inputField {
@@ -80,3 +80,9 @@
     background-color: #b3001e;
   }
   
+  @media (max-width:768px){
+    .adminContainer {
+    padding: 60px 0px;
+    padding-bottom: 0px;
+    }
+  }

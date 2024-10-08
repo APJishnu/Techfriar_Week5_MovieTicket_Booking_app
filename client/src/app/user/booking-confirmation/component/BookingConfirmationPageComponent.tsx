@@ -45,7 +45,6 @@ const BookingConfirmationPageComponent: React.FC = () => {
         });
       }
     } catch (error) {
-      console.error('Error parsing user data from localStorage', error);
     }
   }, []);
 

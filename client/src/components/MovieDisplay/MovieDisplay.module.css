@@ -2,6 +2,7 @@
 .mainSection {
   padding: 20px;
   width: 100%;
+
 }
 
 /* Container for all content */
@@ -12,6 +13,7 @@
   max-width: 1450px;
   margin: 0 auto;
   gap: 20px;
+ 
 
 }
 
@@ -166,6 +168,7 @@
 @media (max-width: 768px) {
   .mainSection {
     padding:  0px;
+    padding-bottom: 40px;
     width: 100%;
   }
 

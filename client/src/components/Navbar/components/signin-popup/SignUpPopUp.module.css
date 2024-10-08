@@ -52,9 +52,10 @@
 }
 
 .signUpOption:hover {
-    background-color:#ff4848;
-    color: white;
+    background-color:#ffffff;
+    color: rgb(255, 255, 255);
     border: 1px solid #ff4848;
+    box-shadow: inset 1px 0px 70px  rgb(255, 63, 63);
 }
 
 .authLogo{

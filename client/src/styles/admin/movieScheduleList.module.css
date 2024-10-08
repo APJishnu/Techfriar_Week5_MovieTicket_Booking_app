@@ -172,6 +172,49 @@
   margin-right: 10px;
 }
 
+/* Confirmation Modal */
+.confirmationModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 1000; /* Ensure it's on top */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirmationModal p {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.confirmationModal button {
+  margin-right: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.confirmButton {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.cancelButton {
+  background-color: #3d4dfd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+
+
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

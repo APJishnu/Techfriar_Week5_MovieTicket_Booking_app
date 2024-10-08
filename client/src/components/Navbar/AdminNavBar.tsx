@@ -92,7 +92,7 @@ const AdminNavbar = () => {
                                 ? { backgroundColor: '#f65c5c', color: '#ffffff' }
                                 : {}
                         }>
-                            Admin Dashboard
+                            Dashboard
                         </Link>
                     </li>
                     <li className={styles.mainNavigationsLi}>
@@ -119,7 +119,7 @@ const AdminNavbar = () => {
                                 ? { backgroundColor: '#f65c5c', color: '#ffffff' }
                                 : {}
                         }>
-                            Movie Schedule
+                            Schedules
                         </Link>
                     </li>
                 </ul>

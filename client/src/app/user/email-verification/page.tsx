@@ -74,7 +74,6 @@ const EmailVerification: React.FC = () => {
         Cookies.set("userField", response.data.data.field, { expires: 1 / 24 });
         Cookies.set("userValue", response.data.data.value, { expires: 1 / 24 });
 
-        console.log(response.data.data.otp)
 
       } else {
         setError("Failed to send OTP. Please try again.");
@@ -97,7 +96,6 @@ const EmailVerification: React.FC = () => {
       const userOtp = Cookies.get("userOtp");
       const userField = Cookies.get("userField");
       const userValue = Cookies.get("userValue");
-      console.log(userOtp)
       const response = await axios.post(
         `${API_URL}/api/auth/verify-otp`,
         { field: "email", value: email, otp, userOtp, userField, userValue },
@@ -131,29 +129,31 @@ const EmailVerification: React.FC = () => {
   return (
     <div className={styles.wrapper}>
       {/* Initial popup to ask for email verification */}
-      {showInitialPopup && (
-        <PopUpVerification
-          onClose={() => setShowInitialPopup(false)}  // Close the popup
-          onProceed={() => setShowInitialPopup(false)}  // Proceed button closes the popup
-          verificationType="email"  // Set verification type to "email"
-        />
-      )}
+      <PopUpVerification
+        show={showInitialPopup}
+        onClose={() => router.push('/')}
+        message="Please verify your email to continue."
+        buttonText="Enter Now"
+        onConfirm={() => {
+          setShowInitialPopup(false);
+          // Additional logic if needed
+        }}
+      />
+
+
 
       {/* Success popup after OTP verification */}
-      {showSuccessPopup && (
-        <PopUpVerification
-          onClose={() => {
-            setShowSuccessPopup(false);
-            router.push('/'); // Redirect to home page after success popup closes
-          }}
-          onProceed={() => {
-            setShowSuccessPopup(false);
-            router.push('/'); // Redirect to home page after success popup closes
-          }}
-          success
-          verificationType="email"  // Set verification type to "email"
-        />
-      )}
+      <PopUpVerification
+        show={showSuccessPopup}
+        onClose={() => router.push('/')}
+        message="Your email has been successfully verified!"
+        buttonText="Continue"
+        onConfirm={() => {
+          setShowSuccessPopup(false);
+          // Navigate to the home page after success
+          router.push('/home');
+        }}
+      />
 
       <div className={styles.container}>
         <h1 className={styles.title}>Email Verification</h1>

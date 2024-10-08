@@ -21,7 +21,7 @@
   }
   .container h2{
     text-align: center;
-    color: #000000;
+    color: #f12222;
   }
   
   /* Form Styles */
@@ -51,7 +51,7 @@
   .label {
     font-size: 17px;
     font-weight: 700;
-    color: #ff0000;
+    color: #4e4e4e;
   }
   
   .selectField,
@@ -131,8 +131,8 @@
   /* Responsive Styles */
   @media (max-width: 768px) {
     .mainSection {
-      padding: 20px;
-      padding-top: 100px;
+      padding: 60px 0px;
+    padding-bottom: 0px;
     }
   
     .showtimeRow {

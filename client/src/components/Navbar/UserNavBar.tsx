@@ -95,7 +95,7 @@ const Navbar = () => {
     };
 
 
-   
+
 
     return (
         <>
@@ -136,11 +136,11 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    {user? (
+                    {user ? (
                         <div className={`${styles.profileHeader} ${showMenu ? styles.show : styles.hidden}`} onClick={toggleDropdown}>
 
                             <div className={styles.profileIcon}>
-                                {user.photo?(
+                                {user.photo ? (
                                     <img src={user.photo} alt={user.firstname} className={styles.profilePhoto} />
                                 ) : (
                                     <i className="fas fa-user-circle"></i>
@@ -148,8 +148,8 @@ const Navbar = () => {
                                 <span>{user.firstname}</span>
                                 <div className={`${styles.profileDropdown} ${showDropdown ? styles.showDropdown : ''}`}>
 
-                                    <Link href="/user/email-verification">Two Factor Authentication</Link>
-                                    <Link href="/user/booking-details">Movie Booking Collection</Link>
+                                    <Link href="/user/email-verification">2F Authentication</Link>
+                                    <Link href="/user/booking-details">Booking Collection</Link>
                                     <a onClick={handleLogout}>Logout</a>
                                 </div>
                             </div>

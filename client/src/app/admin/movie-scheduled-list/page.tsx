@@ -41,6 +41,13 @@ const ScheduleList: React.FC = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>(""); // State for search input
+  const [showModal, setShowModal] = useState<boolean>(false); // State for modal
+  const [scheduleToDelete, setScheduleToDelete] = useState<{
+    scheduleId: string;
+    movieId: string;
+    date: string;
+    time: string;
+  } | null>(null); // Track which schedule to delete
   const router = useRouter();
 
   useEffect(() => {
@@ -48,10 +55,8 @@ const ScheduleList: React.FC = () => {
       try {
         const response = await axios.get(`${API_URL}/api/admin/schedule-details`);
         setSchedules(response.data);
-        console.log("Fetched schedules:", response.data);
       } catch (error) {
         setErrorMessage("Failed to fetch schedules.");
-        console.error(error);
       }
     };
     fetchSchedules();
@@ -69,8 +74,18 @@ const ScheduleList: React.FC = () => {
     return acc;
   }, {} as { [theatreName: string]: Schedule[] });
 
-  // Handle deleting showtimes (existing code)
-  const handleDeleteShowtime = async (scheduleId: string, movieId: string, date: string, time: string) => {
+  // Function to handle delete confirmation
+  const confirmDeleteShowtime = (scheduleId: string, movieId: string, date: string, time: string) => {
+    setScheduleToDelete({ scheduleId, movieId, date, time });
+    setShowModal(true);
+  };
+
+  // Function to handle the actual deletion
+  const handleDeleteShowtime = async () => {
+    if (!scheduleToDelete) return;
+
+    const { scheduleId, movieId, date, time } = scheduleToDelete;
+
     try {
       await axios.delete(`${API_URL}/api/admin/schedule/${scheduleId}/showtime`, {
         data: { movieId, date, time },
@@ -102,9 +117,10 @@ const ScheduleList: React.FC = () => {
           })
           .filter((schedule) => schedule.movies.length > 0)
       );
+
+      setShowModal(false); // Close modal after deletion
     } catch (error) {
       setErrorMessage("Failed to delete showtime.");
-      console.error(error);
     }
   };
 
@@ -130,7 +146,7 @@ const ScheduleList: React.FC = () => {
             placeholder="Search by theatre name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={styles.searchInput} // You can define your own styles
+            className={styles.searchInput}
           />
 
           <button
@@ -158,7 +174,6 @@ const ScheduleList: React.FC = () => {
                         {schedule.movies.map((movieSchedule) => {
                           const movieId = movieSchedule.movie?._id;
                           if (!movieId) {
-                            console.warn("Movie ID is null or undefined for schedule:", schedule);
                             return null;
                           }
 
@@ -183,7 +198,7 @@ const ScheduleList: React.FC = () => {
                                               alt="Delete Showtime"
                                               className={styles.deleteIcon}
                                               onClick={() =>
-                                                handleDeleteShowtime(
+                                                confirmDeleteShowtime(
                                                   schedule._id,
                                                   movieId,
                                                   showDate.date,
@@ -216,6 +231,19 @@ const ScheduleList: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      {showModal && (
+        <div className={styles.confirmationModal}>
+          <p>Are you sure you want to delete this showtime?</p>
+          <button onClick={handleDeleteShowtime} className={styles.confirmButton}>
+            Yes, Delete
+          </button>
+          <button onClick={() => setShowModal(false)} className={styles.cancelButton}>
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
   );
 };

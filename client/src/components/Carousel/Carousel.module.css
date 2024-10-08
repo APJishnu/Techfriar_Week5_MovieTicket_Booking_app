@@ -158,13 +158,13 @@
     }
 
     .carousel {
-        height: 250px; /* Adjusted height for better alignment on tablets */
+        height: 200px; /* Adjusted height for better alignment on tablets */
         border-radius: 12px; /* Slightly smaller border-radius for smaller screens */
        
     }
 
     .carouselSlide {
-        height: 250px;
+        height: 200px;
     }
 
     .carouselSlide img {
@@ -173,6 +173,6 @@
     }
     .carouselOverlay {
         bottom: 5%; /* Adjusted to keep the text closer to the bottom */
-        left: 27%;
+        left: 28%;
     }
 }
