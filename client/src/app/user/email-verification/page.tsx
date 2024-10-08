@@ -151,7 +151,7 @@ const EmailVerification: React.FC = () => {
         onConfirm={() => {
           setShowSuccessPopup(false);
           // Navigate to the home page after success
-          router.push('/home');
+          router.push('/');
         }}
       />
 
