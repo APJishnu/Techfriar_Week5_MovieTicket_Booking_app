@@ -1,14 +1,16 @@
-"use client";
+"use client"
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import OTPInput from "../../../components/OtpInput/OtpInput";
 import styles from "../../../components/OtpInput/OtpInput.module.css";
-import { getUser, User } from "../../../utils/auth";
-import { useRouter } from "next/navigation"; // Import useRouter
-import PopUpVerification from "../../../components/PopUpVerification/PopUpVerification";
+import { getUser, isAuthenticated, User } from '../../../utils/auth';
+import { useRouter } from 'next/navigation'; // Import useRouter
+import PopUpVerification from '../../../components/PopUpVerification/PopUpVerification';
 import { API_URL } from "@/utils/api";
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
+
+
 
 const EmailVerification: React.FC = () => {
   const router = useRouter(); // Initialize useRouter
@@ -27,7 +29,7 @@ const EmailVerification: React.FC = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
+    const token = urlParams.get('token');
 
     if (token) {
       Cookies.set("authToken", token, { expires: 1 / 24 });
@@ -36,13 +38,15 @@ const EmailVerification: React.FC = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userData = await getUser();
-      setUser(userData);
-      if (userData?.email) {
-        setEmail(userData.email);
-      } else {
-        setEmail("");
-      }
+    
+        const userData = await getUser();
+        setUser(userData);
+        if (userData?.email) {
+          setEmail(userData.email);
+        } else {
+          setEmail("");
+        }
+     
     };
 
     fetchUser();
@@ -63,11 +67,17 @@ const EmailVerification: React.FC = () => {
         setOtpSent(true);
         setCountdown(60);
         startCountdown();
+
+        Cookies.set("userOtp", response.data.data.otp, { expires: 1 / 24 });
+        Cookies.set("userField", response.data.data.field, { expires: 1 / 24 });
+        Cookies.set("userValue", response.data.data.value, { expires: 1 / 24 });
+
+
       } else {
-        setError(response.data.message);
+        setError("Failed to send OTP. Please try again.");
       }
     } catch (err) {
-      setError("Failed to send OTP. Please try again..");
+      setError("Failed to send OTP. Please try again.");
     }
     setLoading(false);
   };
@@ -81,20 +91,24 @@ const EmailVerification: React.FC = () => {
     const token = getAuthToken();
     setError("");
     try {
+      const userOtp = Cookies.get("userOtp");
+      const userField = Cookies.get("userField");
+      const userValue = Cookies.get("userValue");
       const response = await axios.post(
         `${API_URL}/api/auth/verify-otp`,
-        { otp },
+        { field: "email", value: email, otp, userOtp, userField, userValue },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
       if (response.data.verified) {
         setSuccess(true);
-        setShowSuccessPopup(true);
-
+        setShowSuccessPopup(true); // Show success popup
+        // Delay redirection by 5 seconds
         setTimeout(() => {
-          router.push("/");
+          router.push('/');
         }, 5000);
+
       } else {
-        setError(response.data.message);
+        setError("Incorrect OTP. Please try again.");
       }
     } catch (err) {
       setError("Verification failed. Please try again.");
@@ -115,7 +129,7 @@ const EmailVerification: React.FC = () => {
       {/* Initial popup to ask for email verification */}
       <PopUpVerification
         show={showInitialPopup}
-        onClose={() => router.push("/")}
+        onClose={() => router.push('/')}
         message="Please verify your email to continue."
         buttonText="Enter Now"
         onConfirm={() => {
@@ -124,16 +138,18 @@ const EmailVerification: React.FC = () => {
         }}
       />
 
+
+
       {/* Success popup after OTP verification */}
       <PopUpVerification
         show={showSuccessPopup}
-        onClose={() => router.push("/")}
+        onClose={() => router.push('/')}
         message="Your email has been successfully verified!"
         buttonText="Continue"
         onConfirm={() => {
           setShowSuccessPopup(false);
           // Navigate to the home page after success
-          router.push("/");
+          router.push('/');
         }}
       />
 
@@ -160,9 +176,7 @@ const EmailVerification: React.FC = () => {
                 <button
                   onClick={sendOtp}
                   disabled={countdown > 0} // Disable button after OTP sent
-                  className={`${styles.sendButton} ${
-                    otpSent ? styles.activeSendButton : ""
-                  }`}
+                  className={`${styles.sendButton} ${otpSent ? styles.activeSendButton : ""}`}
                 >
                   {countdown > 0 ? `Resend OTP (${countdown})` : "Send OTP"}
                 </button>
@@ -181,9 +195,7 @@ const EmailVerification: React.FC = () => {
                 Verify OTP
               </button>
               {!otpSent ? (
-                <span className={styles.tooltip}>
-                  sent Otp to Email for enable the button
-                </span>
+                <span className={styles.tooltip}>sent Otp to Email for enable the button</span>
               ) : null}
               {error && <p className={styles.errorMessage}>{error}</p>}
               {success && <p className={styles.successMessage}>{success}</p>}
