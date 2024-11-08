@@ -19,6 +19,7 @@ passport.use(new GoogleStrategy({
       });
       await user.save();
     }
+
     done(null, user);
   } catch (err) {
     console.error("Error in Google authentication:", err); 

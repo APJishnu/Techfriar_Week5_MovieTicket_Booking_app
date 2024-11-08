@@ -1,15 +1,14 @@
-"use client"
-import React, { useState } from 'react';
-import styles from './Popup.module.css';
-import SignUpPopup from '../../../../../components/Navbar/components/signin-popup/SignUpPopUp'; // Import the SignUpPopup component
+"use client";
+import React, { useState } from "react";
+import styles from "./Popup.module.css";
+import SignUpPopup from "../../../../../components/Navbar/components/signin-popup/SignUpPopUp"; // Import the SignUpPopup component
 
 interface PopupProps {
   message: string;
   onClose: () => void;
-
 }
 
-const Popup: React.FC<PopupProps> = ({ message, onClose}) => {
+const Popup: React.FC<PopupProps> = ({ message, onClose }) => {
   const [showSignUpPopup, setShowSignUpPopup] = useState(false);
 
   const handleSignUpClick = () => {
@@ -17,8 +16,7 @@ const Popup: React.FC<PopupProps> = ({ message, onClose}) => {
   };
   const toggleSignUpPopup = () => {
     setShowSignUpPopup(!showSignUpPopup);
-};
-
+  };
 
   return (
     <div className={styles.overlay}>
@@ -30,14 +28,14 @@ const Popup: React.FC<PopupProps> = ({ message, onClose}) => {
             <button onClick={handleSignUpClick} className={styles.signUpBtn}>
               <i className="fas fa-user"></i> Sign Up
             </button>
-            
+
             <button onClick={onClose} className={styles.closeButton}>
               X
             </button>
           </>
         ) : (
           // Show SignUpPopup component when "Sign Up" is clicked
-         <SignUpPopup toggleSignUpPopup={toggleSignUpPopup} />
+          <SignUpPopup toggleSignUpPopup={toggleSignUpPopup} />
         )}
       </div>
     </div>

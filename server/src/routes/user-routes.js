@@ -1,10 +1,9 @@
-
-require('dotenv').config();
-const userHelper = require('../helpers/user-helper')
-const createRazorpayOrder = require('../config/razorpay')
-const { sendWhatsAppMessage } = require('../config/sms-sender');
-const { generateQRCode } = require('../config/qr-code');
-
+require("dotenv").config();
+const userHelper = require("../helpers/user-helper");
+const createRazorpayOrder = require("../config/razorpay");
+const { sendWhatsAppMessage } = require("../config/sms-sender");
+const { generateQRCode } = require("../config/qr-code");
+const crypto = require("crypto");
 
 module.exports = {
   // Route handlers
@@ -40,7 +39,12 @@ module.exports = {
   getSeatsForShowtimeRouter: async (req, res) => {
     const { theatreId, movieId, showDate, showTime } = req.query;
     try {
-      const result = await userHelper.getSeatsForShowtime(theatreId, movieId, showDate, showTime);
+      const result = await userHelper.getSeatsForShowtime(
+        theatreId,
+        movieId,
+        showDate,
+        showTime
+      );
       res.json(result);
     } catch (error) {
       res.status(500).json({ message: error.message, error });
@@ -57,23 +61,44 @@ module.exports = {
     }
   },
 
-
-
   createOrderRouter: async (req, res) => {
     const { amount } = req.body;
     try {
       const order = await createRazorpayOrder(amount);
-      res.json({ success: true, order_id: order.id, amount: order.amount, currency: order.currency });
+      res.json({
+        success: true,
+        order_id: order.id,
+        amount: order.amount,
+        currency: order.currency,
+      });
     } catch (error) {
       res.status(500).json({ success: false, message: error.message });
     }
   },
 
-
-
   confirmBookingRouter: async (req, res) => {
-    const { userDetails, movieTitle, theatreId, showDate, showTime, selectedSeats, totalPrice, paymentId } = req.body;
+    const {
+      userDetails,
+      movieTitle,
+      theatreId,
+      showDate,
+      showTime,
+      selectedSeats,
+      totalPrice,
+      paymentId,
+      orderId,
+    } = req.body;
     try {
+      const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET); // Secret key from Razorpay
+      hmac.update(orderId + "|" + paymentId); // Order and payment ID concatenation
+      const generatedSignature = hmac.digest("hex");
+
+      if (generatedSignature !== razorpay_signature) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Invalid payment signature" });
+      }
+
       const booking = await userHelper.confirmBooking({
         userDetails,
         movieTitle,
@@ -93,8 +118,6 @@ module.exports = {
         selectedSeats,
         userId: userDetails.userId,
       });
-
-
 
       const qrData = `
   🎬 Movie: ${movieTitle}
@@ -137,14 +160,16 @@ module.exports = {
       🌐 Visit Us: http://localHost:3000/
     `;
 
-      const whatsappMessage = await sendWhatsAppMessage(userDetails.phone, messageBody, qrCodeUrl);
+      const whatsappMessage = await sendWhatsAppMessage(
+        userDetails.phone,
+        messageBody,
+        qrCodeUrl
+      );
       res.json({ success: true, booking, qrCodeUrl });
     } catch (error) {
       res.status(500).json({ success: false, message: error.message });
     }
   },
-
-
 
   getUserBookingsRouter: async (req, res) => {
     const userId = req.params.userId;
@@ -155,8 +180,9 @@ module.exports = {
       }
       res.status(200).json(result.data);
     } catch (error) {
-      res.status(500).json({ message: 'Server error while fetching booking details.' });
+      res
+        .status(500)
+        .json({ message: "Server error while fetching booking details." });
     }
   },
-
 };

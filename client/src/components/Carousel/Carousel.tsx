@@ -2,9 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from './Carousel.module.css';
-import Link from 'next/link';
 
-// Simulate data fetching from the backend (admin panel provides the data)
 const fetchCarouselData = async () => {
   // In a real app, you would fetch this from the backend
   return [
@@ -12,7 +10,7 @@ const fetchCarouselData = async () => {
       id: 1,
       src: "/carousel-1.jpeg",
       title: "Moana 2",
-      rating: 4.5,
+      rating: 4.5,  
       description: "An epic journey of a hero.",
     },
     {

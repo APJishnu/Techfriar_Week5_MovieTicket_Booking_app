@@ -1,20 +1,18 @@
-
-
-.bookingConfirmation{
+.bookingConfirmation {
 
   text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-top: 150px;
- 
+
 }
 
 .bookingConfirmation h1 {
   font-size: 40px;
   letter-spacing: 4px;
   margin-bottom: 10px;
-  
+
 }
 
 .bookingConfirmation h1:before {
@@ -73,14 +71,14 @@
   margin-bottom: 10px;
 }
 
-.mapPin{
+.mapPin {
   font-size: 14px;
   color: #37383a;
 
-  
+
 }
 
-.mapPin span{
+.mapPin span {
   font-size: 40px;
   margin-right: 10px;
   color: #2a2a2ae6;
@@ -113,7 +111,7 @@
   outline: none;
 }
 
-.priceWithButton{
+.priceWithButton {
   width: 100%;
   display: flex;
   justify-content: space-between;

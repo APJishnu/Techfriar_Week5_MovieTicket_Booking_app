@@ -1,62 +1,68 @@
-require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const MongoStore = require('connect-mongo');
-const Routes = require('./routes/routes');
-const authRoutes = require('./routes/auth-routes'); // Add auth routes
-const passport = require('passport');
-const path = require('path');
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const passport = require("passport");
 
+const { connectDB } = require("./config/database");
+const Routes = require("./routes/routes");
+const authRoutes = require("./routes/auth-routes");
 
-const session = require('express-session');
-const { db } = require('./config/database')
-require('./config/passport');  // Add the passport configuration
+require("./config/passport"); // Load passport configuration
 
 const app = express();
 
 // Middleware setup
 app.use(bodyParser.json());
-app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// Enable CORS for the frontend
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
 
-app.use(cors({
-  origin: `${process.env.FRONTEND_URL}`, // Include 'https://' and full domain
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true // Allow cookies
-}));
+// Static files setup
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-
-
-
+// Cookie parser
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // Session configuration
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,
-  }),
-  cookie: {
-    secure: process.env.NODE_ENV === 'production', // true in production (for HTTPS), false in development
-    httpOnly: process.env.NODE_ENV === 'development',
-    maxAge: 3600 * 1000
-  }
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true, 
+      maxAge: 3600 * 1000, 
+    },
+  })
+);
 
-app.set('trust proxy', 1); // Trust first proxy for secure cookies
+// Enable secure cookies behind a proxy (e.g., in production environments)
+app.set("trust proxy", 1);
 
+// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+app.use("/api", Routes);
+app.use("/api/auth", authRoutes);
 
-app.use('/api/', Routes); // Add the new movie routes
-app.use('/api/auth/', authRoutes);
-
+// Connect to database and start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await connectDB();
+  console.log(`Server is running on port ${PORT}`);
 });

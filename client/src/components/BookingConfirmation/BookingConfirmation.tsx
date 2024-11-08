@@ -83,7 +83,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         order_id: data.order_id,
         handler: (response: any) => {
           setModalMessage("Payment successful!");
-          confirmBooking(response.razorpay_payment_id);
+          confirmBooking(response.razorpay_payment_id,data.order_id);
         },
         prefill: {
           name: `${userDetails.firstname} ${userDetails.lastname}`,
@@ -97,7 +97,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
     }
   };
 
-  const confirmBooking = async (paymentId: string) => {
+  const confirmBooking = async (paymentId: string,orderId:string) => {
     try {
       const response = await axios.post(`${API_URL}/api/confirm-booking`, {
         userDetails: {
@@ -111,6 +111,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         selectedSeats,
         totalPrice,
         paymentId,
+        orderId
       });
       if (response.data.success) {
         const bookingDetails = response.data.booking;

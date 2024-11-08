@@ -28,13 +28,12 @@ const Navbar = () => {
     const [activePath, setActivePath] = useState<string>(pathname);
 
     useEffect(() => {
-        // Update the active path whenever the route changes
         setActivePath(pathname);
     }, [pathname]);
 
     useEffect(() => {
         const fetchUser = async () => {
-            if (isAuthenticated()) {
+            if (await isAuthenticated()) {
                 const userData = await getUser();
                 setUser(userData);
             } else {

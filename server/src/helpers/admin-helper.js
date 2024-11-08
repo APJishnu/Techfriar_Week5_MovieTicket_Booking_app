@@ -264,7 +264,6 @@ module.exports = {
 
       return { message: 'Movie schedule updated successfully!' };
     } catch (error) {
-      console.error(error);
       return { error: 'Failed to update movie schedule. Please try again.' };
     }
   },

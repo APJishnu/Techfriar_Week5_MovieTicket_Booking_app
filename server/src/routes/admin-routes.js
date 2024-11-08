@@ -4,10 +4,6 @@ const searchApi = require('../helpers/api');
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
 
-
-
-
-
 // Route handlers
 module.exports = {
 
@@ -55,7 +51,6 @@ module.exports = {
     try {
       const { title, description, duration, genre, certification, releaseDate, imageUrl, director, cast, imdbRating, language } = req.body;
       const moviePhoto = req.file; // Check for the uploaded file
-      console.log(moviePhoto)
       if (!title || !description || !duration || !genre || !certification || !releaseDate) {
         return res.status(400).json({ error: 'All required fields must be provided.' });
       }

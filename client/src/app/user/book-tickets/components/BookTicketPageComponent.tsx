@@ -74,35 +74,35 @@ const MovieSchedule: React.FC = () => {
   const [selectedShowtime, setSelectedShowtime] = useState<SelectedShowtime | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false); // Manage popup state
 
-  useEffect(() => {
-    const fetchSchedule = async () => {
-      if (movieId) {
-        try {
-          const response = await axios.get(`${API_URL}/api/book-tickets/${movieId}`);
-          const scheduleData = response.data;
+  const fetchSchedule = async () => {
+    if (movieId) {
+      try {
+        const response = await axios.get(`${API_URL}/api/book-tickets/${movieId}`);
+        const scheduleData = response.data;
 
-          if (scheduleData.length > 0) {
-            const movieDetails = scheduleData[0]?.movies[0];
+        if (scheduleData.length > 0) {
+          const movieDetails = scheduleData[0]?.movies[0];
 
-            setMovie({
-              title: movieDetails.movieTitle || "N/A",
-              genre: movieDetails.genre || "N/A",
-              language: movieDetails.language || "N/A",
-              duration: movieDetails.duration || "N/A",
-              releaseDate: new Date(movieDetails.releaseDate).toLocaleDateString() || "N/A",
-              rating: movieDetails.rating || "N/A",
-            });
+          setMovie({
+            title: movieDetails.movieTitle || "N/A",
+            genre: movieDetails.genre || "N/A",
+            language: movieDetails.language || "N/A",
+            duration: movieDetails.duration || "N/A",
+            releaseDate: new Date(movieDetails.releaseDate).toLocaleDateString() || "N/A",
+            rating: movieDetails.rating || "N/A",
+          });
 
-            setTheaterSchedules(scheduleData);
-            setFilteredSchedules(filterByDate(scheduleData, selectedDate));
-            setWeekdays(calculateWeekdays());
-          }
-        } catch (error) {
-          setErrorMessage("Failed to fetch schedule details.");
+          setTheaterSchedules(scheduleData);
+          setFilteredSchedules(filterByDate(scheduleData, selectedDate));
+          setWeekdays(calculateWeekdays());
         }
+      } catch (error) {
+        setErrorMessage("Failed to fetch schedule details.");
       }
-    };
+    }
+  };
 
+  useEffect(() => {
     fetchSchedule();
   }, [movieId]);
   const calculateWeekdays = (): WeekdayButtons => {
@@ -194,8 +194,8 @@ const MovieSchedule: React.FC = () => {
     setSelectedTime(event.target.value);
   };
 
-  const handleShowtimeClick = (theatreId: string, showDate: string, showTime: string) => {
-    if (isAuthenticated()) {
+  const handleShowtimeClick = async (theatreId: string, showDate: string, showTime: string) => {
+    if (await isAuthenticated()) {
       setSelectedShowtime({ theatreId, date: showDate, time: showTime });
     } else {
       setShowPopup(true); // Show the popup if not authenticated
