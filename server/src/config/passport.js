@@ -15,12 +15,13 @@ passport.use(new GoogleStrategy({
         firstname: profile.name.givenName,
         lastname: profile.name.familyName,
         email: profile.emails[0].value,
-        photo: profile.photos[0]?.value, // Store profile picture if available
+        photo: profile.photos[0]?.value, 
       });
       await user.save();
     }
     done(null, user);
   } catch (err) {
+    console.error("Error in Google authentication:", err); 
     done(err, null);
   }
 }));
