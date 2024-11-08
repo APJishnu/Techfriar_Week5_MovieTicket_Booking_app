@@ -5,7 +5,7 @@ const User = require('../models/user-models');
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/api/auth/google/callback', // Ensure correct protocol and domain
+  callbackURL: `${process.env.BACKEND_URL}/api/auth/google/callback`, // Ensure correct protocol and domain
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({ googleId: profile.id });

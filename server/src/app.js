@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 
 app.use(cors({
-  origin: 'https://techfriar-week5-movie-ticket-booking-app.vercel.app', // Include 'https://' and full domain
+  origin: `${process.env.FRONTEND_URL}`, // Include 'https://' and full domain
   methods: 'GET,POST,PUT,DELETE',
   credentials: true // Allow cookies
 }));
@@ -30,7 +30,6 @@ app.use(cors({
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 
-console.log('Uploads path:', path.join(__dirname, '/uploads'));
 
 
 // Session configuration
@@ -48,15 +47,12 @@ app.use(session({
   }
 }));
 
-
 app.set('trust proxy', 1); // Trust first proxy for secure cookies
-
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-
 
 app.use('/api/', Routes); // Add the new movie routes
 app.use('/api/auth/', authRoutes);
