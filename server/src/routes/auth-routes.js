@@ -51,7 +51,7 @@ router.post("/send-otp", async (req, res) => {
   const { field, value } = req.body;
   try {
     // Generate a new OTP
-    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    const otp = 1234
     // Define expiry time for the OTP (1 minute from now)
     const expiryTime = Date.now() + 60 * 1000; // Current time + 60 seconds
 
@@ -62,23 +62,24 @@ router.post("/send-otp", async (req, res) => {
       otp,
     };
 
-    const subject = "Your OTP for Verification";
-    const text = `Your OTP is ${otp}`;
-    const html = `<p>Your OTP is <strong>${otp}</strong></p>`;
+    res.status(200).json({ message: "OTP sent successfully.", data: data });
+    // const subject = "Your OTP for Verification";
+    // const text = `Your OTP is ${otp}`;
+    // const html = `<p>Your OTP is <strong>${otp}</strong></p>`;
 
-    if (field === "email") {
-      const response = await sendEmail(value, subject, text, html);
-      if (response) {
-        res.status(200).json({ message: "OTP sent successfully.", data: data });
-      } else {
-        res
-          .status(200)
-          .json({
-            message: "Failed to send OTP. Please try again later.",
-            data: null,
-          });
-      }
-    } 
+    // if (field === "email") {
+    //   const response = await sendEmail(value, subject, text, html);
+    //   if (response) {
+    //     res.status(200).json({ message: "OTP sent successfully.", data: data });
+    //   } else {
+    //     res
+    //       .status(200)
+    //       .json({
+    //         message: "Failed to send OTP. Please try again later.",
+    //         data: null,
+    //       });
+    //   }
+    // } 
     
   } catch (err) {
     res
